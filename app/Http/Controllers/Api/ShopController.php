@@ -28,6 +28,7 @@ class ShopController extends Controller
 				'type_name' => '韩食快餐',
 				'tel' => '18600562137',
 				'distance' => 0.81,
+				'open_time' => '10:00-22:00'
 			);
 		}
 

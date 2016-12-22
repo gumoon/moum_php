@@ -13,8 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function (Request $request) {
+Route::get('/user', function(Request $request) {
     return $request->user();
 });
 
 Route::post('/common/init', 'CommonController@init');
+Route::get('/dial/timeline', 'DialController@timeline');
+Route::get('/recommend/shops', 'ShopController@recommend');

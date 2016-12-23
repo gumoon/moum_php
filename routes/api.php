@@ -20,3 +20,5 @@ Route::get('/user', function(Request $request) {
 Route::post('/common/init', 'CommonController@init');
 Route::get('/dial/timeline', 'DialController@timeline');
 Route::get('/recommend/shops', 'ShopController@recommend');
+Route::get('/arround/shops', 'ShopController@arround');
+Route::get('/discover/links', 'LinkController@all');

@@ -22,9 +22,9 @@ class ShopController extends Controller
 			$tmp[] = array(
 				'id' => $i,
 				'name' => '年糕火锅',
-				'image' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
+				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
 				'score' => 4,
-				'comment_count' => 3,
+				'comments_count' => 3,
 				'type_name' => '韩食快餐',
 				'tel' => '18600562137',
 				'distance' => 0.81,
@@ -37,7 +37,7 @@ class ShopController extends Controller
 			'msg' => '',
 			'data' => array(
 				'shops' => $tmp,
-				'count' => 10
+				'amount' => 10
 			),
 		);
 
@@ -50,7 +50,7 @@ class ShopController extends Controller
 		$lng = $request->input('lng');
 		$lat = $request->input('lat');
 		$page = $request->input('page');
-		$pageSize = $request->input('page_size');
+		$count = $request->input('count');
 		$catId = $request->input('cat_id');
 		$typeId = $request->input('type_id');
 
@@ -60,9 +60,9 @@ class ShopController extends Controller
 			$partner[] = array(
 				'id' => $i,
 				'name' => '年糕火锅',
-				'image' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
+				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
 				'score' => 4,
-				'comment_count' => 3,
+				'comments_count' => 3,
 				'type_name' => '韩食快餐',
 				'tel' => '18600562137',
 				'distance' => 0.81,
@@ -77,7 +77,7 @@ class ShopController extends Controller
 				'id' => $i,
 				'name' => '猪蹄丁丁',
 				'score' => 2,
-				'comment_count' => 0,
+				'comments_count' => 0,
 				'type_name' => '韩食快餐',
 				'tel' => '18600562137',
 				'distance' => 81,
@@ -93,7 +93,7 @@ class ShopController extends Controller
 					'partner' => $partner,
 					'other' => $other
 				),
-				'count' => 100
+				'amount' => 100
 			)
 		);
 

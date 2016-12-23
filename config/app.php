@@ -170,6 +170,8 @@ return [
          * Package Service Providers...
          */
         Laravel\Passport\PassportServiceProvider::class,
+        //暂时没有部署好搜索后端，先不启用这个抽象
+        // Laravel\Scout\ScoutServiceProvider::class,
         
         //
 

@@ -77,8 +77,7 @@ class ModelMakeCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        //update by huliang
-        return $rootNamespace.'\Models';
+        return $rootNamespace;
     }
 
     /**

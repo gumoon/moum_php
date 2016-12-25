@@ -8,7 +8,13 @@ use moum\Http\Controllers\Controller;
 
 class DialController extends Controller
 {
-    //
+    /**
+     * @api {get} /dial/timeline 最近打商户电话列表
+     * @apiName DialTimeline
+     * @apiGroup Dial
+     * 
+     * 
+     */
 	public function timeline(Request $request)
 	{
 		$tmp = array();

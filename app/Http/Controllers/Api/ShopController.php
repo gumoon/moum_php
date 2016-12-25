@@ -8,7 +8,12 @@ use moum\Http\Controllers\Controller;
 
 class ShopController extends Controller
 {
-    //
+    /**
+     * @api {get} /recommend/shops 推荐商家
+     * @apiName RecommendShops
+     * @apiGroup Recommend
+     * 
+     */
 	public function recommend(Request $request)
 	{
 		// $ret = array(
@@ -44,7 +49,12 @@ class ShopController extends Controller
 		return response()->json($ret);
 	}
 
-	//周边商户
+	/**
+	 * @api {get} /arround/shops 周边商户列表
+	 * @apiName ArroundShops
+	 * @apiGroup Arround
+	 * 
+	 */
 	public function arround(Request $request)
 	{
 		$lng = $request->input('lng');
@@ -98,5 +108,18 @@ class ShopController extends Controller
 		);
 
 		return response()->json($ret);
+	}
+
+	/**
+	 * 
+	 */
+	public function show(Request $request)
+	{
+		$shopId = $request->input('shop_id');
+
+		$shop = array(
+			'id' => 10,
+			'name' => '',
+		);
 	}
 }

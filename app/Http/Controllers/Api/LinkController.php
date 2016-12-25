@@ -8,7 +8,14 @@ use moum\Http\Controllers\Controller;
 
 class LinkController extends Controller
 {
-    //
+    /**
+     * @api {get} /discover/links 发现模块的常用链接
+     * @apiName DiscoverLinks
+     * @apiGroup Discover
+     *
+     * 
+     * 
+     */
 	public function all(Request $request)
 	{
 		for ($i=0; $i < 10; $i++) 

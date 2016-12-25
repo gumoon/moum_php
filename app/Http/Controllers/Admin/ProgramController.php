@@ -49,7 +49,7 @@ class ProgramController extends Controller
 
         $program->save();
 
-        if( $request->is('*/ajax/*') )
+        if( $request->expectsJson() )
         {
             $ret = array(
                 'errno' => 0,
@@ -111,7 +111,7 @@ class ProgramController extends Controller
 
         $program->save();
 
-        if( $request->is('*/ajax/*') )
+        if( $request->expectsJson() )
         {
             $ret = array(
                 'errno' => 0,

@@ -4,6 +4,7 @@ namespace moum\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Cache;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -30,5 +31,12 @@ class HomeController extends Controller
     public function phpinfo()
     {
         phpinfo();
+    }
+
+    public function debug()
+    {
+        Carbon::setLocale('zh');
+        echo Carbon::now()->subSeconds(5)->diffForHumans();
+        echo Carbon::now();
     }
 }

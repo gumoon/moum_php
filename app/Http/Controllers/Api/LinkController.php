@@ -19,10 +19,19 @@ class LinkController extends Controller
 				'url' => 'http://www.baidu.com'
 			);
 		}
+
+		for ($i=0; $i < 10; $i++) 
+		{ 
+			$tmp2[] = array(
+				'icon' => '',
+				'name' => '新浪',
+				'url' => 'http://www.sina.com.cn'
+			);
+		}
 		
 		$links = array(
 			'china' => $tmp1,
-			'korea' => $tmp1
+			'korea' => $tmp2
 		);
 
 		$ret = array(

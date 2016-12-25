@@ -8,7 +8,12 @@ use moum\Http\Controllers\Controller;
 
 class CommonController extends Controller
 {
-    //进入app时调用
+    /**
+     * 进入APP时调用
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
 	public function init(Request $request)
 	{
 		//设备唯一标识符

@@ -60,8 +60,8 @@ class Handler extends ExceptionHandler
     {
         if ($request->expectsJson()) {
             $ret = array(
-                'err_no' => 99,
-                'msg' => 'Unauthenticated.',
+                'err_no' => 10000,
+                'msg' => trans('errorcode.10000'),
                 'data' => new \stdClass
             );
             return response()->json($ret, 401);
@@ -87,8 +87,8 @@ class Handler extends ExceptionHandler
 
         if ($request->expectsJson()) {
             $ret = array(
-                'err_no' => 99,
-                'msg' => '验证没通过',
+                'err_no' => 10001,
+                'msg' => trans('errorcode.10001'),
                 'data' => $errors
             );
             return response()->json($ret, 422);
@@ -106,19 +106,21 @@ class Handler extends ExceptionHandler
      */
     protected function prepareResponse($request, Exception $e)
     {
+        //api请求，返回json格式的错误信息
         if($request->expectsJson())
         {
             $e = FlattenException::create($e);
 
             $ret = array(
                 'err_no' => $e->getStatusCode(),
-                'msg' => trans('httpcode.'.$e->getStatusCode()),
+                'msg' => trans('errorcode.'.$e->getStatusCode()),
                 'data' => new \stdClass
             );
 
             return response()->json($ret, $e->getStatusCode());
         }
 
+        //默认的处理方式
         if ($this->isHttpException($e)) {
             return $this->toIlluminateResponse($this->renderHttpException($e), $e);
         } else {

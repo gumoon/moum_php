@@ -26,7 +26,6 @@ class StoreCommentPost extends FormRequest
     {
         return [
             'shop_id' => 'required',
-            'score' => 'required',
             'content' => 'required',
         ];
     }

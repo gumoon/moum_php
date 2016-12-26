@@ -23,7 +23,10 @@ Route::get('/dial/timeline', 'DialController@timeline');
 Route::get('/shop/recommend', 'ShopController@recommend');
 Route::get('/shop/arround', 'ShopController@arround');
 Route::get('/shop/show', 'ShopController@show');
+Route::post('/shop/report_error', 'ShopController@reportError');
 
 Route::get('/discover/links', 'LinkController@all');
 
 Route::get('/comment/by_shop', 'CommentController@byShop');
+Route::post('/comment/create', 'CommentController@create');
+

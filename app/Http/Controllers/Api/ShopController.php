@@ -146,4 +146,23 @@ class ShopController extends Controller
 
 		return response()->json($ret);
 	}
+
+	/**
+	 * @api {post} /shop/has_error 商户纠错
+	 * @apiName ShopHasError
+	 * @apiGroup Shop
+	 * 
+	 */
+	public function reportError(Request $request)
+	{
+		$errorNo = $request->input('err_no');
+
+		$ret = array(
+			'err_no' => 0,
+			'msg' => '',
+			'data' => new \stdClass
+		);
+
+		return response()->json($ret);
+	}
 }

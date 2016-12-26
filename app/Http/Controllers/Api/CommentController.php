@@ -3,6 +3,7 @@
 namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use moum\Http\Requests\StoreCommentPost;
 use moum\Http\Controllers\Controller;
 
 
@@ -40,6 +41,27 @@ class CommentController extends Controller
 			'err_no' => 0,
 			'msg' => 'success',
 			'data' => $comments,
+		);
+
+		return response()->json($ret);
+	}
+
+	/**
+	 * @api {post} /comment/create 添加一条评论
+	 * @apiName CommentCreate
+	 * @apiGroup Comment
+	 * 
+	 */
+	public function create(StoreCommentPost $request)
+	{
+		$shopId = $request->input('shop_id');
+		$score = $request->input('score');
+		$content = $request->input('content');
+
+		$ret = array(
+			'err_no' => 0,
+			'msg' => '',
+			'data' => new \stdClass
 		);
 
 		return response()->json($ret);

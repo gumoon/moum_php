@@ -24,7 +24,7 @@ class CommentController extends Controller
 	{
 		$shopId = $request->input('shop_id');
 		
-		for($i = 0; $i < 5; $i++ )
+		for($i = 0; $i < 10; $i++ )
 		{
 			$comments[] = array(
 				'user' => array(

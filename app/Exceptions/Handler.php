@@ -5,6 +5,7 @@ namespace moum\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\Debug\Exception\FlattenException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
@@ -94,5 +95,34 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->back()->withInput($request->input())->withErrors($errors);
+    }
+
+    /**
+     * Prepare response containing exception render.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function prepareResponse($request, Exception $e)
+    {
+        if($request->expectsJson())
+        {
+            $e = FlattenException::create($e);
+
+            $ret = array(
+                'err_no' => $e->getStatusCode(),
+                'msg' => trans('httpcode.'.$e->getStatusCode()),
+                'data' => new \stdClass
+            );
+
+            return response()->json($ret, $e->getStatusCode());
+        }
+
+        if ($this->isHttpException($e)) {
+            return $this->toIlluminateResponse($this->renderHttpException($e), $e);
+        } else {
+            return $this->toIlluminateResponse($this->convertExceptionToResponse($e), $e);
+        }
     }
 }

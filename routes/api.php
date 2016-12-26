@@ -19,6 +19,11 @@ Route::get('/user', function(Request $request) {
 
 Route::post('/common/init', 'CommonController@init');
 Route::get('/dial/timeline', 'DialController@timeline');
-Route::get('/recommend/shops', 'ShopController@recommend');
-Route::get('/arround/shops', 'ShopController@arround');
+
+Route::get('/shop/recommend', 'ShopController@recommend');
+Route::get('/shop/arround', 'ShopController@arround');
+Route::get('/shop/show', 'ShopController@show');
+
 Route::get('/discover/links', 'LinkController@all');
+
+Route::get('/comment/by_shop', 'CommentController@byShop');

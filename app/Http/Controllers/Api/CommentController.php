@@ -61,13 +61,7 @@ class CommentController extends Controller
 			);
 		}
 
-		$ret = array(
-			'err_no' => 0,
-			'msg' => 'success',
-			'data' => $comments,
-		);
-
-		return response()->json($ret);
+		return $this->successJson( $comments );
 	}
 
 	/**
@@ -97,13 +91,7 @@ class CommentController extends Controller
 		$score = $request->input('score');
 		$content = $request->input('content');
 
-		$ret = array(
-			'err_no' => 0,
-			'msg' => '',
-			'data' => new \stdClass
-		);
-
-		return response()->json($ret);
+		return $this->successJson();
 	}
 
 	/**

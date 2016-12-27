@@ -74,16 +74,12 @@ class DialController extends Controller
 			);
 		}
 
-		$ret = array(
-			'err_no' => 0,
-			'msg' => 'success',
-			'data' => array(
-				'dials' => $tmp,
-				'amount' => 100,
-			),
+		$data = array(
+			'dials' => $tmp,
+			'amount' => 100
 		);
 
-		return response()->json($ret);
+		return $this->successJson( $data );
 	}
 
 	/**

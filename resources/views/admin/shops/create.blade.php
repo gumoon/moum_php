@@ -15,9 +15,9 @@
 @section('customjs')
 <script type="text/javascript">
 	$(document).ready(function(){
-		var url = "{{ url('houtai/ajax/programs/store') }}";
+		var url = "{{ url('houtai/ajax/shops/store') }}";
 		
-		$('#programCreate').submit(function(){
+		$('#shopCreate').submit(function(){
 			var name = $("#name").val();
 			var intro = $("#intro").val();
 			var type = $("#type").val();
@@ -38,7 +38,7 @@
 				
 				console.log(data);
 				//表单重置
-				document.getElementById('programCreate').reset();
+				document.getElementById('shopCreate').reset();
 				//错误提示删除
 				$("#namediv").removeClass('has-error');
 				$("#introdiv").addClass('has-error');
@@ -83,7 +83,7 @@
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">添加节目</h1>
+                <h1 class="page-header">添加商户</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -96,46 +96,82 @@
         			<div class="panel-body">
         				<div class="row">
         					<div class="col-lg-6">
-        						<form role="form" id="programCreate" {{-- method="POST" action="{{ url('houtai/programs') --}}">
+        						<form role="form" id="shopCreate" {{-- method="POST" action="{{ url('houtai/shops') --}}">
         							<div class="form-group" id="namediv">
-        								<label>节目名称：</label>
-        								<input type="text" id="name" name="name" class="form-control" placeholder="请输入VOA官网上的节目标准名称，用英文输入">
+        								<label>商户名称</label>
+        								<input type="text" id="name" name="name" class="form-control" placeholder="">
 
 	                                    <span class="help-block">
 	                                    </span>
         							</div>
-									<div class="form-group" id="introdiv">
-										<label>节目简介：</label>
-										<textarea class="form-control" rows="3" id="intro" name="intro" placeholder="节目的英文介绍"></textarea>
-
-										<span class="help-block">
-	                                    </span>
+        							<div class="form-group">
+                                            <label>商户头图</label>
+                                            <input type="file">
+                                    </div>
+                                    <div class="form-group" id="catdiv">
+										<label>商户分类</label>
+										<select class="form-control" id="type" name="type">
+											<option value="-1">请选择分类</option>
+											<option value="0">外卖</option>
+										</select>
+										<span class="help-block"></span>
 									</div>
 									<div class="form-group" id="typediv">
-										<label>节目类型：</label>
+										<label>商户子分类</label>
 										<select class="form-control" id="type" name="type">
-											<option value="-1">请选择节目类型</option>
-											<option value="1">音频节目</option>
-											<option value="2">视频节目</option>
-											<option value="3">音视频节目</option>
-											<option value="0">其他类型</option>
+											<option value="-1">请选择子分类</option>
+											<option value="0">炸鸡</option>
 										</select>
+										<span class="help-block"></span>
+									</div>
+									<div class="form-group" id="teldiv">
+        								<label>联系电话</label>
+        								<input type="text" id="tel" name="tel" class="form-control" placeholder="">
+	                                    <span class="help-block">
+	                                    </span>
+        							</div>
+        							<div class="form-group" id="bossteldiv">
+        								<label>老板手机号</label>
+        								<input type="text" id="bosstel" name="bosstel" class="form-control" placeholder="">
+	                                    <span class="help-block">
+	                                    </span>
+        							</div>
+        							<div class="form-group">
+        								<label>营业时间</label>
+        								<input type="text" class="form-control" placeholder="">
+	                                    <span class="help-block">
+	                                    </span>
+        							</div>
+        							<div class="form-group">
+        								<label>地址</label>
+        								<input type="text" class="form-control" placeholder="">
+	                                    <span class="help-block">
+	                                    </span>
+        							</div>
+        							<div class="form-group">
+                                        <label>是否VIP商户</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_vip" value="0" checked>否
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="is_vip" value="1">是
+                                        </label>
+                                    </div>
+									<div class="form-group" id="introdiv">
+										<label>老板一句话简介：</label>
+										<textarea class="form-control" rows="3" id="intro" name="intro" placeholder=""></textarea>
 
 										<span class="help-block">
 	                                    </span>
 									</div>
-									<div class="form-group" id="statusdiv">
-										<label>节目当前播出状态：</label>
-										<select class="form-control" id="status" name="status">
-											<option value="-1">请选择节目当前播出状态</option>
-											<option value="0">正常播出</option>
-											<option value="1">已停播</option>
-											<option value="99">我们平台已下架</option>
-										</select>
-
-										<span class="help-block">
-	                                    </span>
-									</div>
+									<div class="form-group">
+                                            <label>菜单图</label>
+                                            <input type="file">
+                                            <input type="file">
+                                            <input type="file">
+                                            <input type="file">
+                                    </div>
+									
 									{{ csrf_field() }}
 									<button type="submit" class="btn btn-success">添加</button>
         						</form>

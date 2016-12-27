@@ -75,12 +75,6 @@ class LinkController extends Controller
 			'korea' => $tmp2
 		);
 
-		$ret = array(
-			'err_no' => 0,
-			'msg' => 'success',
-			'data' => $links,
-		);
-
-		return response()->json($ret);
+		return $this->successJson( $links );
 	}
 }

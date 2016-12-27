@@ -2,6 +2,7 @@
 
 namespace moum\Http\Controllers\Admin;
 
+use Illuminate\Http\Request;
 use moum\Http\Requests\StoreShopPost;
 use moum\Models\Shop;
 use moum\Http\Controllers\Controller;
@@ -135,5 +136,19 @@ class ShopController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * 根据cat_id 获取 types
+     * 
+     */
+    public function getTypesByCatId(Request $request)
+    {
+        $cat_id = $request->input('cat_id');
+
+        if( isset( $this->shopTypes[$cat_id] ) )
+        {
+            return $this->successJson( $this->shopTypes[$cat_id] );
+        }
     }
 }

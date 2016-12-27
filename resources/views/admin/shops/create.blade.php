@@ -14,64 +14,85 @@
 
 @section('customjs')
 <script type="text/javascript">
+var changeUrl = "{{ url('houtai/ajax/shops/get_types') }}";
+var url = "{{ url('houtai/ajax/shops/store') }}";
+//分类改变调用函数
+function changeCat(){
+	var cat_id = $("#cat_id option:selected").val();
+	var token = $("input[name='_token']").val();
+	var postData = {cat_id: cat_id, _token: token};
+	console.log(postData);
+	$.post(changeUrl, postData, function(data){
+		if(data.err_no){
+			alert(data.msg);
+		}else{
+			console.log(data);
+			for(id in data.data){
+				var str = '<option value="'+id+'">'+data.data[id]+'</option>';
+				$("#type_id").append(str);
+			}
+		}
+	});
+}
 	$(document).ready(function(){
-		var url = "{{ url('houtai/ajax/shops/store') }}";
+		$("#cat_id").on("change", changeCat);
+		// 
 		
-		$('#shopCreate').submit(function(){
-			var name = $("#name").val();
-			var intro = $("#intro").val();
-			var type = $("#type").val();
-			var status = $("#status").val();
-			var token = $("input[name='_token']").val();
-			var postData = {name: name, intro: intro, type: type, status: status, _token: token};
-			console.log(postData);
+		// $('#shopCreate').submit(function(){
+		// 	var name = $("#name").val();
+		// 	var intro = $("#intro").val();
+		// 	var type = $("#type").val();
+		// 	var status = $("#status").val();
+		// 	var token = $("input[name='_token']").val();
+		// 	var postData = {name: name, intro: intro, type: type, status: status, _token: token};
+		// 	console.log(postData);
 
-			$.post(url, postData, function(data){
-				if(data.errno)
-				{
-					alert(data.msg);
-				}
-				else
-				{
-					alert(data.msg)
-				}
+		// 	$.post(url, postData, function(data){
+		// 		if(data.errno)
+		// 		{
+		// 			alert(data.msg);
+		// 		}
+		// 		else
+		// 		{
+		// 			alert(data.msg)
+		// 		}
 				
-				console.log(data);
-				//表单重置
-				document.getElementById('shopCreate').reset();
-				//错误提示删除
-				$("#namediv").removeClass('has-error');
-				$("#introdiv").addClass('has-error');
-				$("#typediv").addClass('has-error');
-				$("#statusdiv").addClass('has-error');
-				$("#namediv .help-block").html("");
-				$("#introdiv .help-block").html("");
-				$("#typediv .help-block").html("");
-				$("#statusdiv .help-block").html("");
-			})
-			.fail(function(data){
-				console.log(data.responseJSON);
-				//此处使用js来验证值，我还需要精进下。
-				if( data.responseJSON.name[0] != ''){
-					$("#namediv").addClass('has-error');
-					$("#namediv .help-block").html("<strong>"+data.responseJSON.name[0]+"</strong>");
-				}
-				if( data.responseJSON.intro[0] != ''){
-					$("#introdiv").addClass('has-error');
-					$("#introdiv .help-block").html("<strong>"+data.responseJSON.intro[0]+"</strong>");
-				}
-				if( data.responseJSON.type[0] != ''){
-					$("#typediv").addClass('has-error');
-					$("#typediv .help-block").html("<strong>请选择节目类型</strong>");
-				}
-				if( data.responseJSON.status[0] != ''){
-					$("#statusdiv").addClass('has-error');
-					$("#statusdiv .help-block").html("<strong>请选择节目当前播出状态</strong>");
-				}
+		// 		console.log(data);
+		// 		//表单重置
+		// 		document.getElementById('shopCreate').reset();
+		// 		//错误提示删除
+		// 		$("#namediv").removeClass('has-error');
+		// 		$("#introdiv").addClass('has-error');
+		// 		$("#typediv").addClass('has-error');
+		// 		$("#statusdiv").addClass('has-error');
+		// 		$("#namediv .help-block").html("");
+		// 		$("#introdiv .help-block").html("");
+		// 		$("#typediv .help-block").html("");
+		// 		$("#statusdiv .help-block").html("");
+		// 	})
+		// 	.fail(function(data){
+		// 		console.log(data.responseJSON);
+		// 		//此处使用js来验证值，我还需要精进下。
+		// 		if( data.responseJSON.name[0] != ''){
+		// 			$("#namediv").addClass('has-error');
+		// 			$("#namediv .help-block").html("<strong>"+data.responseJSON.name[0]+"</strong>");
+		// 		}
+		// 		if( data.responseJSON.intro[0] != ''){
+		// 			$("#introdiv").addClass('has-error');
+		// 			$("#introdiv .help-block").html("<strong>"+data.responseJSON.intro[0]+"</strong>");
+		// 		}
+		// 		if( data.responseJSON.type[0] != ''){
+		// 			$("#typediv").addClass('has-error');
+		// 			$("#typediv .help-block").html("<strong>请选择节目类型</strong>");
+		// 		}
+		// 		if( data.responseJSON.status[0] != ''){
+		// 			$("#statusdiv").addClass('has-error');
+		// 			$("#statusdiv .help-block").html("<strong>请选择节目当前播出状态</strong>");
+		// 		}
 				
-			});
-			return false;
-		});
+		// 	});
+		// 	return false;
+		// });
 	});
 </script>
 @endsection
@@ -110,7 +131,7 @@
                                     </div>
                                     <div class="form-group" id="catdiv">
 										<label>商户分类</label>
-										<select class="form-control" id="type" name="type">
+										<select class="form-control" id="cat_id" name="cat_id">
 											<option value="-1">请选择分类</option>
 											<option value="0">外卖</option>
 										</select>
@@ -118,9 +139,8 @@
 									</div>
 									<div class="form-group" id="typediv">
 										<label>商户子分类</label>
-										<select class="form-control" id="type" name="type">
+										<select class="form-control" id="type_id" name="type_id">
 											<option value="-1">请选择子分类</option>
-											<option value="0">炸鸡</option>
 										</select>
 										<span class="help-block"></span>
 									</div>
@@ -138,13 +158,13 @@
         							</div>
         							<div class="form-group">
         								<label>营业时间</label>
-        								<input type="text" class="form-control" placeholder="">
+        								<input type="text" id="open_time" name="open_time" class="form-control" placeholder="">
 	                                    <span class="help-block">
 	                                    </span>
         							</div>
         							<div class="form-group">
         								<label>地址</label>
-        								<input type="text" class="form-control" placeholder="">
+        								<input type="text" id="addr" name="addr" class="form-control" placeholder="">
 	                                    <span class="help-block">
 	                                    </span>
         							</div>

@@ -103,7 +103,8 @@ class DialController extends Controller
 	 *    {
 	 *      "shop": {
 	 *        "tel": "13911112222",
-	 *        "name": "店铺名称"
+	 *        "name": "店铺名称",
+	 *        "image_url": "http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg"
 	 *      },
 	 *      "count": 3215
 	 *    }
@@ -118,7 +119,8 @@ class DialController extends Controller
 			$tmp[] = array(
 				'shop' => array(
 					'tel' => '13911112222',
-					'name' => '店铺名称'
+					'name' => '店铺名称',
+					'image_url' => 'http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg'
 				),
 				'count' => 3215
 			);

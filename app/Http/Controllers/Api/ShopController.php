@@ -252,65 +252,41 @@ class ShopController extends Controller
 	 *
 	 * @apiParam {String} keyword 查询关键字
 	 * 
-	 * @apiSuccess {Number} err_no 错误码
-	 * @apiSuccess {String} msg 错误信息
-	 * @apiSuccess {Object} data
-	 * @apiSuccess {Object[]} data.partner
-	 * @apiSuccess {Number} data.partner.id 商户ID
-	 * @apiSuccess {String} data.partner.name 商户名
-	 * @apiSuccess {String} data.partner.image_url 商户头图
-	 * @apiSuccess {Number} data.partner.score 评星
-	 * @apiSuccess {Number} data.partner.comments_count 商户评价数
-	 * @apiSuccess {String} data.partner.type_name 类型名
-	 * @apiSuccess {String} data.partner.tel 商户电话
-	 * @apiSuccess {Number} data.partner.distance 距离
-	 * @apiSuccess {String} data.partner.open_time 营业时间
-	 * @apiSuccess {Object[]} data.other
-	 * @apiSuccess {Number} data.other.id 商户ID
-	 * @apiSuccess {String} data.other.name 商户名
-	 * @apiSuccess {Number} data.other.score 评星
-	 * @apiSuccess {Number} data.other.comments_count 商户评价数
-	 * @apiSuccess {String} data.other.type_name 类型名
-	 * @apiSuccess {String} data.other.tel 商户电话
-	 * @apiSuccess {Number} data.other.distance 距离
-	 * @apiSuccess {String} data.other.open_time 营业时间
-	 * @apiSuccess {Number} data.amount 满足条件的商户总数
+     * @apiSuccess {Number} err_no 错误码
+     * @apiSuccess {String} msg 错误信息
+     * @apiSuccess {Object} data 
+     * @apiSuccess {Object[]} data.shops 商户l列表
+     * @apiSuccess {Number} data.shops.id 商户ID
+     * @apiSuccess {String} data.shops.name 商户名
+     * @apiSuccess {String} data.shops.image_url 商户头图
+     * @apiSuccess {Number} data.shops.score 评星
+     * @apiSuccess {Number} data.shops.coumments_count 评论数
+     * @apiSuccess {String} data.shops.type_name 子类名
+     * @apiSuccess {String} data.shops.tel 电话号
+     * @apiSuccess {Number} data.shops.distance 距离
+     * @apiSuccess {String} data.shops.open_time 营业时间
+     * @apiSuccess {Number} data.amount 满足条件的商户总数
 	 *
 	 * @apiSuccessExample {json} Success-response:
-	 * {
+     * {
 	 *  "err_no": 0,
 	 *  "msg": "",
 	 *  "data": {
-	 *    "shops": {
-	 *      "partner": [
-	 *        {
-	 *          "id": 0,
-	 *          "name": "年糕火锅",
-	 *          "image_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
-	 *          "score": 4,
-	 *          "comments_count": 3,
-	 *          "type_name": "韩食快餐",
-	 *          "tel": "18600562137",
-	 *          "distance": 0.81,
-	 *          "open_time": "10:00-22:00"
-	 *        }
-	 *        ...
-	 *      ],
-	 *      "other": [
-	 *        {
-	 *          "id": 0,
-	 *          "name": "猪蹄丁丁",
-	 *          "score": 2,
-	 *          "comments_count": 0,
-	 *          "type_name": "韩食快餐",
-	 *          "tel": "18600562137",
-	 *          "distance": 81,
-	 *          "open_time": "10:00-22:00"
-	 *        }
-	 *        ...
-	 *      ]
-	 *    },
-	 *    "amount": 100
+	 *    "shops": [
+	 *      {
+	 *        "id": 0,
+	 *        "name": "年糕火锅",
+	 *        "image_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
+	 *        "score": 4,
+	 *        "comments_count": 3,
+	 *        "type_name": "韩食快餐",
+	 *        "tel": "18600562137",
+	 *        "distance": 0.81,
+	 *        "open_time": "10:00-22:00"
+	 *      }
+	 *      ...
+	 *    ],
+	 *    "amount": 10
 	 *  }
 	 * }
 	 * 
@@ -319,10 +295,9 @@ class ShopController extends Controller
 	{
 		$keyword = $request->input('keyword');
 
-		$partner = array();
 		for($i = 0; $i < 10; $i++)
 		{
-			$partner[] = array(
+			$tmp[] = array(
 				'id' => $i,
 				'name' => '年糕火锅',
 				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
@@ -335,26 +310,8 @@ class ShopController extends Controller
 			);
 		}
 
-		$other = array();
-		for($i = 0; $i < 10; $i++)
-		{
-			$other[] = array(
-				'id' => $i,
-				'name' => '猪蹄丁丁',
-				'score' => 2,
-				'comments_count' => 0,
-				'type_name' => '韩食快餐',
-				'tel' => '18600562137',
-				'distance' => 81,
-				'open_time' => '10:00-22:00'
-			);
-		}
-
 		$data = array(
-			'shops' => array(
-				'partner' => $partner,
-				'other' => $other
-			),
+			'shops' => $tmp,
 			'amount' => 100
 		);
 

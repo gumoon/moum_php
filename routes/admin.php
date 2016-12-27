@@ -13,19 +13,17 @@
 
 //管理后台
 Route::get('login', function () {
-    //return view('welcome');
     return view('admin.login');
 });
 Route::get('/', function () {
-    //return view('welcome');
     return view('admin.index');
 });
 
-Route::resource('programs', 'ProgramController');
+Route::resource('shops', 'ShopController');
 Route::resource('programinfos', 'ProgramInfoController');
 
 //ajax请求都以ajax开头
-Route::post('ajax/programs/store', 'ProgramController@store');
-Route::post('ajax/programs/update/{id}', 'ProgramController@update');
+Route::post('ajax/shops/store', 'ShopController@store');
+Route::post('ajax/shops/update/{id}', 'ShopController@update');
 Route::post('ajax/programinfos/store', 'ProgramInfoController@store');
 Route::post('ajax/programinfos/update/{id}', 'ProgramInfoController@update');

@@ -18,15 +18,19 @@ Route::get('/user', function(Request $request) {
 });
 
 Route::post('/common/init', 'CommonController@init');
+
 Route::get('/dial/timeline', 'DialController@timeline');
+Route::get('/dial/by_month', 'DialController@byMonth');
 
 Route::get('/shop/recommend', 'ShopController@recommend');
 Route::get('/shop/arround', 'ShopController@arround');
 Route::get('/shop/show', 'ShopController@show');
 Route::post('/shop/report_error', 'ShopController@reportError');
+Route::get('/shop/timeline', 'ShopController@timeline');
 
 Route::get('/discover/links', 'LinkController@all');
 
 Route::get('/comment/by_shop', 'CommentController@byShop');
 Route::post('/comment/create', 'CommentController@create');
+Route::get('/comment/timeline', 'CommentController@timeline');
 

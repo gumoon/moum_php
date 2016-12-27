@@ -81,6 +81,58 @@ class ShopController extends Controller
 	}
 
 	/**
+	 * @api {get} /shop/timeline 最新商户列表
+	 * @apiName ShopTimeline
+	 * @apiGroup Shop
+	 *
+	 * @apiSuccess {Number} err_no
+	 * @apiSuccess {String} msg
+	 * @apiSuccess {Object[]} data
+	 * @apiSuccess {Number} data.id
+	 * @apiSuccess {String} data.name
+	 * @apiSuccess {String} data.image_url
+	 * @apiSuccess {String} data.created_at
+	 * @apiSuccess {String} data.intro
+	 *
+	 * @apiSuccessExample {json} Success-response:
+	 * {
+	 *  "err_no": 0,
+	 *  "msg": "",
+	 *  "data": [
+	 *    {
+	 *      "id": 0,
+	 *      "name": "年糕火锅",
+	 *      "image_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
+	 *      "created_at": "5小时前",
+	 *      "intro": "老板的一句话介绍"
+	 *    }
+	 *    ...
+	 *  ]
+	 * }
+	 */
+	public function timeline(Request $request)
+	{
+		for($i = 0; $i < 10; $i++)
+		{
+			$tmp[] = array(
+				'id' => $i,
+				'name' => '年糕火锅',
+				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
+				'created_at' => '5小时前',
+				'intro' => '老板的一句话介绍'
+			);
+		}
+
+		$ret = array(
+			'err_no' => 0,
+			'msg' => '',
+			'data' => $tmp
+		);
+
+		return response()->json($ret);		
+	}
+
+	/**
 	 * @api {get} /shop/arround 周边商户列表
 	 * @apiName ShopArround
 	 * @apiGroup Shop

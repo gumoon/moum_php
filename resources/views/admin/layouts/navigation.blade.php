@@ -239,13 +239,13 @@
                     <a href="{{ url('houtai') }}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                 </li>
                 <li>
-                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 节目管理<span class="fa arrow"></span></a>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 商户管理<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ url('houtai/programs') }}">全部节目</a>
+                            <a href="{{ url('houtai/shops') }}">全部商户</a>
                         </li>
                         <li>
-                            <a href="{{ url('houtai/programs/create') }}">新增节目</a>
+                            <a href="{{ url('houtai/shops/create') }}">新增商户</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
@@ -261,7 +261,7 @@
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->
-                </li>
+                </li> 
                 <li>
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> Charts<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">

@@ -22,7 +22,8 @@ class DialController extends Controller
      * @apiSuccess {Number} data.dials.shop.id 商户ID
      * @apiSuccess {String} data.dials.shop.name 商户名
      * @apiSuccess {String} data.dials.shop.image_url 商户头图
-     * @apiSuccess {String} data.dials.shop.tel 商户电话
+     * @apiSuccess {String} data.dials.shop.open_time 营业时间
+     * @apiSuccess {String} data.dials.shop.intro 商户简介
      * @apiSuccess {Object} data.dials.user 打电话的用户
      * @apiSuccess {String} data.dials.user.name 用户名
      * @apiSuccess {Number} data.amount 满足条件的总记录条数
@@ -39,7 +40,8 @@ class DialController extends Controller
 	 *          "id": 10,
 	 *          "name": "年糕火锅",
 	 *          "image_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
-	 *          "tel": "13911112222"
+	 *          "open_time": "10:00-22:00",
+	 *          "intro": "老板的一句话介绍"
 	 *        },
 	 *        "user": {
 	 *          "name": "路人甲"
@@ -55,7 +57,7 @@ class DialController extends Controller
 	public function timeline(Request $request)
 	{
 		$tmp = array();
-		for($i=0; $i<1; $i++)
+		for($i=0; $i<10; $i++)
 		{
 			$tmp[] = array(
 				'created_at' => '刚刚',
@@ -63,7 +65,8 @@ class DialController extends Controller
 					'id' => 10,
 					'name' => '年糕火锅',
 					'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
-					'tel' => '13911112222'
+					'open_time' => '10:00-22:00',
+					'intro' => '老板的一句话介绍'
 				),
 				'user' => array(
 					'name' => '路人甲',
@@ -81,5 +84,50 @@ class DialController extends Controller
 		);
 
 		return response()->json($ret);
+	}
+
+	/**
+	 * @api {get} /dial/by_month 打电话月榜
+	 * @apiName DialByMonth
+	 * @apiGroup Dial
+	 *
+	 * @apiSuccess {Number} err_no
+	 * @apiSuccess {String} msg
+	 * @apiSuccess {Object[]} data
+	 * @apiSuccess {Object} data.shop
+	 * @apiSuccess {String} data.shop.tel
+	 * @apiSuccess {String} data.shop.name
+	 * @apiSuccess {Number} data.count
+	 *
+	 * @apiSuccessExample {json} Success-response:
+	 * {
+	 *  "err_no": 0,
+	 *  "msg": "success",
+	 *  "data": [
+	 *    {
+	 *      "shop": {
+	 *        "tel": "13911112222",
+	 *        "name": "店铺名称"
+	 *      },
+	 *      "count": 3215
+	 *    }
+	 *    ...
+	 *  ]
+	 * }
+	 */
+	public function byMonth(Request $request)
+	{
+		for($i=0; $i<10; $i++)
+		{
+			$tmp[] = array(
+				'shop' => array(
+					'tel' => '13911112222',
+					'name' => '店铺名称'
+				),
+				'count' => 3215
+			);
+		}
+
+		return $this->successJson( $tmp );
 	}
 }

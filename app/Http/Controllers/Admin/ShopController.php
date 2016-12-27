@@ -2,12 +2,12 @@
 
 namespace moum\Http\Controllers\Admin;
 
-use moum\Http\Requests\StoreProgramPost;
-use moum\Models\Program;
+use moum\Http\Requests\StoreShopPost;
+use moum\Models\Shop;
 use moum\Http\Controllers\Controller;
 
 
-class ProgramController extends Controller
+class ShopController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +16,9 @@ class ProgramController extends Controller
      */
     public function index()
     {
-        $programs = Program::all();
+        $shops = Shop::all();
 
-        return view('admin.programs.index', ['programs' => $programs]);
+        return view('admin.shops.index', ['shops' => $shops]);
     }
 
     /**
@@ -29,7 +29,7 @@ class ProgramController extends Controller
     public function create()
     {
         //
-        return view('admin.programs.create');
+        return view('admin.shops.create');
     }
 
     /**
@@ -38,9 +38,9 @@ class ProgramController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreProgramPost $request)
+    public function store(StoreShopPost $request)
     {
-        $program = new Program;
+        $program = new Shop;
 
         $program->name = $request->input('name');
         $program->intro = $request->input('intro');
@@ -61,7 +61,7 @@ class ProgramController extends Controller
         }
         else
         {
-            return redirect('/houtai/programs');
+            return redirect('/houtai/shops');
         }
         
     }
@@ -87,9 +87,9 @@ class ProgramController extends Controller
     {
         $id = intval($id);
 
-        $program = Program::findOrFail($id);
+        $shop = Shop::findOrFail($id);
 
-        return view('admin.programs.edit', ['program' => $program]);
+        return view('admin.shops.edit', ['shop' => $shop]);
     }
 
     /**
@@ -99,10 +99,10 @@ class ProgramController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreProgramPost $request, $id)
+    public function update(StoreShopPost $request, $id)
     {
         $id = intval($id);
-        $program = Program::find($id);
+        $program = Shop::find($id);
 
         $program->name = $request->input('name');
         $program->intro = $request->input('intro');
@@ -123,7 +123,7 @@ class ProgramController extends Controller
         }
         else
         {
-            return redirect('/houtai/programs');
+            return redirect('/houtai/shops');
         }
     }
 

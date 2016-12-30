@@ -91,6 +91,7 @@ class DialController extends Controller
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object[]} data
 	 * @apiSuccess {Object} data.shop
+	 * @apiSuccess {Number} data.shop.id
 	 * @apiSuccess {String} data.shop.tel
 	 * @apiSuccess {String} data.shop.name
 	 * @apiSuccess {Number} data.count
@@ -102,6 +103,7 @@ class DialController extends Controller
 	 *  "data": [
 	 *    {
 	 *      "shop": {
+	 *        "id": 1,
 	 *        "tel": "13911112222",
 	 *        "name": "店铺名称",
 	 *        "image_url": "http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg"
@@ -118,6 +120,7 @@ class DialController extends Controller
 		{
 			$tmp[] = array(
 				'shop' => array(
+					'id' => 1,
 					'tel' => '13911112222',
 					'name' => '店铺名称',
 					'image_url' => 'http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg'

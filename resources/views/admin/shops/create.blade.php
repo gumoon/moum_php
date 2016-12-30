@@ -20,7 +20,8 @@ var changeCatUrl = "{{ url('houtai/shops/get_types') }}";
 var url = "{{ url('houtai/ajax/shops/store') }}";
 var map = new AMap.Map('map',{
     zoom: 14,
-    center: [116.39,39.9]
+    center: [116.39,39.9],
+    scrollWheel: false
 });
 //分类改变调用函数
 function changeCat(){
@@ -394,6 +395,9 @@ $(document).ready(function(){
 
     					<div class="row">
     						<div class="col-lg-6">
+        						<div id="map" style="width: 100%; height: 300px;"></div>
+        					</div>
+    						<div class="col-lg-6">
     							<div class="form-group" id="introdiv">
 									<label>老板一句话简介：</label>
 									<textarea class="form-control" rows="8" id="intro" name="intro" placeholder=""></textarea>
@@ -401,9 +405,6 @@ $(document).ready(function(){
 									<span class="help-block">
                                     </span>
 								</div>
-        					</div>
-        					<div class="col-lg-6">
-        						<div id="map" style="width: 100%; height: 300px;"></div>
         					</div>
         				</div>
 

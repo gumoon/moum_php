@@ -17,7 +17,7 @@ Route::get('login', function () {
 });
 Route::get('/', function () {
     return view('admin.index');
-});
+})->middleware('auth');
 
 Route::post('/shops/get_types', 'ShopController@getTypesByCatId');
 Route::resource('shops', 'ShopController');

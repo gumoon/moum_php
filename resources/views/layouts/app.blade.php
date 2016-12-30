@@ -43,9 +43,8 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="{{ url('/home') }}">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <li class="active"><a href="/">Home</a></li>
+                        <li><a href="{{ url('/houtai') }}">管理后台</a></li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->

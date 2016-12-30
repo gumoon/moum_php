@@ -246,7 +246,7 @@ class ShopController extends Controller
 	}
 
 	/**
-	 * @api {post} /shop/search 商户搜索
+	 * @api {get} /shop/search 商户搜索
 	 * @apiName ShopSearch
 	 * @apiGroup Shop
 	 *

@@ -40,6 +40,8 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapWebRoutes();
 
         $this->mapAdminRoutes();
+
+        $this->mapCommonRoutes();
     }
 
     /**
@@ -91,6 +93,22 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => 'houtai',
         ], function ($router) {
             require base_path('routes/admin.php');
+        });
+    }
+
+    /** 
+     * 通用工具
+     * 
+     *
+     */
+    protected function mapCommonRoutes()
+    {
+        Route::group([
+            'middleware' => 'web',
+            'namespace' => $this->namespace . '\Common',
+            'prefix' => 'tools',
+        ], function ($router) {
+            require base_path('routes/common.php');
         });
     }
 }

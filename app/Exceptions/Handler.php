@@ -107,18 +107,18 @@ class Handler extends ExceptionHandler
     protected function prepareResponse($request, Exception $e)
     {
         //api请求，返回json格式的错误信息
-        if($request->expectsJson())
-        {
-            $e = FlattenException::create($e);
+        // if($request->expectsJson())
+        // {
+        //     $e = FlattenException::create($e);
 
-            $ret = array(
-                'err_no' => $e->getStatusCode(),
-                'msg' => trans('errorcode.'.$e->getStatusCode()),
-                'data' => new \stdClass
-            );
+        //     $ret = array(
+        //         'err_no' => $e->getStatusCode(),
+        //         'msg' => trans('errorcode.'.$e->getStatusCode()),
+        //         'data' => new \stdClass
+        //     );
 
-            return response()->json($ret, $e->getStatusCode());
-        }
+        //     return response()->json($ret, $e->getStatusCode());
+        // }
 
         //默认的处理方式
         if ($this->isHttpException($e)) {

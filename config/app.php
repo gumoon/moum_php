@@ -234,4 +234,11 @@ return [
 
     ],
 
+    # 注意在设置『内网』和『外网』的时候，地址不要加上 bucketName
+
+    'ossServer' => 'http://oss-cn-beijing.aliyuncs.com', //青岛为 http://oss-cn-qingdao.aliyuncs.com
+    'ossServerInternal' => 'http://oss-cn-beijing-internal.aliyuncs.com', //青岛为 http://oss-cn-qingdao-internal.aliyuncs.com
+    'AccessKeyId' => 'LTAInKC6H9DaRPQL',
+    'AccessKeySecret' => 'ftDl5CyvzSsFtNlQzRnz3iIZyJFwiN',
+    'ossDomain' => 'http://moum.oss-cn-beijing.aliyuncs.com/'
 ];

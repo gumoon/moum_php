@@ -10,7 +10,8 @@
         "doctrine/dbal": "^2.5",
         "laravel/passport": "^1.0",
         "laravel/scout": "^2.0",
-        "predis/predis": "~1.0"
+        "predis/predis": "~1.0",
+        "johnlui/aliyun-oss": "*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

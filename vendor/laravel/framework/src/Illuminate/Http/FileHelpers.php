@@ -46,6 +46,6 @@ trait FileHelpers
             $path = rtrim($path, '/').'/';
         }
 
-        return $path.md5_file($this->getRealPath()).'.'.$this->guessExtension();
+        return $path.md5_file($this->getRealPath()).'.'.$this->clientExtension();
     }
 }

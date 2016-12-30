@@ -60,9 +60,9 @@
 							    <tr>
         							<td>{{ $shop->id }}</td>
         							<td>{{ $shop->name }}</td>
-        							<td>分类/子分类</td>
+        							<td>{{ $shopCats[$shop->cat_id] }}/{{ $shopTypes[$shop->cat_id][$shop->type_id] }}</td>
         							<td>{{ $shop->tel }}</td>
-                                    <td>是</td>
+                                    <td>@if($shop->is_vip) 是 @else 否 @endif</td>
         							<td><a href="{{ route('shops.edit', ['shop' => $shop->id]) }}">编辑</a></td>
         						</tr>
 							@empty

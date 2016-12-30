@@ -19,12 +19,5 @@ Route::get('/', function () {
     return view('admin.index');
 });
 
+Route::post('/shops/get_types', 'ShopController@getTypesByCatId');
 Route::resource('shops', 'ShopController');
-Route::resource('programinfos', 'ProgramInfoController');
-
-//ajax请求都以ajax开头
-Route::post('ajax/shops/get_types', 'ShopController@getTypesByCatId');
-Route::post('ajax/shops/store', 'ShopController@store');
-Route::post('ajax/shops/update/{id}', 'ShopController@update');
-Route::post('ajax/programinfos/store', 'ProgramInfoController@store');
-Route::post('ajax/programinfos/update/{id}', 'ProgramInfoController@update');

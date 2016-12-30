@@ -4,7 +4,7 @@ namespace moum\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreProgramPost extends FormRequest
+class StoreShopPost extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,6 @@ class StoreProgramPost extends FormRequest
         return [
             'name' => 'required|max:100',
             'intro' => 'required',
-            'type' => 'in:0,1,2,3',
-            'status' => 'in:0,1,99',
         ];
     }
 }

@@ -21,6 +21,7 @@ Route::post('/common/init', 'CommonController@init');
 
 Route::get('/dial/timeline', 'DialController@timeline');
 Route::get('/dial/by_month', 'DialController@byMonth');
+Route::post('/dial/create', 'DialController@create');
 
 Route::get('/shop/recommend', 'ShopController@recommend');
 Route::get('/shop/arround', 'ShopController@arround');

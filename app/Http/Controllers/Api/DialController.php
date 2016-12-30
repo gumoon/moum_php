@@ -4,6 +4,7 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
+use moum\Models\Dial;
 
 
 class DialController extends Controller
@@ -131,4 +132,45 @@ class DialController extends Controller
 
 		return $this->successJson( $tmp );
 	}
+
+	/**
+	 * @api {post} /dial/create 用户给商户打电话行为发生时调用
+	 * @apiName DialCreate
+	 * @apiGroup Dial
+	 *
+	 * @apiParam {Number} shop_id
+	 * @apiParam {String} uuid
+	 * @apiSuccess {Number} err_no 
+	 * @apiSuccess {String} msg
+	 * @apiSuccess {Object} data
+	 * @apiSuccessExample {json} Success-response: 
+	 * {
+	 *  "err_no": 0,
+	 *  "msg": "success",
+	 *  "data": {}
+	 * }
+	 */
+	public function create(Request $request)
+	{
+		$userId = $request->user()->id;
+		$clientId = $request->user()->token()->client_id;
+		$shopId = $request->input('shop_id');
+		$uuid = $request->input('uuid');
+
+		$this->validate($request, [
+			'shop_id' => 'bail|required',
+			// 'uuid' => 'required'
+		]);
+
+		$dial = new Dial;
+		$dial->uid = $userId;
+		$dial->client_id = $clientId;
+		$dial->shop_id = $shopId;
+		$dial->uuid = $uuid;
+
+		$dial->save();
+
+		return $this->successJson();
+	}
+	
 }

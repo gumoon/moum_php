@@ -158,8 +158,8 @@ class DialController extends Controller
 		$uuid = $request->input('uuid');
 
 		$this->validate($request, [
-			'shop_id' => 'bail|required',
-			// 'uuid' => 'required'
+			'shop_id' => 'bail|required|exists:shops,id',
+			'uuid' => 'required|max:100'
 		]);
 
 		$dial = new Dial;

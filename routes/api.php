@@ -36,3 +36,6 @@ Route::get('/comment/by_shop', 'CommentController@byShop');
 Route::post('/comment/create', 'CommentController@create');
 Route::get('/comment/timeline', 'CommentController@timeline');
 
+Route::post('/user/login', 'UserController@login');
+
+

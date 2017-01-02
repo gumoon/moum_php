@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDialsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,16 @@ class CreateDialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dials', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('shop_id');
-            $table->string('uuid', 100)->comment('设备唯一码');
-            $table->unsignedTinyInteger('client_id')->comment('客户端ID');
-            $table->timestamp('created_at');
+            $table->unsignedTinyInteger('score')->comment('评分');
+            $table->text('content')->comment('评论内容');
+            $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('shop_id')->references('id')->on('shops');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -30,6 +33,6 @@ class CreateDialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dials');
+        Schema::dropIfExists('comments');
     }
 }

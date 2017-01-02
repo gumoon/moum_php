@@ -57,8 +57,21 @@ class DialController extends Controller
      */
 	public function timeline(Request $request)
 	{
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+
 		$tmp = array();
-		for($i=0; $i<10; $i++)
+		if( $page > 3 || $page < 1 )
+		{
+			$data = array(
+				'dials' => $tmp,
+				'amount' => 30
+			);
+
+			return $this->successJson( $data );
+		}
+
+		for($i=0; $i<$count; $i++)
 		{
 			$tmp[] = array(
 				'created_at' => '刚刚',
@@ -75,9 +88,10 @@ class DialController extends Controller
 			);
 		}
 
+
 		$data = array(
 			'dials' => $tmp,
-			'amount' => 100
+			'amount' => 30
 		);
 
 		return $this->successJson( $data );
@@ -163,7 +177,7 @@ class DialController extends Controller
 		]);
 
 		$dial = new Dial;
-		$dial->uid = $userId;
+		$dial->user_id = $userId;
 		$dial->client_id = $clientId;
 		$dial->shop_id = $shopId;
 		$dial->uuid = $uuid;

@@ -4,6 +4,9 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Requests\StoreCommentPost;
+use moum\Models\Comment;
+use moum\Models\Shop;
+use Exception;
 use moum\Http\Controllers\Controller;
 
 
@@ -90,6 +93,28 @@ class CommentController extends Controller
 		$shopId = $request->input('shop_id');
 		$score = $request->input('score');
 		$content = $request->input('content');
+		$userId = $request->user()->id;
+
+		//以下这种形式报错
+		// $comment = new Comment([
+		// 	'score' => $score, 
+		// 	'content' => $content,
+		// 	'user_id' => $userId
+		// ]);
+		$comment = new Comment;
+		$comment->score = $score;
+		$comment->content = $content;
+		$comment->user_id = $userId;
+
+		$shop = Shop::find( $shopId );
+		//@todo $shop 为空时
+		//@todo save()失败时
+		// if( empty($shop) )
+		// {
+		// 	throw new Exception("Error Processing Request", 1);
+			
+		// }
+		$shop->comments()->save( $comment );
 
 		return $this->successJson();
 	}
@@ -136,7 +161,17 @@ class CommentController extends Controller
 	 */
 	public function timeline(Request $request)
 	{
-		for($i = 0; $i < 1; $i++ )
+		// $this->validate($request, [
+		// 	'page' => ''
+		// ]);
+		
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+
+		//按照时间戳，查询最新的评论列表
+		// $comment = Comment::find(1);
+
+		for($i = 0; $i < 10; $i++ )
 		{
 			$comments[] = array(
 				'user' => array(

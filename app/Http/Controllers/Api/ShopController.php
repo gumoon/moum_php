@@ -3,6 +3,7 @@
 namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use moum\Models\Shop;
 use moum\Http\Controllers\Controller;
 
 
@@ -365,6 +366,8 @@ class ShopController extends Controller
 	public function show(Request $request)
 	{
 		$shopId = $request->input('shop_id');
+
+		// $shop = Shop::find( $shopId );
 
 		$shop = array(
 			'id' => 10,

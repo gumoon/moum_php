@@ -27,4 +27,12 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function roles()
+    {
+        return $this->belongToMany('moum\Models\Role', 'role_user', 'user_id', 'role_id')->withTimestamps();
+    }
 }

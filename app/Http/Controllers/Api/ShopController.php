@@ -5,6 +5,7 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Models\Shop;
 use Config;
+use moum\Services\Helper;
 use moum\Http\Controllers\Controller;
 
 
@@ -15,6 +16,9 @@ class ShopController extends Controller
      * @apiName ShopRecommend
      * @apiGroup Shop
      *
+     * @apiParam {Number} lat
+     * @apiParam {Number} lng
+     * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
      * @apiSuccess {Object} data 
@@ -55,24 +59,41 @@ class ShopController extends Controller
      */
 	public function recommend(Request $request)
 	{
-		for($i = 0; $i < 10; $i++)
+		$this->validate($request, [
+			'lat' => 'bail|required|min:-90|max:90',
+			'lng' => 'bail|required|min:-180|max:180'
+		]);
+
+		$lat = $request->input('lat');
+		$lng = $request->input('lng');
+
+		//推荐商户显示几个
+		$amount = 10;
+
+		$shops = Shop::where('id', '>', 0)
+						->latest()
+						->take($amount)
+						->get();
+
+		$tmp = array();
+		foreach( $shops AS $shop )
 		{
 			$tmp[] = array(
-				'id' => $i,
-				'name' => '年糕火锅',
-				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
+				'id' => $shop->id,
+				'name' => $shop->name,
+				'image_url' => Config::get('app.ossDomain').$shop->image_url,
 				'score' => 4,
-				'comments_count' => 3,
-				'type_name' => '韩食快餐',
-				'tel' => '18600562137',
-				'distance' => 0.81,
-				'open_time' => '10:00-22:00'
+				'comments_count' => $shop->comments->count(),
+				'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
+				'tel' => $shop->tel,
+				'distance' => Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km',
+				'open_time' => $shop->open_time
 			);
-		}
+		}	
 
 		$data = array(
 			'shops' => $tmp,
-			'amount' => 10
+			'amount' => $amount
 		);
 
 		return $this->successJson( $data );

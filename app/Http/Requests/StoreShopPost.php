@@ -27,6 +27,12 @@ class StoreShopPost extends FormRequest
         return [
             'name' => 'required|max:100',
             'intro' => 'required',
+            'image_url' => 'required',
+            'open_time' => 'required',
+            'tel' => 'required',
+            'addr' => 'required',
+            'cat_id' => 'required|integer|min:0',
+            'type_id' => 'required|integer|min:0'
         ];
     }
 }

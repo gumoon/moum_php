@@ -82,6 +82,9 @@ class ShopController extends Controller
 	 * @apiName ShopTimeline
 	 * @apiGroup Shop
 	 *
+	 * @apiParam {Number} [page=1]
+	 * @apiParam {Number} [count=10]
+	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object[]} data
@@ -109,14 +112,31 @@ class ShopController extends Controller
 	 */
 	public function timeline(Request $request)
 	{
-		for($i = 0; $i < 10; $i++)
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
+		]);
+		
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
+
+		//按照时间戳，查询最新的商户列表
+		$shops = Shop::where('id', '>', 0)
+						->latest()
+						->skip($offset)
+						->take($count)
+						->get();
+
+		$tmp = array();
+		foreach( $shops AS $shop )
 		{
 			$tmp[] = array(
-				'id' => $i,
-				'name' => '年糕火锅',
-				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
-				'created_at' => '5小时前',
-				'intro' => '老板的一句话介绍'
+				'id' => $shop->id,
+				'name' => $shop->name,
+				'image_url' => $shop->image_url,
+				'created_at' => $shop->created_at->diffForHumans(),
+				'intro' => $shop->intro
 			);
 		}
 

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 use moum\Http\Requests\StoreCommentPost;
 use moum\Models\Comment;
 use moum\Models\Shop;
-use Exception;
-use Carbon\Carbon;
 use moum\Http\Controllers\Controller;
 
 
@@ -59,9 +57,11 @@ class CommentController extends Controller
 		$shopId = $request->input('shop_id');
 		$page = $request->input('page', 1);
 		$count = 10;
+		$offset = ($page - 1)*$count;
 
 		$comments = Comment::where('shop_id', $shopId)
-						->orderBy('created_at', 'desc')
+						->lastest()
+						->skip($offset)
 						->take($count)
 						->get();
 
@@ -105,30 +105,24 @@ class CommentController extends Controller
 	 */
 	public function create(StoreCommentPost $request)
 	{
+		$this->validate($request, [
+			'shop_id' => 'bail|required|exists:shops,id',
+			'score' => 'bail|filled|integer|in:1,2,3,4,5',
+			'content' => 'bail|required|max:255'
+		]);
+
 		$shopId = $request->input('shop_id');
-		$score = $request->input('score');
+		$score = $request->input('score', 3);
 		$content = $request->input('content');
 		$userId = $request->user()->id;
 
-		//以下这种形式报错
-		// $comment = new Comment([
-		// 	'score' => $score, 
-		// 	'content' => $content,
-		// 	'user_id' => $userId
-		// ]);
 		$comment = new Comment;
 		$comment->score = $score;
 		$comment->content = $content;
 		$comment->user_id = $userId;
 
-		$shop = Shop::find( $shopId );
-		//@todo $shop 为空时
-		//@todo save()失败时
-		// if( empty($shop) )
-		// {
-		// 	throw new Exception("Error Processing Request", 1);
-			
-		// }
+		$shop = Shop::findOrFail( $shopId );
+
 		$shop->comments()->save( $comment );
 
 		return $this->successJson();
@@ -139,6 +133,9 @@ class CommentController extends Controller
 	 * @apiName CommentTimeline
 	 * @apiGroup Comment
 	 *
+	 * @apiParam {Number} [page=1]
+	 * @apiParam {Number} [count=10]
+	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object[]} data
@@ -176,33 +173,40 @@ class CommentController extends Controller
 	 */
 	public function timeline(Request $request)
 	{
-		// $this->validate($request, [
-		// 	'page' => ''
-		// ]);
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
+		]);
 		
 		$page = $request->input('page', 1);
 		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
 
 		//按照时间戳，查询最新的评论列表
-		// $comment = Comment::find(1);
+		$comments = Comment::where('id', '>', 0)
+						->latest()
+						->skip($offset)
+						->take($count)
+						->get();
 
-		for($i = 0; $i < 10; $i++ )
+		$tmp = array();
+		foreach( $comments AS $comment)
 		{
-			$comments[] = array(
+			$tmp[] = array(
 				'user' => array(
-					'name' => '路人甲',
+					'name' => $comment->user->name,
 					'profile_image_url' => 'http://s.qdcdn.com/cl/13064302,800,450.jpg'
 				),
 				'shop' => array(
-					'id' => 1,
-					'name' => '餐厅名'
+					'id' => $comment->shop->id,
+					'name' => $comment->shop->name
 				),
-				'created_at' => '5分钟前',
-				'score' => 4,
-				'content' => '很好，非常好!'
+				'created_at' => $comment->created_at->diffForHumans(),
+				'score' => $comment->score,
+				'content' => $comment->content
 			);
 		}
 
-		return $this->successJson( $comments );
+		return $this->successJson( $tmp );
 	}
 }

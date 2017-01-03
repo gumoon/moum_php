@@ -119,7 +119,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * @api {post} /user/reset_password
+	 * @api {post} /user/reset_password 重置密码
 	 * @apiName UserResetPassword
 	 * @apiGroup User
 	 *
@@ -143,7 +143,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * @api {post} /user/captcha
+	 * @api {post} /user/captcha 获取验证码
 	 * @apiName UserCaptcha
 	 * @apiGroup User
 	 *

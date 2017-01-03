@@ -4,6 +4,7 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Models\Shop;
+use Config;
 use moum\Http\Controllers\Controller;
 
 
@@ -134,7 +135,7 @@ class ShopController extends Controller
 			$tmp[] = array(
 				'id' => $shop->id,
 				'name' => $shop->name,
-				'image_url' => $shop->image_url,
+				'image_url' => Config::get('app.ossDomain').$shop->image_url,
 				'created_at' => $shop->created_at->diffForHumans(),
 				'intro' => $shop->intro
 			);

@@ -23,7 +23,7 @@ class UserController extends Controller
      * @apiSuccess {Number} data.gender
      * @apiSuccess {String} data.tel
      *
-     * @apiSuccess {json} Success-response:
+     * @apiSuccessExample {json}  Success-response:
      * {
 	 *  "err_no": 0,
 	 *  "msg": "success",

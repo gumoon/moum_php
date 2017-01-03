@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/user', function(Request $request) {
-    return $request->user();
-});
-
 Route::post('/common/init', 'CommonController@init');
 
 Route::get('/dial/timeline', 'DialController@timeline');
@@ -37,5 +33,9 @@ Route::post('/comment/create', 'CommentController@create');
 Route::get('/comment/timeline', 'CommentController@timeline');
 
 Route::post('/user/login', 'UserController@login');
+Route::post('/user/register', 'UserController@register');
+Route::post('/user/update', 'UserController@update');
+Route::post('/user/reset_password', 'UserController@resetPassword');
+Route::post('/user/captcha', 'UserController@captcha');
 
 

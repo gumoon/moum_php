@@ -7,17 +7,19 @@ use moum\Http\Requests\StoreCommentPost;
 use moum\Models\Comment;
 use moum\Models\Shop;
 use Exception;
+use Carbon\Carbon;
 use moum\Http\Controllers\Controller;
 
 
 class CommentController extends Controller
 {
     /**
-     * @api {get} /comment/by_shop 某个商户的评论列表
+     * @api {get} /comment/by_shop 某个商户的评论列表（支持分页）
      * @apiName CommentByShop
      * @apiGroup Comment
      * 
-     * @apiParam  {String} shop_id 商户ID
+     * @apiParam {String} shop_id 商户ID
+     * @apiParam {Number} page 页码
      * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
@@ -49,22 +51,35 @@ class CommentController extends Controller
      */
 	public function byShop(Request $request)
 	{
+		$this->validate($request, [
+			'shop_id' => 'bail|required|exists:shops,id',
+			'page' => 'bail|integer|min:1'
+		]);
+
 		$shopId = $request->input('shop_id');
-		
-		for($i = 0; $i < 10; $i++ )
+		$page = $request->input('page', 1);
+		$count = 10;
+
+		$comments = Comment::where('shop_id', $shopId)
+						->orderBy('created_at', 'desc')
+						->take($count)
+						->get();
+
+		$tmp = array();
+		foreach( $comments AS $comment )
 		{
-			$comments[] = array(
+			$tmp[] = array(
 				'user' => array(
-					'name' => '路人甲',
-					'profile_image_url' => 'http://s.qdcdn.com/cl/13064302,800,450.jpg'
+					'name' => $comment->user->name,
+					'profile_image_url' => 'http://v1.qzone.cc/avatar/201506/13/09/57/557b8e21c827c327.jpg%21200x200.jpg'
 				),
-				'created_at' => '5分钟前',
-				'score' => 4,
-				'content' => '很好，非常好!'
+				'created_at' => empty($comment->created_at) ? '未知' : $comment->created_at->diffForHumans(),
+				'score' => $comment->score,
+				'content' => $comment->content
 			);
 		}
-
-		return $this->successJson( $comments );
+		
+		return $this->successJson( $tmp );
 	}
 
 	/**

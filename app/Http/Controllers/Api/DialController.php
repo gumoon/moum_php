@@ -13,6 +13,9 @@ class DialController extends Controller
      * @api {get} /dial/timeline 最近打商户电话列表
      * @apiName DialTimeline
      * @apiGroup Dial
+     *
+     * @apiParam {Number} [page=1]
+     * @apiParam {Number} [count=10]
      * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
@@ -57,24 +60,25 @@ class DialController extends Controller
      */
 	public function timeline(Request $request)
 	{
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
+		]);
+
 		$page = $request->input('page', 1);
 		$count = $request->input('count', 10);
+		$offset = ($page -1) * $count;
 
-		$tmp = array();
-		if( $page > 3 || $page < 1 )
-		{
-			$data = array(
-				'dials' => $tmp,
-				'amount' => 30
-			);
+		$dails = Dial::where('id', '>', 0)
+					->latest()
+					->skip($offset)
+					->take($count)
+					->get();
 
-			return $this->successJson( $data );
-		}
-
-		for($i=0; $i<$count; $i++)
+		foreach( $dails AS $dail )
 		{
 			$tmp[] = array(
-				'created_at' => '刚刚',
+				'created_at' => $dial->created_at->diffForHumans(),
 				'shop' => array(
 					'id' => 10,
 					'name' => '年糕火锅',
@@ -173,7 +177,7 @@ class DialController extends Controller
 
 		$this->validate($request, [
 			'shop_id' => 'bail|required|exists:shops,id',
-			'uuid' => 'required|max:100'
+			'uuid' => 'bail|required|max:100'
 		]);
 
 		$dial = new Dial;

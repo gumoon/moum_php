@@ -17,7 +17,8 @@ class CommentController extends Controller
      * @apiGroup Comment
      * 
      * @apiParam {String} shop_id 商户ID
-     * @apiParam {Number} page 页码
+     * @apiParam {Number} [page=1] 页码
+     * @apiParam {Number} [count=10] 每页多少条记录
      * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
@@ -51,16 +52,17 @@ class CommentController extends Controller
 	{
 		$this->validate($request, [
 			'shop_id' => 'bail|required|exists:shops,id',
-			'page' => 'bail|integer|min:1'
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
 		]);
 
 		$shopId = $request->input('shop_id');
 		$page = $request->input('page', 1);
-		$count = 10;
-		$offset = ($page - 1)*$count;
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
 
 		$comments = Comment::where('shop_id', $shopId)
-						->lastest()
+						->latest()
 						->skip($offset)
 						->take($count)
 						->get();

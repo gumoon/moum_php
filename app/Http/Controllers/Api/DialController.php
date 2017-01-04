@@ -5,6 +5,9 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use moum\Models\Dial;
+use Config;
+use DB;
+use Carbon\Carbon;
 
 
 class DialController extends Controller
@@ -69,25 +72,26 @@ class DialController extends Controller
 		$count = $request->input('count', 10);
 		$offset = ($page -1) * $count;
 
-		$dails = Dial::where('id', '>', 0)
+		$dials = Dial::where('id', '>', 0)
 					->latest()
 					->skip($offset)
 					->take($count)
 					->get();
 
-		foreach( $dails AS $dail )
+		$tmp = array();
+		foreach( $dials AS $dial )
 		{
 			$tmp[] = array(
-				'created_at' => $dial->created_at->diffForHumans(),
+				'created_at' => Carbon::parse($dial->created_at)->diffForHumans(),
 				'shop' => array(
-					'id' => 10,
-					'name' => '年糕火锅',
-					'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
-					'open_time' => '10:00-22:00',
-					'intro' => '老板的一句话介绍'
+					'id' => $dial->shop->id,
+					'name' => $dial->shop->name,
+					'image_url' => Config::get('app.ossDomain').$dial->shop->image_url,
+					'open_time' => $dial->shop->open_time,
+					'intro' => $dial->shop->intro
 				),
 				'user' => array(
-					'name' => '路人甲',
+					'name' => $dial->user->name,
 				)
 			);
 		}
@@ -95,7 +99,7 @@ class DialController extends Controller
 
 		$data = array(
 			'dials' => $tmp,
-			'amount' => 30
+			'amount' => Dial::where('id', '>', 0)->count()
 		);
 
 		return $this->successJson( $data );
@@ -106,6 +110,9 @@ class DialController extends Controller
 	 * @apiName DialByMonth
 	 * @apiGroup Dial
 	 *
+	 * @apiParam {Number} [page=1]
+	 * @apiParam {Number} [count=10]
+	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object[]} data
@@ -135,16 +142,34 @@ class DialController extends Controller
 	 */
 	public function byMonth(Request $request)
 	{
-		for($i=0; $i<10; $i++)
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
+		]);
+
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
+
+		$dials = Dial::select(DB::raw('count(id) as dial_count, shop_id'))
+					->where('created_at', '>', Carbon::now()->firstOfMonth())
+					->where('created_at', '<', Carbon::now()->lastOfMonth())
+					->groupBy('shop_id')
+					->orderBy('dial_count', 'desc')
+					->skip($offset)
+					->take($count)
+					->get();
+
+		foreach( $dials AS $dial)
 		{
 			$tmp[] = array(
 				'shop' => array(
-					'id' => 1,
-					'tel' => '13911112222',
-					'name' => '店铺名称',
-					'image_url' => 'http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg'
+					'id' => $dial->shop->id,
+					'tel' => $dial->shop->tel,
+					'name' => $dial->shop->name,
+					'image_url' => Config::get('app.ossDomain').$dial->shop->image_url
 				),
-				'count' => 3215
+				'count' => $dial->dial_count
 			);
 		}
 

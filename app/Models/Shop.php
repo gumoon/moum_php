@@ -23,4 +23,12 @@ class Shop extends Model
     {
     	return $this->hasMany('moum\Models\Comment');
     }
+
+    /**
+     * Get the dails for the shop.
+     */
+    public function dails()
+    {
+    	return $this->hasMany('moum\Models\Dial');
+    }
 }

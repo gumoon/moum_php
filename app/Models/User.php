@@ -35,4 +35,12 @@ class User extends Authenticatable
     {
         return $this->belongToMany('moum\Models\Role', 'role_user', 'user_id', 'role_id')->withTimestamps();
     }
+
+    /**
+     * The dials that belong to the user.
+     */
+    public function dials()
+    {
+        return $this->hasMany('moum\Models\Dial');
+    }
 }

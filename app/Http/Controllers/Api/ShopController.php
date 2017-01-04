@@ -5,6 +5,7 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Models\Shop;
 use Config;
+use DB;
 use moum\Services\Helper;
 use moum\Http\Controllers\Controller;
 
@@ -180,7 +181,7 @@ class ShopController extends Controller
 	 * @apiParam {Number} lat 维度
 	 * @apiParam {Number} [page=1] 页码
 	 * @apiParam {Number} [count=10] 每页商户数
-	 * @apiParam {Number} type_id 类型ID
+	 * @apiParam {Number} type_id 类型ID:0-4,全部时传99
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
@@ -246,41 +247,72 @@ class ShopController extends Controller
 	 */
 	public function arround(Request $request)
 	{
-		$lng = $request->input('lng');
-		$lat = $request->input('lat');
-		$page = $request->input('page');
-		$count = $request->input('count');
-		$typeId = $request->input('type_id');
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1',
+			'lat' => 'bail|required|min:-90|max:90',
+			'lng' => 'bail|required|min:-180|max:180',
+			'type_id' => 'bail|required|in:0,1,2,3,4,99'
+		]);
 
-		$partner = array();
-		for($i = 0; $i < 10; $i++)
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
+		$lat = $request->input('lat');
+		$lng = $request->input('lng');
+		$typeId = $request->input('type_id');
+		
+		if( $typeId == 99 )
 		{
-			$partner[] = array(
-				'id' => $i,
-				'name' => '年糕火锅',
-				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
-				'score' => 4,
-				'comments_count' => 3,
-				'type_name' => '韩食快餐',
-				'tel' => '18600562137',
-				'distance' => 0.81,
-				'open_time' => '10:00-22:00'
-			);
+			$typeIds = [0,1,2,3,4];
+		}
+		else
+		{
+			$typeIds = [$typeId];
 		}
 
+		$shops = Shop::whereIn('type_id', $typeIds)
+					->skip($offset)
+					->take($count)
+					->get();
+
+		$distance = '';
+		$partner = array();
 		$other = array();
-		for($i = 0; $i < 10; $i++)
-		{
-			$other[] = array(
-				'id' => $i,
-				'name' => '猪蹄丁丁',
-				'score' => 2,
-				'comments_count' => 0,
-				'type_name' => '韩食快餐',
-				'tel' => '18600562137',
-				'distance' => 81,
-				'open_time' => '10:00-22:00'
-			);
+		foreach ($shops as $shop) {
+			if( !empty($lng) && !empty($lat) )
+			{
+				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+			}
+
+			if( $shop->is_vip )
+			{
+				$partner[] = array(
+					'id' => $shop->id,
+					'name' => $shop->name,
+					'image_url' => Config::get('app.ossDomain').$shop->image_url,
+					'score' => 4,
+					'comments_count' => $shop->comments->count(),
+					'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
+					'tel' => $shop->tel,
+					'distance' => $distance,
+					'open_time' => $shop->open_time
+				);
+			}
+			else
+			{
+				$other[] = array(
+					'id' => $shop->id,
+					'name' => $shop->name,
+					'score' => 4,
+					'comments_count' => $shop->comments->count(),
+					'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
+					'tel' => $shop->tel,
+					'distance' => $distance,
+					'open_time' => $shop->open_time
+				);
+			}
+
 		}
 
 		$data = array(
@@ -288,7 +320,7 @@ class ShopController extends Controller
 				'partner' => $partner,
 				'other' => $other
 			),
-			'amount' => 100
+			'amount' => Shop::whereIn('type_id', $typeIds)->count()
 		);
 
 		return $this->successJson( $data );
@@ -300,6 +332,10 @@ class ShopController extends Controller
 	 * @apiGroup Shop
 	 *
 	 * @apiParam {String} keyword 查询关键字
+	 * @apiParam {Number} [page=1]
+	 * @apiParam {Number} [count=10]
+	 * @apiParam {Number} lat
+	 * @apiParam {Number} lng
 	 * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
@@ -342,26 +378,50 @@ class ShopController extends Controller
 	 */
 	public function search(Request $request)
 	{
-		$keyword = $request->input('keyword');
+		$this->validate($request, [
+			'keyword' => 'bail|required|max:255',
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1',
+			'lat' => 'bail|required|min:-90|max:90',
+			'lng' => 'bail|required|min:-180|max:180'
+		]);
 
-		for($i = 0; $i < 10; $i++)
-		{
+		$keyword = $request->input('keyword');
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
+		$lat = $request->input('lat');
+		$lng = $request->input('lng');
+
+		$shops = Shop::where('name', 'like', '%'.$keyword.'%')
+					->skip($offset)
+					->take($count)
+					->get();
+
+		$tmp = array();
+		$distance = '';
+		foreach ($shops as $shop) {
+			if( !empty($lng) && !empty($lat) )
+			{
+				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+			}
+
 			$tmp[] = array(
-				'id' => $i,
-				'name' => '年糕火锅',
-				'image_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg',
+				'id' => $shop->id,
+				'name' => $shop->name,
+				'image_url' => Config::get('app.ossDomain').$shop->image_url,
 				'score' => 4,
-				'comments_count' => 3,
-				'type_name' => '韩食快餐',
-				'tel' => '18600562137',
-				'distance' => 0.81,
-				'open_time' => '10:00-22:00'
+				'comments_count' => $shop->comments->count(),
+				'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
+				'tel' => $shop->tel,
+				'distance' => $distance,
+				'open_time' => $shop->open_time
 			);
 		}
 
 		$data = array(
 			'shops' => $tmp,
-			'amount' => 100
+			'amount' => $shops->count()
 		);
 
 		return $this->successJson( $data );
@@ -465,7 +525,8 @@ class ShopController extends Controller
 	 * @apiName ShopHasError
 	 * @apiGroup Shop
 	 *
-	 * @apiParam {Number}  err_num 错误号
+	 * @apiParam {Number} err_num 错误号
+	 * @apiParam {Number} shop_id
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
@@ -480,7 +541,20 @@ class ShopController extends Controller
 	 */
 	public function reportError(Request $request)
 	{
+		$this->validate($request, [
+			'err_num' => 'bail|required|integer|in:1,2,3',
+			'shop_id' => 'bail|required|exists:shops,id'
+		]);
+
 		$errorNo = $request->input('err_num');
+		$shopId = $request->input('shop_id');
+		$userId = $request->user()->id;
+
+		DB::table('user_report_shop_errors')->insert([
+			'shop_id' => $shopId,
+			'user_id' => $userId,
+			'err_num' => $errorNo
+		]);
 
 		return $this->successJson();
 	}

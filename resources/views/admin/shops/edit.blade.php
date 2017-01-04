@@ -93,7 +93,7 @@ function clickButton4()
 }
 
 function processError(){
-	alert('upload error');
+	alert('上传出错了');
 }
 //选择文件后，自动上传图片
 function changeFile0(){
@@ -250,7 +250,7 @@ function submitUpdateShop()
 			window.location.href = "{{ url('/houtai/shops') }}";
 		},
 		error: function(){
-			alert('error')
+			alert('出错了')
 		}
 	};
 	$("#updateShop").ajaxSubmit(options);

@@ -32,7 +32,7 @@ class Controller extends BaseController
     {
     	$ret = array(
     		'err_no' => 0,
-    		'msg' => 'success',
+    		'msg' => '成功',
     		'data' => $data ? $data : new \stdClass
     	);
 

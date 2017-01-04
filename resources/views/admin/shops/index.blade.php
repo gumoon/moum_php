@@ -20,7 +20,7 @@
 	$(document).ready(function(){
 		$("#programTables").DataTable({
 			responsive: true,
-			"lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "全部"]]
+			"lengthMenu": [[10, 20, -1], [10, 20, "全部"]]
 		});
 	});
 </script>

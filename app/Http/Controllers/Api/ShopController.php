@@ -76,8 +76,14 @@ class ShopController extends Controller
 						->get();
 
 		$tmp = array();
+		$distance = '';
 		foreach( $shops AS $shop )
 		{
+			if( !empty($lng) && !empty($lat) )
+			{
+				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+			}
+
 			$tmp[] = array(
 				'id' => $shop->id,
 				'name' => $shop->name,
@@ -86,7 +92,7 @@ class ShopController extends Controller
 				'comments_count' => $shop->comments->count(),
 				'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 				'tel' => $shop->tel,
-				'distance' => Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km',
+				'distance' => $distance,
 				'open_time' => $shop->open_time
 			);
 		}	
@@ -430,6 +436,12 @@ class ShopController extends Controller
 			}
 		}
 
+		$distance = '';
+		if( !empty($lng) && !empty($lat) )
+		{
+			$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+		}
+
 		$shop = array(
 			'id' => $shop->id,
 			'name' => $shop->name,
@@ -437,7 +449,7 @@ class ShopController extends Controller
 			'comments_count' => $shop->comments->count(),
 			'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 			'tel' => $shop->tel,
-			'distance' => Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km',
+			'distance' => $distance,
 			'open_time' => $shop->open_time,
 			'image_url' => Config::get('app.ossDomain').$shop->image_url,
 			'intro' => $shop->intro,

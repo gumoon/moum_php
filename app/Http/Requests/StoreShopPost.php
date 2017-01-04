@@ -27,7 +27,7 @@ class StoreShopPost extends FormRequest
         return [
             'name' => 'required|max:100',
             'intro' => 'required',
-            'image_url' => 'required',
+            'image_url01' => 'required',
             'open_time' => 'required',
             'tel' => 'required',
             'addr' => 'required',

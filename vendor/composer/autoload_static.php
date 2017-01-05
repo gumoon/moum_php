@@ -933,6 +933,7 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'UpdateTelAttrToShopsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_05_121141_update_tel_attr_to_shops_table.php',
+        'UpdateTelAttrToUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_05_123607_update_tel_attr_to_users_table.php',
         'UpdateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_04_172641_update_users_table.php',
         'UsersTableSeeder' => __DIR__ . '/../..' . '/database/seeds/UsersTableSeeder.php',
     );

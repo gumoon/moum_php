@@ -546,6 +546,7 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateTelAttrToShopsTable' => $baseDir . '/database/migrations/2017_01_05_121141_update_tel_attr_to_shops_table.php',
+    'UpdateTelAttrToUsersTable' => $baseDir . '/database/migrations/2017_01_05_123607_update_tel_attr_to_users_table.php',
     'UpdateUsersTable' => $baseDir . '/database/migrations/2017_01_04_172641_update_users_table.php',
     'UsersTableSeeder' => $baseDir . '/database/seeds/UsersTableSeeder.php',
 );

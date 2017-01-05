@@ -4,6 +4,7 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
+use moum\Services\OSS;
 
 
 class CommonController extends Controller
@@ -24,6 +25,48 @@ class CommonController extends Controller
 		$uuid = $request->input('uuid');
 
 		return $this->successJson();
+	}
+
+	/**
+	 * @api {post} /common/upload 上传图片
+	 * @apiName CommonUpload
+	 * @apiGroup Common
+	 *
+	 * @apiParam {file} image 待上传的图片名
+	 *
+	 * @apiSuccess {Number} err_no
+	 * @apiSuccess {String} msg
+	 * @apiSuccess {Object} data
+	 * @apiSuccess {String} data.url
+	 * @apiSuccess {String} data.filename
+	 *
+	 * @apiSuccessExample {json} Success-response:
+	 * {
+	 *  "err_no": 0,
+	 *  "msg": "success",
+	 *  "data": {
+	 *    "url": "12d456",
+	 *    "filename": "aaa.jpg"
+	 *  }
+	 * }
+	 */
+	public function upload(Request $request)
+	{
+		$file = $request->file('image');
+
+		$path = $file->path();
+		$filename = $file->hashName();
+
+		OSS::upload($filename, $path);
+
+		$url = OSS::getUrl($filename);
+		
+		$data = array(
+			'url' => $url,
+			'filename' => $filename
+		);
+		
+		return $this->successJson( $data );
 	}
 
 	/**

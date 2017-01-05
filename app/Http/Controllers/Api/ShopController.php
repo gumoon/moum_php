@@ -113,6 +113,8 @@ class ShopController extends Controller
 	 *
 	 * @apiParam {Number} [page=1]
 	 * @apiParam {Number} [count=10]
+	 * @apiParam {Number} lat
+	 * @apiParam {Number} lng
 	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
@@ -143,12 +145,16 @@ class ShopController extends Controller
 	{
 		$this->validate($request, [
 			'page' => 'bail|filled|integer|min:1',
-			'count' => 'bail|filled|integer|min:1'
+			'count' => 'bail|filled|integer|min:1',
+			'lat' => 'bail|required|min:-90|max:90',
+			'lng' => 'bail|required|min:-180|max:180'
 		]);
 		
 		$page = $request->input('page', 1);
 		$count = $request->input('count', 10);
 		$offset = ($page - 1) * $count;
+		$lat = $request->input('lat');
+		$lng = $request->input('lng');
 
 		//按照时间戳，查询最新的商户列表
 		$shops = Shop::where('id', '>', 0)
@@ -158,14 +164,22 @@ class ShopController extends Controller
 						->get();
 
 		$tmp = array();
+		$distance = '';
 		foreach( $shops AS $shop )
 		{
+			if( !empty($lng) && !empty($lat) )
+			{
+				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+			}
+
 			$tmp[] = array(
 				'id' => $shop->id,
 				'name' => $shop->name,
 				'image_url' => Config::get('app.ossDomain').$shop->image_url,
 				'created_at' => $shop->created_at->diffForHumans(),
-				'intro' => $shop->intro
+				'intro' => $shop->intro,
+				'open_time' => $shop->open_time,
+				'distance' => $distance
 			);
 		}
 

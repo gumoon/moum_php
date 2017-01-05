@@ -5,7 +5,9 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use moum\Models\User;
-
+use Illuminate\Auth\AuthenticationException;
+use Illuminate\Hashing\BcryptHasher;
+use Config;
 
 class UserController extends Controller
 {
@@ -14,10 +16,12 @@ class UserController extends Controller
      * @apiName UserLogin
      * @apiGroup User
      * 
-     *
-     * @apiSuccess {int} err_no
-     * @apiSuccess {string} msg
-     * @apiSuccess {object} data
+     * @apiParam {String} tel|email
+     * @apiParam {String} password
+     * 
+     * @apiSuccess {Number} err_no
+     * @apiSuccess {String} msg
+     * @apiSuccess {Object} data
      * @apiSuccess {Number} data.id
      * @apiSuccess {String} data.name
      * @apiSuccess {String} data.profile_image_url
@@ -39,12 +43,28 @@ class UserController extends Controller
      */
 	public function login(Request $request)
 	{
+		$this->validate($request, [
+			'tel' => 'bail|required|exists:users,tel',
+			'password' => 'bail|required'
+		]);
+
+		$tel = $request->input('tel');
+		$password = $request->input('password');
+
+		$user = User::where('tel', $tel)->first();
+
+		$aa = new BcryptHasher;
+		if( !$aa->check($password, $user->password) )
+		{
+			throw new AuthenticationException('password error');
+		}
+
 		$user = array(
-			'id' => 1,
-			'name' => 'moon',
-			'profile_image_url' => 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
-			'gender' => 1,
-			'tel' => '18600562137'
+			'id' => $user->id,
+			'name' => $user->name ? $user->name : 'MOUM用户',
+			'profile_image_url' => $user->profile_image_url ? Config::get('app.ossDomain').$user->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
+			'gender' => $user->gender,
+			'tel' => $user->tel
 		);
 
 		return $this->successJson($user);
@@ -117,8 +137,10 @@ class UserController extends Controller
 	 * @apiName UserUpdate
 	 * @apiGroup User
 	 *
-	 * @apiParam {String} tel
-	 * @apiParam {String} password
+	 * @apiParam {String} name
+	 * @apiParam {String} profile_image_url
+	 * @apiParam {Number} gender
+	 * @apiParam {Number} user_id
 	 *
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
@@ -134,6 +156,25 @@ class UserController extends Controller
 	 */
 	public function update(Request $request)
 	{
+		$this->validate($request, [
+			'name' => 'bail|filled|max:100',
+			'profile_image_url' => 'bail|required|max:255',
+			'gender' => 'bail|filled|integer|in:0,1,2',
+			'user_id' => 'bail|required|exists:users,id'
+		]);
+
+		$name = $request->input('name');
+		$profile_image_url = $request->input('profile_image_url');
+		$gender = $request->input('gender');
+		$userId = $request->input('user_id');
+
+		$user = User::find($userId);
+		$user->name = $name;
+		$user->profile_image_url = $profile_image_url;
+		$user->gender = $gender;
+
+		$user->save();
+
 		return $this->successJson();
 	}
 
@@ -144,6 +185,7 @@ class UserController extends Controller
 	 *
 	 * @apiParam {String} tel
 	 * @apiParam {String} password
+	 * @apiParam {Number} captcha
 	 *
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
@@ -158,6 +200,22 @@ class UserController extends Controller
 	 */
 	public function resetPassword(Request $request)
 	{
+		$this->validate($request, [
+			'tel' => 'bail|required|exists:users,tel',
+			'password' => 'bail|required',
+			'captcha' => 'bail|required'
+		]);
+
+		$tel = $request->input('tel');
+		$password = $request->input('password');
+		$captcha = $request->input('captcha');
+
+		$userFind = User::where('tel', $tel)->first();
+
+		$user = User::find($userFind->id);
+		$user->password = bcrypt($password);
+		$user->save();
+
 		return $this->successJson();
 	}
 
@@ -183,9 +241,8 @@ class UserController extends Controller
 	 */
 	public function captcha(Request $request)
 	{
-		$code = '1234';
 		$data = array(
-			'captcha' => '12d456'
+			'captcha' => '123456'
 		);
 
 		return $this->successJson($data);

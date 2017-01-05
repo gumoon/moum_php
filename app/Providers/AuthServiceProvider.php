@@ -30,7 +30,7 @@ class AuthServiceProvider extends ServiceProvider
     {
         //$this->registerPolicies();
 
-        //注册路由
+        //注册路由，其实是可以加版本号的（移到api组即可）。只是对应的 js 接口也需要修改。
         Passport::routes();
         Passport::tokensExpireIn(Carbon::now()->addDays(1));
         Passport::refreshTokensExpireIn(Carbon::now()->addDays(2));

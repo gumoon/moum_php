@@ -1,7 +1,7 @@
 {
   "name": "MOUM项目",
   "version": "0.0.0",
-  "description": "针对中国朝鲜族和来华韩国人市场推出的生活服务平台",
+  "description": "面向来华韩国人市场推出的生活服务APP",
   "title": "MOUM-API",
   "url" : "https://moum.xiaoyuweb.cn/api/v1",
   "withCompare": false,

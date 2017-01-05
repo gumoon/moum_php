@@ -16,7 +16,7 @@ class UserController extends Controller
      * @apiName UserLogin
      * @apiGroup User
      * 
-     * @apiParam {String} tel|email
+     * @apiParam {String} tel 或者email
      * @apiParam {String} password
      * 
      * @apiSuccess {Number} err_no
@@ -235,7 +235,7 @@ class UserController extends Controller
 	 *  "err_no": 0,
 	 *  "msg": "success",
 	 *  "data": {
-	 *    "captcha": "12d456"
+	 *    "captcha": "123456"
 	 *  }
 	 * }
 	 */

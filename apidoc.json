@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "针对中国朝鲜族和来华韩国人市场推出的生活服务平台",
   "title": "MOUM-API",
-  "url" : "https://moum.xiaoyuweb.cn/api",
+  "url" : "https://moum.xiaoyuweb.cn/api/v1",
   "withCompare": false,
   "header": {
   	"title": "接口调用者必读",

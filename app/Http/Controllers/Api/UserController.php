@@ -4,6 +4,7 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
+use moum\Models\User;
 
 
 class UserController extends Controller
@@ -56,7 +57,6 @@ class UserController extends Controller
 	 *
 	 * @apiParam {String} tel
 	 * @apiParam {String} captcha
-	 * @apiParam {String} email
 	 * @apiParam {String} password
 	 * 
 	 * @apiSuccess {Number} err_no
@@ -79,18 +79,37 @@ class UserController extends Controller
 	 */
 	public function register(Request $request)
 	{
+		$this->validate($request, [
+			'tel' => 'bail|required|unique:users',
+			'password' => 'bail|required',
+			'captcha' => 'bail|required'
+		]);
+
 		$tel = $request->input('tel');
 		$password = $request->input('password');
+		$captcha = $request->input('captcha');
 
-		$user = array(
-			'id' => 1,
-			'name' => 'moon',
+		// $user = new User;
+		// $user->tel = $tel;
+		// $user->password = bcrypt($password);
+		// $user->email = $tel;
+		// //此处 $saved 为 true 
+		// $saved = $user->save();
+		$saved = User::create([
+            'email' => $tel,
+            'password' => bcrypt($password),
+            'tel' => $tel
+        ]);
+
+		$data = array(
+			'id' => $saved->id,
+			'name' => 'MOUM用户',
 			'profile_image_url' => 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
-			'gender' => 1,
-			'tel' => '18600562137'
+			'gender' => 0,
+			'tel' => $tel
 		);
 
-		return $this->successJson($user);
+		return $this->successJson($data);
 	}
 
 	/**

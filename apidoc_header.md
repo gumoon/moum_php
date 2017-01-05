@@ -1,6 +1,6 @@
 ## 域名说明
 
-1. 阿里云测试服务器api域名：http://moum.xiaoyuweb.cn/api
+1. 阿里云测试服务器api域名：http://moum.xiaoyuweb.cn/api/v1
 2. 生产服务器api域名：
 
 ## 注意事项

@@ -3,6 +3,8 @@
 namespace moum\Providers;
 
 use Carbon\Carbon;
+use moum\Models\Comment;
+use moum\Policies\CommentPolicy;
 use Laravel\Passport\Passport;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'moum\Models' => 'moum\Policies\ModelPolicy',
+        // 'moum\Models' => 'moum\Policies\ModelPolicy',
+            Comment::class => CommentPolicy::class
     ];
 
     /**
@@ -25,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->registerPolicies();
+        //$this->registerPolicies();
 
         //注册路由
         Passport::routes();

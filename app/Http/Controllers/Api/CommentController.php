@@ -7,6 +7,7 @@ use moum\Http\Requests\StoreCommentPost;
 use moum\Models\Comment;
 use moum\Models\Shop;
 use moum\Http\Controllers\Controller;
+use Config;
 
 
 class CommentController extends Controller
@@ -73,7 +74,7 @@ class CommentController extends Controller
 			$tmp[] = array(
 				'user' => array(
 					'name' => $comment->user->name,
-					'profile_image_url' => 'http://v1.qzone.cc/avatar/201506/13/09/57/557b8e21c827c327.jpg%21200x200.jpg'
+					'profile_image_url' => !empty($comment->user->profile_image_url) ? Config::get('app.ossDomain').$comment->user->profile_image_url : 'http://v1.qzone.cc/avatar/201408/17/15/46/53f05dcfe6120279.jpg%21200x200.jpg'
 				),
 				'created_at' => empty($comment->created_at) ? '未知' : $comment->created_at->diffForHumans(),
 				'score' => $comment->score,
@@ -197,7 +198,7 @@ class CommentController extends Controller
 			$tmp[] = array(
 				'user' => array(
 					'name' => $comment->user->name,
-					'profile_image_url' => 'http://s.qdcdn.com/cl/13064302,800,450.jpg'
+					'profile_image_url' => !empty($comment->user->profile_image_url) ? Config::get('app.ossDomain').$comment->user->profile_image_url : 'http://v1.qzone.cc/avatar/201408/17/15/46/53f05dcfe6120279.jpg%21200x200.jpg'
 				),
 				'shop' => array(
 					'id' => $comment->shop->id,

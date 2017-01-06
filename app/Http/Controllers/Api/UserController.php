@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use moum\Models\User;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Hashing\BcryptHasher;
 use Config;
+use Hash;
 
 class UserController extends Controller
 {
@@ -53,8 +53,7 @@ class UserController extends Controller
 
 		$user = User::where('tel', $tel)->first();
 
-		$aa = new BcryptHasher;
-		if( !$aa->check($password, $user->password) )
+		if( !Hash::check($password, $user->password) )
 		{
 			throw new AuthenticationException('password error');
 		}
@@ -140,7 +139,6 @@ class UserController extends Controller
 	 * @apiParam {String} name
 	 * @apiParam {String} profile_image_url
 	 * @apiParam {Number} gender
-	 * @apiParam {Number} user_id
 	 *
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
@@ -160,15 +158,13 @@ class UserController extends Controller
 			'name' => 'bail|filled|max:100',
 			'profile_image_url' => 'bail|required|max:255',
 			'gender' => 'bail|filled|integer|in:0,1,2',
-			'user_id' => 'bail|required|exists:users,id'
 		]);
 
 		$name = $request->input('name');
 		$profile_image_url = $request->input('profile_image_url');
 		$gender = $request->input('gender');
-		$userId = $request->input('user_id');
 
-		$user = User::find($userId);
+		$user = User::find($request->user()->id);
 		$user->name = $name;
 		$user->profile_image_url = $profile_image_url;
 		$user->gender = $gender;

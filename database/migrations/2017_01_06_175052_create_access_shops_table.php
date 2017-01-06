@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDialsTable extends Migration
+class CreateAccessShopsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateDialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('dials', function (Blueprint $table) {
+        Schema::create('access_shops', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('shop_id');
             $table->string('uuid', 100)->comment('设备唯一码');
             $table->unsignedTinyInteger('client_id')->comment('客户端ID');
             $table->timestamp('created_at');
-            //此处没有加外键，仍然可以访问shop
+            $table->foreign('shop_id')->references('id')->on('shops');
         });
     }
 
@@ -31,6 +31,6 @@ class CreateDialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dials');
+        Schema::dropIfExists('access_shops');
     }
 }

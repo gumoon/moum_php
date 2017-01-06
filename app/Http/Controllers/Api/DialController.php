@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use moum\Models\Dial;
 use Config;
-use DB;
 use Carbon\Carbon;
 
 
@@ -103,77 +102,6 @@ class DialController extends Controller
 		);
 
 		return $this->successJson( $data );
-	}
-
-	/**
-	 * @api {get} /dial/by_month 打电话月榜
-	 * @apiName DialByMonth
-	 * @apiGroup Dial
-	 *
-	 * @apiParam {Number} [page=1]
-	 * @apiParam {Number} [count=10]
-	 * 
-	 * @apiSuccess {Number} err_no
-	 * @apiSuccess {String} msg
-	 * @apiSuccess {Object[]} data
-	 * @apiSuccess {Object} data.shop
-	 * @apiSuccess {Number} data.shop.id
-	 * @apiSuccess {String} data.shop.tel
-	 * @apiSuccess {String} data.shop.name
-	 * @apiSuccess {Number} data.count
-	 *
-	 * @apiSuccessExample {json} Success-response:
-	 * {
-	 *  "err_no": 0,
-	 *  "msg": "success",
-	 *  "data": [
-	 *    {
-	 *      "shop": {
-	 *        "id": 1,
-	 *        "tel": "13911112222",
-	 *        "name": "店铺名称",
-	 *        "image_url": "http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg"
-	 *      },
-	 *      "count": 3215
-	 *    }
-	 *    ...
-	 *  ]
-	 * }
-	 */
-	public function byMonth(Request $request)
-	{
-		$this->validate($request, [
-			'page' => 'bail|filled|integer|min:1',
-			'count' => 'bail|filled|integer|min:1'
-		]);
-
-		$page = $request->input('page', 1);
-		$count = $request->input('count', 10);
-		$offset = ($page - 1) * $count;
-
-		$dials = Dial::select(DB::raw('count(id) as dial_count, shop_id'))
-					->where('created_at', '>', Carbon::now()->firstOfMonth())
-					->where('created_at', '<', Carbon::now()->lastOfMonth())
-					->groupBy('shop_id')
-					->orderBy('dial_count', 'desc')
-					->skip($offset)
-					->take($count)
-					->get();
-
-		foreach( $dials AS $dial)
-		{
-			$tmp[] = array(
-				'shop' => array(
-					'id' => $dial->shop->id,
-					'tel' => $dial->shop->tel,
-					'name' => $dial->shop->name,
-					'image_url' => Config::get('app.ossDomain').$dial->shop->image_url
-				),
-				'count' => $dial->dial_count
-			);
-		}
-
-		return $this->successJson( $tmp );
 	}
 
 	/**

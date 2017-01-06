@@ -8,19 +8,25 @@ use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use moum\Models\Shop;
 
-class SomeEvent
+class AccessShopEvent
 {
     use InteractsWithSockets, SerializesModels;
 
+    public $shop;
+
+    public $arr;
+    
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Shop $shop, $arr = [])
     {
-        //
+        $this->shop = $shop;
+        $this->arr = $arr;
     }
 
     /**

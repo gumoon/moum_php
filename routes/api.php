@@ -16,7 +16,6 @@ use Illuminate\Http\Request;
 Route::post('/common/init', 'CommonController@init');
 
 Route::get('/dial/timeline', 'DialController@timeline');
-Route::get('/dial/by_month', 'DialController@byMonth');
 Route::post('/dial/create', 'DialController@create');
 
 Route::get('/shop/recommend', 'ShopController@recommend');
@@ -25,6 +24,7 @@ Route::get('/shop/show', 'ShopController@show');
 Route::post('/shop/report_error', 'ShopController@reportError');
 Route::get('/shop/timeline', 'ShopController@timeline');
 Route::get('/shop/search', 'ShopController@search');
+Route::get('/shop/access_rank_by_month', 'ShopController@accessRankByMonth');
 
 Route::get('/discover/links', 'LinkController@all');
 

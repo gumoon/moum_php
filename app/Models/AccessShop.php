@@ -4,17 +4,9 @@ namespace moum\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Dial extends Model
+class AccessShop extends Model
 {
     public $timestamps = false;
-
-    /**
-     * Get the user that owns the dails.
-     */
-    public function user()
-    {
-    	return $this->belongsTo('moum\Models\User');
-    }
 
     /**
      * Get the shop that owns the dials.
@@ -22,5 +14,5 @@ class Dial extends Model
     public function shop()
     {
     	return $this->belongsTo('moum\Models\Shop');
-    }
+    }    
 }

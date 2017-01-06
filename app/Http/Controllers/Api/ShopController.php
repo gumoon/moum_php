@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use moum\Models\Shop;
 use Config;
 use DB;
+use moum\Models\AccessShop;
 use moum\Services\Helper;
 use moum\Http\Controllers\Controller;
+use Carbon\Carbon;
+use moum\Events\AccessShopEvent;
 
 
 class ShopController extends Controller
@@ -449,6 +452,7 @@ class ShopController extends Controller
 	 * @apiParam {Number} shop_id 商户ID
 	 * @apiParam {Number} lat
 	 * @apiParam {Number} lng
+	 * @apiParam {String} uuid
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
@@ -492,14 +496,23 @@ class ShopController extends Controller
 		$this->validate($request, [
 			'lat' => 'bail|required|min:-90|max:90',
 			'lng' => 'bail|required|min:-180|max:180',
-			'shop_id' => 'bail|required|exists:shops,id'
+			'shop_id' => 'bail|required|exists:shops,id',
+			'uuid' => 'bail|required|max:100'
 		]);
 
 		$lat = $request->input('lat');
 		$lng = $request->input('lng');
 		$shopId = $request->input('shop_id');
+		$uuid = $request->input('uuid');
 
 		$shop = Shop::findOrFail( $shopId );
+		//添加一条设备访问商户的记录。
+		$arr = array(
+			'uuid' => $uuid,
+			'user_id' => $request->user()->id,
+			'client_id' => $request->user()->token()->client_id
+		);
+		event(new AccessShopEvent($shop, $arr));
 
 		$menu_image_urls = array();
 		$tmp = json_decode($shop->menu_image_urls, true);
@@ -516,7 +529,7 @@ class ShopController extends Controller
 			$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
 		}
 
-		$shop = array(
+		$data = array(
 			'id' => $shop->id,
 			'name' => $shop->name,
 			'score' => 3,
@@ -531,7 +544,7 @@ class ShopController extends Controller
 			'menu_image_urls' => $menu_image_urls
 		);
 
-		return $this->successJson( $shop );
+		return $this->successJson( $data );
 	}
 
 	/**
@@ -571,5 +584,77 @@ class ShopController extends Controller
 		]);
 
 		return $this->successJson();
+	}
+
+	/**
+	 * @api {get} /shop/access_rank_by_month 商户访问数月排行
+	 * @apiName ShopAccessRankByMonth
+	 * @apiGroup Shop
+	 *
+	 * @apiParam {Number} [page=1]
+	 * @apiParam {Number} [count=10]
+	 * 
+	 * @apiSuccess {Number} err_no
+	 * @apiSuccess {String} msg
+	 * @apiSuccess {Object[]} data
+	 * @apiSuccess {Object} data.shop
+	 * @apiSuccess {Number} data.shop.id
+	 * @apiSuccess {String} data.shop.tel
+	 * @apiSuccess {String} data.shop.name
+	 * @apiSuccess {Number} data.count
+	 *
+	 * @apiSuccessExample {json} Success-response:
+	 * {
+	 *  "err_no": 0,
+	 *  "msg": "success",
+	 *  "data": [
+	 *    {
+	 *      "shop": {
+	 *        "id": 1,
+	 *        "tel": "13911112222",
+	 *        "name": "店铺名称",
+	 *        "image_url": "http://i1.hdslb.com/bfs/archive/5b269a158687ae21083778799ac9e939d335ab35.jpg"
+	 *      },
+	 *      "count": 3215
+	 *    }
+	 *    ...
+	 *  ]
+	 * }
+	 */
+	public function accessRankByMonth(Request $request)
+	{
+		$this->validate($request, [
+			'page' => 'bail|filled|integer|min:1',
+			'count' => 'bail|filled|integer|min:1'
+		]);
+
+		$page = $request->input('page', 1);
+		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
+
+		$accesses = AccessShop::select(DB::raw('count(id) as access_count, shop_id'))
+					->where('created_at', '>', Carbon::now()->firstOfMonth())
+					->where('created_at', '<', Carbon::now()->lastOfMonth())
+					->groupBy('shop_id')
+					->orderBy('access_count', 'desc')
+					->skip($offset)
+					->take($count)
+					->get();
+
+		$tmp = array();
+		foreach( $accesses AS $access)
+		{
+			$tmp[] = array(
+				'shop' => array(
+					'id' => $access->shop->id,
+					'tel' => $access->shop->tel,
+					'name' => $access->shop->name,
+					'image_url' => Config::get('app.ossDomain').$access->shop->image_url
+				),
+				'count' => $access->access_count
+			);
+		}
+
+		return $this->successJson( $tmp );
 	}
 }

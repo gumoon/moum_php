@@ -4,6 +4,7 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
+use moum\Models\Link;
 
 
 class LinkController extends Controller
@@ -50,29 +51,35 @@ class LinkController extends Controller
 	 * }
      * 
      */
-	public function all(Request $request)
+	public function all()
 	{
-		for ($i=0; $i < 10; $i++) 
-		{ 
-			$tmp1[] = array(
-				'icon' => 'http://sr.photos3.fotosearch.com/bthumb/CSP/CSP433/k4337069.jpg',
-				'name' => '百度',
-				'url' => 'http://www.baidu.com'
-			);
-		}
+		$links = Link::all();
 
-		for ($i=0; $i < 10; $i++) 
-		{ 
-			$tmp2[] = array(
-				'icon' => 'http://a.hiphotos.baidu.com/zhidao/wh%3D450%2C600/sign=b287ba24be096b63814c56543903ab72/b64543a98226cffca6d6c2b9b9014a90f603ea39.jpg',
-				'name' => '新浪',
-				'url' => 'http://www.sina.com.cn'
-			);
+		$china = array();
+		$korea = array();
+		foreach($links AS $link)
+		{
+			if($link->nation_id == 0)
+			{
+				$china[] = array(
+					'icon' => $link->icon,
+					'name' => $link->name,
+					'url' => $link->url
+				);
+			}
+			else
+			{
+				$korea[] = array(
+					'icon' => $link->icon,
+					'name' => $link->name,
+					'url' => $link->url
+				);				
+			}
 		}
 		
 		$links = array(
-			'china' => $tmp1,
-			'korea' => $tmp2
+			'china' => $china,
+			'korea' => $korea
 		);
 
 		return $this->successJson( $links );

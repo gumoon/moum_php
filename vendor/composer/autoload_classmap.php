@@ -9,6 +9,7 @@ return array(
     'CreateAccessShopsTable' => $baseDir . '/database/migrations/2017_01_06_175052_create_access_shops_table.php',
     'CreateCommentsTable' => $baseDir . '/database/migrations/2016_12_31_141717_create_comments_table.php',
     'CreateDialsTable' => $baseDir . '/database/migrations/2016_12_30_175022_create_dials_table.php',
+    'CreateLinksTable' => $baseDir . '/database/migrations/2017_01_07_000211_create_links_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
     'CreateRoleUserTable' => $baseDir . '/database/migrations/2016_12_31_170811_create_role_user_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2016_12_31_163314_create_roles_table.php',

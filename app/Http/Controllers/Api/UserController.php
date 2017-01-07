@@ -182,7 +182,7 @@ class UserController extends Controller
 			'name' => $name,
 			'profile_image_url' => $profile_image_url ? Config::get('app.ossDomain').$profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
 			'gender' => $gender,
-			'tel' => $tel
+			'tel' => $user->tel
 		);
 
 		return $this->successJson($data);

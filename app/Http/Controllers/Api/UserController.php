@@ -162,7 +162,7 @@ class UserController extends Controller
 	{
 		$this->validate($request, [
 			'name' => 'bail|filled|max:100',
-			'profile_image_url' => 'bail|required|max:255',
+			'profile_image_url' => 'bail|filled|max:255',
 			'gender' => 'bail|filled|integer|in:0,1,2',
 		]);
 
@@ -171,17 +171,27 @@ class UserController extends Controller
 		$gender = $request->input('gender');
 
 		$user = User::find($request->user()->id);
-		$user->name = $name;
-		$user->profile_image_url = $profile_image_url;
-		$user->gender = $gender;
+		if( !empty($name) )
+		{
+			$user->name = $name;
+		}
+		if( !empty($profile_image_url) )
+		{
+			$user->profile_image_url = $profile_image_url;
+		}
+		if( !empty($gender) )
+		{
+			$user->gender = $gender;
+		}
 
 		$user->save();
 
 		$data = array(
 			'id' => $request->user()->id,
-			'name' => $name,
-			'profile_image_url' => $profile_image_url ? Config::get('app.ossDomain').$profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
-			'gender' => $gender,
+			'name' => $name ? $name : ($user->name ? $this->name : '
+			MOUM用户'),
+			'profile_image_url' => $profile_image_url ? Config::get('app.ossDomain').$profile_image_url : ($user->profile_image_url ? Config::get('app.ossDomain').$user->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg'),
+			'gender' => $gender ? $gender : $user->gender,
 			'tel' => $user->tel
 		);
 

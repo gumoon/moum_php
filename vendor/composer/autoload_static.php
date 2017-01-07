@@ -396,6 +396,7 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'CreateAccessShopsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_06_175052_create_access_shops_table.php',
         'CreateCommentsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_31_141717_create_comments_table.php',
         'CreateDialsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_30_175022_create_dials_table.php',
+        'CreateFailedJobsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_07_154327_create_failed_jobs_table.php',
         'CreateLinksTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_07_000211_create_links_table.php',
         'CreatePasswordResetsTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_100000_create_password_resets_table.php',
         'CreateRoleUserTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_31_170811_create_role_user_table.php',

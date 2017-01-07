@@ -145,10 +145,16 @@ class UserController extends Controller
 	 * @apiSuccess {Object} data
 	 *
 	 * @apiSuccessExample {json} Success-response:
-	 * {
+     * {
 	 *  "err_no": 0,
 	 *  "msg": "success",
-	 *  "data": {}
+	 *  "data": {
+	 *    "id": 1,
+	 *    "name": "moon",
+	 *    "profile_image_url": "http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg",
+	 *    "gender": 1,
+	 *    "tel": "18600562137"
+	 *  }
 	 * }
 	 * 
 	 */
@@ -171,7 +177,15 @@ class UserController extends Controller
 
 		$user->save();
 
-		return $this->successJson();
+		$data = array(
+			'id' => $request->user()->id,
+			'name' => $name,
+			'profile_image_url' => $profile_image_url ? Config::get('app.ossDomain').$profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
+			'gender' => $gender,
+			'tel' => $tel
+		);
+
+		return $this->successJson($data);
 	}
 
 	/**

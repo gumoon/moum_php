@@ -452,7 +452,6 @@ class ShopController extends Controller
 	 * @apiParam {Number} shop_id 商户ID
 	 * @apiParam {Number} lat
 	 * @apiParam {Number} lng
-	 * @apiParam {String} uuid
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
@@ -497,13 +496,14 @@ class ShopController extends Controller
 			'lat' => 'bail|required|min:-90|max:90',
 			'lng' => 'bail|required|min:-180|max:180',
 			'shop_id' => 'bail|required|exists:shops,id',
-			'uuid' => 'bail|required|max:100'
+			// 'uuid' => 'bail|required|max:100'
 		]);
 
 		$lat = $request->input('lat');
 		$lng = $request->input('lng');
 		$shopId = $request->input('shop_id');
-		$uuid = $request->input('uuid');
+		// $uuid = $request->input('uuid');
+		$uuid = $request->header('uuid');
 
 		$shop = Shop::findOrFail( $shopId );
 		//添加一条设备访问商户的记录。

@@ -110,7 +110,7 @@ class DialController extends Controller
 	 * @apiGroup Dial
 	 *
 	 * @apiParam {Number} shop_id
-	 * @apiParam {String} uuid
+	 * 
 	 * @apiSuccess {Number} err_no 
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object} data
@@ -123,15 +123,15 @@ class DialController extends Controller
 	 */
 	public function create(Request $request)
 	{
+		$this->validate($request, [
+			'shop_id' => 'bail|required|exists:shops,id'
+		]);
+
 		$userId = $request->user()->id;
 		$clientId = $request->user()->token()->client_id;
 		$shopId = $request->input('shop_id');
-		$uuid = $request->input('uuid');
-
-		$this->validate($request, [
-			'shop_id' => 'bail|required|exists:shops,id',
-			'uuid' => 'bail|required|max:100'
-		]);
+		// $uuid = $request->input('uuid');
+		$uuid = $request->header('uuid');
 
 		$dial = new Dial;
 		$dial->user_id = $userId;

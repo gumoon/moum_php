@@ -180,7 +180,7 @@ return [
          */
         moum\Providers\AppServiceProvider::class,
         moum\Providers\AuthServiceProvider::class,
-        // moum\Providers\BroadcastServiceProvider::class,
+        moum\Providers\BroadcastServiceProvider::class,
         moum\Providers\EventServiceProvider::class,
         moum\Providers\RouteServiceProvider::class,
 

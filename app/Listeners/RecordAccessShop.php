@@ -36,7 +36,7 @@ class RecordAccessShop implements ShouldQueue
         $action->uuid = $event->arr['uuid'];
         $action->save();
         Log::info('finished');
-        
-        return false;
+
+        return true;
     }
 }

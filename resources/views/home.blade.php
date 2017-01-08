@@ -1,5 +1,16 @@
 @extends('layouts.app')
 
+@section('thirdjs')
+<script type="text/javascript">
+	Pusher.logToConsole = true;
+
+	Echo.channel('access-shop')
+	    .listen('.moum\\Events\\AccessShopEvent', (e) => {
+	        console.log(e.shop.tel);
+    	});
+</script>
+@endsection
+
 @section('content')
 
 <div class="container">

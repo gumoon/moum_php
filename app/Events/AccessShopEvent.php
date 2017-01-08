@@ -10,14 +10,14 @@ use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use moum\Models\Shop;
 
-class AccessShopEvent
+class AccessShopEvent implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
     public $shop;
 
     public $arr;
-    
+   
     /**
      * Create a new event instance.
      *
@@ -36,6 +36,6 @@ class AccessShopEvent
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('channel-name');
+        return new Channel('access-shop');
     }
 }

@@ -8,6 +8,8 @@ use moum\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Config;
 use Hash;
+use moum\Notifications\Captcha as CaptchaNotification;
+use Notification;
 
 class UserController extends Controller
 {
@@ -188,8 +190,7 @@ class UserController extends Controller
 
 		$data = array(
 			'id' => $request->user()->id,
-			'name' => $name ? $name : ($user->name ? $this->name : '
-			MOUM用户'),
+			'name' => $name ? $name : ($user->name ? $this->name : 'MOUM用户'),
 			'profile_image_url' => $profile_image_url ? Config::get('app.ossDomain').$profile_image_url : ($user->profile_image_url ? Config::get('app.ossDomain').$user->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg'),
 			'gender' => $gender ? $gender : $user->gender,
 			'tel' => $user->tel
@@ -245,6 +246,7 @@ class UserController extends Controller
 	 * @apiGroup User
 	 *
 	 * @apiParam {String} tel
+	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object} data
@@ -261,10 +263,24 @@ class UserController extends Controller
 	 */
 	public function captcha(Request $request)
 	{
-		$data = array(
-			'captcha' => '123456'
-		);
+		$this->validate($request, [
+			'tel' => 'required'
+		]);
 
+		$tel = $request->input('tel');
+
+		$captcha = '123456';
+
+		$tmp = array(
+			'tel' => $tel,
+			'captcha' => $captcha
+		);
+		//发短信通知给用户
+		Notification::send($request->user(), new CaptchaNotification($tmp));
+		
+		$data = array(
+			'captcha' => $captcha
+		);
 		return $this->successJson($data);
 	}
 }

@@ -31,3 +31,5 @@ Route::get('/home', 'HomeController@index');
 Route::get('/', 'HomeController@index');
 Route::get('/phpinfo', 'HomeController@phpinfo');
 Route::get('/debug', 'HomeController@debug');
+Route::get('/pusher', 'HomeController@pusher');
+Route::get('/push', 'HomeController@push');

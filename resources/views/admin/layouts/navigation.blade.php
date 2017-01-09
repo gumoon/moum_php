@@ -63,6 +63,18 @@
                     </ul>
                     <!-- /.nav-second-level -->
                 </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 网址管理(发现模块）<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('houtai/links') }}">全部网址</a>
+                        </li>
+                        <li>
+                            <a href="{{ url('houtai/links/create') }}">新增网址</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
             </ul>
         </div>
         <!-- /.sidebar-collapse -->

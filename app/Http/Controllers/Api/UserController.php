@@ -276,7 +276,7 @@ class UserController extends Controller
 			'captcha' => $captcha
 		);
 		//发短信通知给用户
-		Notification::send($request->user(), new CaptchaNotification($tmp));
+		//Notification::send($request->user(), new CaptchaNotification($tmp));
 		
 		$data = array(
 			'captcha' => $captcha

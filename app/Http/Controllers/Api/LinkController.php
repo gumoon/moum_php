@@ -5,6 +5,7 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use moum\Models\Link;
+use Config;
 
 
 class LinkController extends Controller
@@ -62,7 +63,7 @@ class LinkController extends Controller
 			if($link->nation_id == 0)
 			{
 				$china[] = array(
-					'icon' => $link->icon,
+					'icon' => Config::get('app.ossDomain').$link->icon,
 					'name' => $link->name,
 					'url' => $link->url
 				);
@@ -70,7 +71,7 @@ class LinkController extends Controller
 			else
 			{
 				$korea[] = array(
-					'icon' => $link->icon,
+					'icon' => Config::get('app.ossDomain').$link->icon,
 					'name' => $link->name,
 					'url' => $link->url
 				);				

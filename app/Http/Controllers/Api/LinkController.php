@@ -32,15 +32,7 @@ class LinkController extends Controller
 	 *  "err_no": 0,
 	 *  "msg": "success",
 	 *  "data": {
-	 *    "china": [
-	 *      {
-	 *        "icon": "http://sr.photos3.fotosearch.com/bthumb/CSP/CSP433/k4337069.jpg",
-	 *        "name": "百度",
-	 *        "url": "http://www.baidu.com"
-	 *      }
-	 *      ...
-	 *    ],
-	 *    "korea": [
+	 *    "links": [
 	 *      {
 	 *        "icon": "http://sr.photos3.fotosearch.com/bthumb/CSP/CSP433/k4337069.jpg",
 	 *        "name": "新浪",
@@ -56,33 +48,20 @@ class LinkController extends Controller
 	{
 		$links = Link::all();
 
-		$china = array();
-		$korea = array();
+		$tmp = array();
 		foreach($links AS $link)
 		{
-			if($link->nation_id == 0)
-			{
-				$china[] = array(
-					'icon' => Config::get('app.ossDomain').$link->icon,
-					'name' => $link->name,
-					'url' => $link->url
-				);
-			}
-			else
-			{
-				$korea[] = array(
-					'icon' => Config::get('app.ossDomain').$link->icon,
-					'name' => $link->name,
-					'url' => $link->url
-				);				
-			}
+			$tmp[] = array(
+				'icon' => Config::get('app.ossDomain').$link->icon,
+				'name' => $link->name,
+				'url' => $link->url
+			);
 		}
-		
-		$links = array(
-			'china' => $china,
-			'korea' => $korea
+		$data = array(
+			'links' => $tmp
 		);
 
-		return $this->successJson( $links );
+
+		return $this->successJson( $data );
 	}
 }

@@ -15,6 +15,9 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         'moum\Events\AccessShopEvent' => [
             'moum\Listeners\RecordAccessShop'
+        ],
+        'moum\Events\OldUserLogin' => [
+            'moum\Listeners\UpdateUserProfileImageUrl'
         ]
     ];
 

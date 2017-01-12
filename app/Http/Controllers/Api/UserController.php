@@ -10,6 +10,9 @@ use Config;
 use Hash;
 use moum\Notifications\Captcha as CaptchaNotification;
 use Notification;
+use DB;
+use Carbon\Carbon;
+use moum\Events\OldUserLogin;
 
 class UserController extends Controller
 {
@@ -46,29 +49,75 @@ class UserController extends Controller
 	public function login(Request $request)
 	{
 		$this->validate($request, [
-			'tel' => 'bail|required|exists:users,tel',
-			'password' => 'bail|required'
+			'tel' => 'required',
+			'password' => 'required'
 		]);
 
 		$tel = $request->input('tel');
 		$password = $request->input('password');
 
 		$user = User::where('tel', $tel)->first();
-
-		if( !Hash::check($password, $user->password) )
+		//若用户不存在，返回 null
+		if( empty($user) )
 		{
-			throw new AuthenticationException('password error');
+			//查询是否是 moum 老用户
+			$oldUser = DB::table('user_info')
+				->where('email', $tel)
+				->where('status', 1)
+				->first();
+			if( empty($oldUser) )
+			{
+				return $this->failedJson('email or tel');
+			}
+
+			//新用户不存在，并且老用户存在
+			//判断密码
+			if( md5($password) !== $oldUser->password )
+			{
+				return $this->failedJson('password');
+			}
+
+			$gender = $oldUser->gender == 'x' ? 0 : ($oldUser->gender == 'm' ? 1 : 2);
+			//往新用户库插入一条记录
+			$newUserId = DB::table('users')->insertGetId([
+				'name' => $oldUser->name,
+				'email' => $oldUser->email,
+				'tel' => $oldUser->email,
+				'password' => bcrypt($password),
+				'gender' => $gender,
+				'created_at' => Carbon::now(),
+				'updated_at' => Carbon::now()
+			]);
+			//若原用户头像存在的话，同时发送一个事件更新头像
+			event(new OldUserLogin($oldUser->profile_image_url, $newUserId));
+
+			$data = array(
+				'id' => $newUserId,
+				'name' => $oldUser->name ? $oldUser->name : 'MOUM用户',
+				'profile_image_url' => $oldUser->profile_image_url ? $oldUser->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
+				'gender' => $gender,
+				'tel' => $tel
+			);
+		}
+		else
+		{
+			//新用户存在
+			//判断密码是否正确
+			if( !Hash::check($password, $user->password) )
+			{
+				return $this->failedJson('password');
+			}
+
+			$data = array(
+				'id' => $user->id,
+				'name' => $user->name ? $user->name : 'MOUM用户',
+				'profile_image_url' => $user->profile_image_url ? Config::get('app.ossDomain').$user->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
+				'gender' => $user->gender,
+				'tel' => $user->tel
+			);			
 		}
 
-		$user = array(
-			'id' => $user->id,
-			'name' => $user->name ? $user->name : 'MOUM用户',
-			'profile_image_url' => $user->profile_image_url ? Config::get('app.ossDomain').$user->profile_image_url : 'http://diy.qqjay.com/u2/2012/1002/606b295f562dd328c65448abea1cb2b6.jpg',
-			'gender' => $user->gender,
-			'tel' => $user->tel
-		);
-
-		return $this->successJson($user);
+		return $this->successJson($data);
 	}
 
 	/**

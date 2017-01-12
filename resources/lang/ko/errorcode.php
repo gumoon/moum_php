@@ -75,5 +75,6 @@ return [
 
     //CUSTOM
     10000 => 'Unauthenticated',
-    10001 => 'validation error'
+    10001 => 'Validation Error',
+    10010 => 'Parameter :param Error',
 ];

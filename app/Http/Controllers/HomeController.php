@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Cache;
 use Carbon\Carbon;
 use Pusher;
+use GuzzleHttp\Client;
+use moum\Services\OSS;
 
 class HomeController extends Controller
 {
@@ -37,9 +39,19 @@ class HomeController extends Controller
 
     public function debug()
     {
-        Carbon::setLocale('zh');
-        echo Carbon::now()->subSeconds(5)->diffForHumans();
-        echo Carbon::now();
+        $client = new Client();
+        $res = $client->request('GET', 'http://lbsfood-taocms.stor.sinaapp.com/pictures/month_1401/201401171647438268.jpeg');
+        $data = $res->getBody()->getContents();
+        $code = $res->getStatusCode();
+        $extension = strrchr('http://lbsfood-taocms.stor.sinaapp.com/pictures/month_1401/201401171647438268.jpeg', '.');
+        dd($extension);
+        $ret = OSS::uploadContent('aaa.jpeg', $data);
+        $fileinfo = getimagesize('http://lbsfood-taocms.stor.sinaapp.com/pictures/month_1401/201401171647438268.jpeg');
+
+        dd($fileinfo, $code);
+        // Carbon::setLocale('zh');
+        // echo Carbon::now()->subSeconds(5)->diffForHumans();
+        // echo Carbon::now();
     }
 
     public function push()

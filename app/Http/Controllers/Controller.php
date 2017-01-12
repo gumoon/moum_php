@@ -47,4 +47,16 @@ class Controller extends BaseController
 
     	return response()->json( $ret );
     }
+
+    //封装错误返回的json
+    protected function failedJson($msg)
+    {
+        $ret = array(
+            'err_no' => 10010,
+            'msg' => trans('errorcode.10010',['param' => $msg]),
+            'data' => new \stdClass
+        );
+
+        return response()->json( $ret );
+    }
 }

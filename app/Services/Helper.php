@@ -24,6 +24,4 @@ class Helper {
         
         return round($s/1000, 2);
     }
-
-
 }

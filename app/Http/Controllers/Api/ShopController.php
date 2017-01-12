@@ -496,7 +496,6 @@ class ShopController extends Controller
 			'lat' => 'bail|required|min:-90|max:90',
 			'lng' => 'bail|required|min:-180|max:180',
 			'shop_id' => 'bail|required|exists:shops,id',
-			// 'uuid' => 'bail|required|max:100'
 		]);
 
 		$lat = $request->input('lat');
@@ -504,6 +503,10 @@ class ShopController extends Controller
 		$shopId = $request->input('shop_id');
 		// $uuid = $request->input('uuid');
 		$uuid = $request->header('uuid');
+		if( empty($uuid) )
+		{
+			return $this->failedJson('uuid');
+		}
 
 		$shop = Shop::findOrFail( $shopId );
 		//添加一条设备访问商户的记录。

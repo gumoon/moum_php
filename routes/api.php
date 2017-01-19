@@ -39,4 +39,8 @@ Route::post('/user/update', 'UserController@update');
 Route::post('/user/reset_password', 'UserController@resetPassword');
 Route::post('/user/captcha', 'UserController@captcha');
 
+Route::post('/suggest/create', 'SuggestController@create');
+
+Route::get('/spread/all', 'SpreadController@all');
+
 

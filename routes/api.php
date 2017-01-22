@@ -44,3 +44,6 @@ Route::post('/suggest/create', 'SuggestController@create');
 Route::get('/spread/all', 'SpreadController@all');
 
 Route::get('/rent/arround', 'RentController@arround');
+
+Route::get('/one14/categorize', 'One14Controller@categorize');
+Route::get('/one14/arround', 'One14Controller@arround');

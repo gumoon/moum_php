@@ -142,18 +142,4 @@ class RentController extends Controller
     {
         //
     }
-
-    /**
-     * 根据cat_id 获取 types
-     * 
-     */
-    public function getTypesByCatId(Request $request)
-    {
-        $cat_id = $request->input('cat_id');
-
-        if( isset( $this->shopTypes[$cat_id] ) )
-        {
-            return $this->successJson( $this->shopTypes[$cat_id] );
-        }
-    }
 }

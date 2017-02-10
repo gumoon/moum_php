@@ -17,7 +17,7 @@ class One14Controller extends Controller
 	 * @apiSuccess {Number} err_no 
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object} data
-	 * @apiSuccessExample {json} Success-response: 
+	 * 
 	 */
 	public function categorize(Request $request)
 	{

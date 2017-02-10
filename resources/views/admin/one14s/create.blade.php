@@ -3,6 +3,7 @@
 @section('headcss')
 <!-- Morris Charts CSS -->
 <link href="{{ asset('admin/vendor/morrisjs/morris.css') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('admin/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
 @section('thirdjs')
@@ -16,7 +17,7 @@
 
 @section('customjs')
 <script type="text/javascript">
-var changeCatUrl = "{{ url('houtai/shops/get_types') }}";
+var changeCatUrl = "{{ url('houtai/one14s/get_types') }}";
 var url = "{{ url('houtai/ajax/shops/store') }}";
 var map = new AMap.Map('map',{
     zoom: 14,
@@ -42,124 +43,36 @@ function changeCat(){
 		}else{
 			console.log(data);
 			for(id in data.data){
-				var str = '<option value="'+id+'">'+data.data[id]+'</option>';
+				var str = '<option value="'+data.data[id].id+'">'+data.data[id].name+'</option>';
 				$("#type_id").append(str);
 			}
 		}
 	});
 }
 
-function processJson0(data){
+function processJson(data){
 	$("#image_url01").attr("src", data.data.url);
 	$("#image_url01").attr("alt", data.data.filename);
 }
-function clickButton0()
+function clickButton()
 {
 	$("#image_url01").attr("src", "");
 	$("#image_url01").attr("alt", "");
-}
-
-function processJson1(data){
-	$("#image_url11").attr("src", data.data.url);
-	$("#image_url11").attr("alt", data.data.filename);
-}
-function clickButton1()
-{
-	$("#image_url11").attr("src", "");
-	$("#image_url11").attr("alt", "");
-}
-
-function processJson2(data){
-	$("#image_url21").attr("src", data.data.url);
-	$("#image_url21").attr("alt", data.data.filename);
-}
-function clickButton2()
-{
-	$("#image_url21").attr("src", "");
-	$("#image_url21").attr("alt", "");
-}
-
-function processJson3(data){
-	$("#image_url31").attr("src", data.data.url);
-	$("#image_url31").attr("alt", data.data.filename);
-}
-function clickButton3()
-{
-	$("#image_url31").attr("src", "");
-	$("#image_url31").attr("alt", "");
-}
-
-function processJson4(data){
-	$("#image_url41").attr("src", data.data.url);
-	$("#image_url41").attr("alt", data.data.filename);
-}
-function clickButton4()
-{
-	$("#image_url41").attr("src", "");
-	$("#image_url41").attr("alt", "");
 }
 
 function processError(){
 	alert('上传出错了');
 }
 //选择文件后，自动上传图片
-function changeFile0(){
+function changeFile(){
 	var options = {
 		url: "{{ url('/tools/upload_image') }}",
 		type: 'post',
 		dataType: 'json',
-		success: processJson0,
+		success: processJson,
 		error: processError
 	};
-	$("#uploadImage0").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile4(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson4,
-		error: processError
-	};
-	$("#uploadImage4").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile1(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson1,
-		error: processError
-	};
-	$("#uploadImage1").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile2(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson2,
-		error: processError
-	};
-	$("#uploadImage2").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile3(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson3,
-		error: processError
-	};
-	$("#uploadImage3").ajaxSubmit(options);
+	$("#uploadImage").ajaxSubmit(options);
 	return false;
 }
 
@@ -226,52 +139,44 @@ function search(){
 	});
 }
 
-function submitCreateShop()
+function submitCreateOne14()
 {
 	var name = $("#name").val();
 	var is_vip = $("input:checked").val();
 	var cat_id = $("#cat_id :selected").val();
 	var type_id = $("#type_id :selected").val();
 	var tel = $("#tel").val();
-	var bosstel = $("#bosstel").val();
-	var open_time = $("#open_time").val();
 	var addr = $("#addr").val();
 	var lng = $("#lng").val();
 	var lat = $("#lat").val();
-	var intro = $("#intro").val();
-	var image_url01 = $("#image_url01").attr("alt");
-	var image_url11 = $("#image_url11").attr("alt");
-	var image_url21 = $("#image_url21").attr("alt");
-	var image_url31 = $("#image_url31").attr("alt");
-	var image_url41 = $("#image_url41").attr("alt");
+	var tags = $("#tags").val();
+	var detail = CKEDITOR.instances.detail.getData();
+	var image_url = $("#image_url01").attr("alt");
 
-	var postData = {name: name, is_vip: is_vip, cat_id: cat_id, type_id: type_id, tel: tel, bosstel: bosstel, open_time: open_time, addr: addr, lng: lng, lat: lat, intro: intro, image_url01: image_url01, image_url11: image_url11, image_url21: image_url21, image_url31: image_url31, image_url41: image_url41};
-	
+	var postData = {name: name, is_vip: is_vip, cat_id: cat_id, type_id: type_id, tel: tel, addr: addr, lng: lng, lat: lat, tags: tags, image_url: image_url, detail: detail};
+	console.log(postData);
+
 	var options = {
-		url: "{{ url('/houtai/shops') }}",
+		url: "{{ url('/houtai/one14s') }}",
 		type: 'post',
 		dataType: 'json',
 		data: postData,
 		success: function(data){
 			alert(data.msg);
-			window.location.href = "{{ url('/houtai/shops') }}";
+			window.location.href = "{{ url('/houtai/one14s') }}";
 		},
 		error: function(){
 			alert('出错了')
 		}
 	};
-	$("#createShop").ajaxSubmit(options);
+	$("#createOne14").ajaxSubmit(options);
 	return false;
 }
 
 $(document).ready(function(){
 
 	$("#cat_id").on("change", changeCat);
-	$("#image_url0").on("change", changeFile0);
-	$("#image_url1").on("change", changeFile1);
-	$("#image_url2").on("change", changeFile2);
-	$("#image_url3").on("change", changeFile3);
-	$("#image_url4").on("change", changeFile4);
+	$("#image_url").on("change", changeFile);
 
 	AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],
     function(){
@@ -288,7 +193,7 @@ $(document).ready(function(){
 	    });
 	});
 
-	$("#createShop").submit(submitCreateShop);
+	$("#createOne14").submit(submitCreateOne14);
 });
 </script>
 @endsection
@@ -300,7 +205,7 @@ $(document).ready(function(){
     <div id="page-wrapper">
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">添加商户</h1>
+                <h1 class="page-header">添加114企业信息</h1>
             </div>
             <!-- /.col-lg-12 -->
         </div>
@@ -314,7 +219,7 @@ $(document).ready(function(){
         				<div class="row">
         					<div class="col-lg-6">
     							<div class="form-group" id="namediv">
-    								<label>商户名称</label>
+    								<label>名称</label>
     								<input type="text" id="name" name="name" class="form-control" placeholder="">
 
                                     <span class="help-block">
@@ -323,7 +228,7 @@ $(document).ready(function(){
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-                                    <label>是否VIP商户</label>
+                                    <label>是否VIP</label>
                                     <label class="radio-inline">
                                         <input type="radio" name="is_vip" value="0" checked>否
                                     </label>
@@ -337,17 +242,19 @@ $(document).ready(function(){
 						<div class="row">
 							<div class="col-lg-6">
                                 <div class="form-group" id="catdiv">
-									<label>商户分类</label>
+									<label>分类</label>
 									<select class="form-control" id="cat_id" name="cat_id">
 										<option value="-1">请选择分类</option>
-										<option value="0">外卖</option>
+										@foreach($one14Categories AS $cat)
+										<option value="{{$cat['id']}}">{{$cat['name']}}</option>
+										@endforeach
 									</select>
 									<span class="help-block"></span>
 								</div>
 							</div>
 							<div class="col-lg-6">
 								<div class="form-group" id="typediv">
-									<label>商户子分类</label>
+									<label>子分类</label>
 									<select class="form-control" id="type_id" name="type_id">
 										<option value="-1">请选择子分类</option>
 									</select>
@@ -356,30 +263,11 @@ $(document).ready(function(){
 							</div>
 						</div>
 
-						<div class="row">
-							<div class="col-lg-6">
+        				<div class="row">
+        					<div class="col-lg-6">
 								<div class="form-group" id="teldiv">
     								<label>联系电话</label>
     								<input type="tel" id="tel" name="tel" class="form-control" placeholder="">
-                                    <span class="help-block">
-                                    </span>
-    							</div>
-    						</div>
-    						<div class="col-lg-6">
-    							<div class="form-group" id="bossteldiv">
-    								<label>老板手机号</label>
-    								<input type="tel" id="bosstel" name="bosstel" class="form-control" placeholder="">
-                                    <span class="help-block">
-                                    </span>
-    							</div>
-    						</div>
-    					</div>
-
-        				<div class="row">
-        					<div class="col-lg-6">
-    							<div class="form-group">
-    								<label>营业时间</label>
-    								<input type="text" id="open_time" name="open_time" class="form-control" placeholder="">
                                     <span class="help-block">
                                     </span>
     							</div>
@@ -404,14 +292,15 @@ $(document).ready(function(){
         						<div id="map" style="width: 100%; height: 300px;"></div>
         					</div>
     						<div class="col-lg-6">
-    							<div class="form-group" id="introdiv">
-									<label>老板一句话简介：</label>
-									<textarea class="form-control" rows="8" id="intro" name="intro" placeholder=""></textarea>
+    							<div class="form-group">
+    								<label>标签列表，用分号分隔</label>
+    								<input type="text" name="tags" id="tags" class="form-control" placeholder="">
 
-									<span class="help-block">
-                                    </span>
-								</div>
-        					</div>
+    								<span class="help-block">
+    									
+    								</span>
+    							</div>
+    						</div>
         				</div>
 
         				<div class="row">
@@ -437,85 +326,35 @@ $(document).ready(function(){
 
         				<div class="row">
 							<div class="col-lg-6">
-								<form role="form" id="uploadImage0" enctype="multipart/form-data">
+								<form role="form" id="uploadImage" enctype="multipart/form-data">
         							<div class="form-group">
                                             <label>商户头图</label>
-                                            <input type="file" id="image_url0" name="image_url">
+                                            <input type="file" id="image_url" name="image_url">
                                             {{ csrf_field() }}
                                  	</div>
 								</form>
 							</div>
 							<div class="col-lg-6">
 								<img src="" alt="" id="image_url01" style="width: 100px; height: 100px" >
-								<button class="btn btn-default" onclick="clickButton0()">删除</button>
-							</div>
-						</div>	
-									
-						<div class="row">
-							<div class="col-lg-6">
-								<form role="form" id="uploadImage1" enctype="multipart/form-data">
-        							<div class="form-group">
-                                            <label>菜单图1</label>
-                                            <input type="file" id="image_url1" name="image_url">
-                                            {{ csrf_field() }}
-                                 	</div>
-								</form>
-							</div>
-							<div class="col-lg-6">
-								<img src="" id="image_url11" style="width: 100px; height: 100px">
-								<button class="btn btn-default" onclick="clickButton1()">删除</button>
+								<button class="btn btn-default" onclick="clickButton()">删除</button>
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-lg-6">
-								<form role="form" id="uploadImage2" enctype="multipart/form-data">
-        							<div class="form-group">
-                                            <label>菜单图2</label>
-                                            <input type="file" id="image_url2" name="image_url">
-                                            {{ csrf_field() }}
-                                 	</div>
-								</form>							
-							</div>
-							<div class="col-lg-6">
-								<img src="" id="image_url21" style="width: 100px; height: 100px">
-								<button class="btn btn-default" onclick="clickButton2()">删除</button>
+							<div class="form-group">
+									<label>详情</label>
+									<textarea name="detail" id="detail" rows="10" cols="80"></textarea>
+									<script>
+						                // Replace the <textarea id="editor1"> with a CKEditor
+						                // instance, using default configuration.
+						                CKEDITOR.replace('detail');
+						            </script>
+									<span class="help-block">
+                                    </span>
 							</div>
 						</div>
-
-						<div class="row">
-							<div class="col-lg-6">
-								<form role="form" id="uploadImage3" enctype="multipart/form-data">
-        							<div class="form-group">
-                                            <label>菜单图3</label>
-                                            <input type="file" id="image_url3" name="image_url">
-                                            {{ csrf_field() }}
-                                 	</div>
-								</form>
-							</div>
-							<div class="col-lg-6">
-								<img src="" id="image_url31" style="width: 100px; height: 100px">
-								<button class="btn btn-default" onclick="clickButton3()">删除</button>
-							</div>
-						</div>
-
-						<div class="row">
-							<div class="col-lg-6">
-								<form role="form" id="uploadImage4" enctype="multipart/form-data">
-        							<div class="form-group">
-                                            <label>菜单图4</label>
-                                            <input type="file" id="image_url4" name="image_url">
-                                            {{ csrf_field() }}
-                                 	</div>
-								</form>
-							</div>
-							<div class="col-lg-6">
-								<img src="" id="image_url41" style="width: 100px; height: 100px">
-								<button class="btn btn-default" onclick="clickButton4()">删除</button>
-							</div>
-						</div>
-									
-						<form id="createShop">		
+											
+						<form id="createOne14">		
 						{{ csrf_field() }}
 						<button type="submit" class="btn btn-success">添加</button>
 						</form>

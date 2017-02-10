@@ -3,8 +3,7 @@
 namespace moum\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use moum\Http\Requests\StoreShopPost;
-use moum\Models\Shop;
+use moum\Models\One14;
 use Config;
 use moum\Http\Controllers\Controller;
 
@@ -17,9 +16,28 @@ class One14Controller extends Controller
      */
     public function index()
     {
-        $shops = Shop::all();
+        $one14s = One14::all();
+        foreach($one14s AS &$one14)
+        {
+            foreach($this->one14Categories AS $cat)
+            {
+                if($one14->cat_id == $cat['id'])
+                {
+                    $one14->cat_name = $cat['name'];
+                    foreach($cat['types'] AS $type)
+                    {
+                        if($one14->type_id == $type['id'])
+                        {
+                            $one14->type_name = $type['name'];
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        }
 
-        return view('admin.shops.index', ['shops' => $shops, 'shopCats' => $this->shopCats, 'shopTypes' => $this->shopTypes]);
+        return view('admin.one14s.index', ['one14s' => $one14s]);
     }
 
     /**
@@ -29,7 +47,7 @@ class One14Controller extends Controller
      */
     public function create()
     {
-        return view('admin.shops.create');
+        return view('admin.one14s.create', ['one14Categories' => $this->one14Categories]);
     }
 
     /**
@@ -38,30 +56,22 @@ class One14Controller extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreShopPost $request)
+    public function store(Request $request)
     {
-        $shop = new Shop;
-        $shop->name = $request->input('name');
-        $shop->image_url = $request->input('image_url01');
-        $shop->cat_id = $request->input('cat_id');
-        $shop->type_id = $request->input('type_id');
-        $shop->tel = $request->input('tel');
-        $shop->boss_tel = $request->input('bosstel');
-        $shop->open_time = $request->input('open_time');
-        $shop->lat = $request->input('lat');
-        $shop->lng = $request->input('lng');
-        $shop->addr = $request->input('addr');
-        $shop->is_vip = $request->input('is_vip');
-        $shop->intro = $request->input('intro');
+        $one14 = new One14;
+        $one14->name = $request->input('name');
+        $one14->image_url = $request->input('image_url');
+        $one14->cat_id = $request->input('cat_id');
+        $one14->type_id = $request->input('type_id');
+        $one14->tel = $request->input('tel');
+        $one14->lat = $request->input('lat');
+        $one14->lng = $request->input('lng');
+        $one14->addr = $request->input('addr');
+        $one14->is_vip = $request->input('is_vip');
+        $one14->detail = $request->input('detail');
+        $one14->tags = $request->input('tags');
 
-        $menu_image_urls['image_url11'] = $request->input('image_url11');
-        $menu_image_urls['image_url21'] = $request->input('image_url21');
-        $menu_image_urls['image_url31'] = $request->input('image_url31');
-        $menu_image_urls['image_url41'] = $request->input('image_url41');
-
-        $shop->menu_image_urls = json_encode( $menu_image_urls );
-
-        $shop->save();
+        $one14->save();
  
         if( $request->expectsJson() )
         {
@@ -69,9 +79,8 @@ class One14Controller extends Controller
         }
         else
         {
-            return redirect('/houtai/shops');
+            return redirect('/houtai/one14s');
         }
-        
     }
 
     /**
@@ -95,20 +104,14 @@ class One14Controller extends Controller
     {
         $id = intval($id);
 
-        $shop = Shop::findOrFail($id);
+        $one14 = One14::findOrFail($id);
 
         //头图
-        $shop->image_url_src = empty($shop->image_url) ? '' : Config::get('app.ossDomain'). $shop->image_url;
+        $one14->image_url_src = empty($one14->image_url) ? '' : Config::get('app.ossDomain'). $one14->image_url;
 
-        //菜单图
-        $menu_image_urls = json_decode($shop->menu_image_urls, true);
+        $one14Categories = collect($this->one14Categories)->keyBy('id');
 
-        $shop->image_url11_src = empty($menu_image_urls['image_url11']) ? '' : Config::get('app.ossDomain').$menu_image_urls['image_url11'];
-        $shop->image_url21_src = empty($menu_image_urls['image_url21']) ? '' : Config::get('app.ossDomain').$menu_image_urls['image_url21'];
-        $shop->image_url31_src = empty($menu_image_urls['image_url31']) ? '' : Config::get('app.ossDomain').$menu_image_urls['image_url31'];
-        $shop->image_url41_src = empty($menu_image_urls['image_url41']) ? '' : Config::get('app.ossDomain').$menu_image_urls['image_url41'];
-
-        return view('admin.shops.edit', ['shop' => $shop, 'shopCats' => $this->shopCats, 'shopTypes' => $this->shopTypes, 'menu_image_urls' => $menu_image_urls]);
+        return view('admin.one14s.edit', ['one14' => $one14, 'one14Categories' => $one14Categories]);
     }
 
     /**
@@ -118,32 +121,24 @@ class One14Controller extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreShopPost $request, $id)
+    public function update(Request $request, $id)
     {
         $id = intval($id);
-        $shop = Shop::find($id);
-        
-        $shop->name = $request->input('name');
-        $shop->image_url = $request->input('image_url01');
-        $shop->cat_id = $request->input('cat_id');
-        $shop->type_id = $request->input('type_id');
-        $shop->tel = $request->input('tel');
-        $shop->boss_tel = $request->input('bosstel');
-        $shop->open_time = $request->input('open_time');
-        $shop->lat = $request->input('lat');
-        $shop->lng = $request->input('lng');
-        $shop->addr = $request->input('addr');
-        $shop->is_vip = $request->input('is_vip');
-        $shop->intro = $request->input('intro');
 
-        $menu_image_urls['image_url11'] = $request->input('image_url11');
-        $menu_image_urls['image_url21'] = $request->input('image_url21');
-        $menu_image_urls['image_url31'] = $request->input('image_url31');
-        $menu_image_urls['image_url41'] = $request->input('image_url41');
+        $one14 = One14::find($id);
+        $one14->name = $request->input('name');
+        $one14->image_url = $request->input('image_url');
+        $one14->cat_id = $request->input('cat_id');
+        $one14->type_id = $request->input('type_id');
+        $one14->tel = $request->input('tel');
+        $one14->lat = $request->input('lat');
+        $one14->lng = $request->input('lng');
+        $one14->addr = $request->input('addr');
+        $one14->is_vip = $request->input('is_vip');
+        $one14->detail = $request->input('detail');
+        $one14->tags = $request->input('tags');
 
-        $shop->menu_image_urls = json_encode( $menu_image_urls );
-
-        $shop->save();
+        $one14->save();
  
         if( $request->expectsJson() )
         {
@@ -151,7 +146,7 @@ class One14Controller extends Controller
         }
         else
         {
-            return redirect('/houtai/shops');
+            return redirect('/houtai/one14s');
         }
     }
 
@@ -174,9 +169,12 @@ class One14Controller extends Controller
     {
         $cat_id = $request->input('cat_id');
 
-        if( isset( $this->shopTypes[$cat_id] ) )
+        foreach($this->one14Categories AS $key => $cat)
         {
-            return $this->successJson( $this->shopTypes[$cat_id] );
+            if($cat['id'] == $cat_id)
+            {
+                return $this->successJson($this->one14Categories[$key]['types']);
+            }
         }
     }
 }

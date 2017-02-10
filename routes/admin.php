@@ -20,6 +20,7 @@ Route::get('/', function () {
 })->middleware('auth');
 
 Route::post('/shops/get_types', 'ShopController@getTypesByCatId');
+Route::post('/one14s/get_types', 'One14Controller@getTypesByCatId');
 Route::resource('shops', 'ShopController');
 Route::resource('links', 'LinkController');
 Route::resource('rents', 'RentController');

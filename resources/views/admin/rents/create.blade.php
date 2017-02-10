@@ -3,6 +3,7 @@
 @section('headcss')
 <!-- Morris Charts CSS -->
 <link href="{{ asset('admin/vendor/morrisjs/morris.css') }}" rel="stylesheet">
+<script type="text/javascript" src="{{ asset('admin/ckeditor/ckeditor.js') }}"></script>
 @endsection
 
 @section('thirdjs')
@@ -16,8 +17,6 @@
 
 @section('customjs')
 <script type="text/javascript">
-var changeCatUrl = "{{ url('houtai/shops/get_types') }}";
-var url = "{{ url('houtai/ajax/shops/store') }}";
 var map = new AMap.Map('map',{
     zoom: 14,
     center: [116.337844,39.99293],
@@ -30,136 +29,29 @@ var marker = new AMap.Marker({
 marker.setMap(map);
 marker.on('dragend', dragendMarker);
 
-//分类改变调用函数
-function changeCat(){
-	var cat_id = $("#cat_id option:selected").val();
-	var token = $("input[name='_token']").val();
-	var postData = {cat_id: cat_id, _token: token};
-	console.log(postData);
-	$.post(changeCatUrl, postData, function(data){
-		if(data.err_no){
-			alert(data.msg);
-		}else{
-			console.log(data);
-			for(id in data.data){
-				var str = '<option value="'+id+'">'+data.data[id]+'</option>';
-				$("#type_id").append(str);
-			}
-		}
-	});
+function processJson(data){
+	$("#image_url1").attr("src", data.data.url);
+	$("#image_url1").attr("alt", data.data.filename);
 }
-
-function processJson0(data){
-	$("#image_url01").attr("src", data.data.url);
-	$("#image_url01").attr("alt", data.data.filename);
-}
-function clickButton0()
+function clickButton()
 {
-	$("#image_url01").attr("src", "");
-	$("#image_url01").attr("alt", "");
-}
-
-function processJson1(data){
-	$("#image_url11").attr("src", data.data.url);
-	$("#image_url11").attr("alt", data.data.filename);
-}
-function clickButton1()
-{
-	$("#image_url11").attr("src", "");
-	$("#image_url11").attr("alt", "");
-}
-
-function processJson2(data){
-	$("#image_url21").attr("src", data.data.url);
-	$("#image_url21").attr("alt", data.data.filename);
-}
-function clickButton2()
-{
-	$("#image_url21").attr("src", "");
-	$("#image_url21").attr("alt", "");
-}
-
-function processJson3(data){
-	$("#image_url31").attr("src", data.data.url);
-	$("#image_url31").attr("alt", data.data.filename);
-}
-function clickButton3()
-{
-	$("#image_url31").attr("src", "");
-	$("#image_url31").attr("alt", "");
-}
-
-function processJson4(data){
-	$("#image_url41").attr("src", data.data.url);
-	$("#image_url41").attr("alt", data.data.filename);
-}
-function clickButton4()
-{
-	$("#image_url41").attr("src", "");
-	$("#image_url41").attr("alt", "");
+	$("#image_url1").attr("src", "");
+	$("#image_url1").attr("alt", "");
 }
 
 function processError(){
 	alert('上传出错了');
 }
 //选择文件后，自动上传图片
-function changeFile0(){
+function changeFile(){
 	var options = {
 		url: "{{ url('/tools/upload_image') }}",
 		type: 'post',
 		dataType: 'json',
-		success: processJson0,
+		success: processJson,
 		error: processError
 	};
-	$("#uploadImage0").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile4(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson4,
-		error: processError
-	};
-	$("#uploadImage4").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile1(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson1,
-		error: processError
-	};
-	$("#uploadImage1").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile2(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson2,
-		error: processError
-	};
-	$("#uploadImage2").ajaxSubmit(options);
-	return false;
-}
-
-function changeFile3(){
-	var options = {
-		url: "{{ url('/tools/upload_image') }}",
-		type: 'post',
-		dataType: 'json',
-		success: processJson3,
-		error: processError
-	};
-	$("#uploadImage3").ajaxSubmit(options);
+	$("#uploadImage").ajaxSubmit(options);
 	return false;
 }
 
@@ -226,52 +118,42 @@ function search(){
 	});
 }
 
-function submitCreateShop()
+function submitCreateRent()
 {
-	var name = $("#name").val();
-	var is_vip = $("input:checked").val();
-	var cat_id = $("#cat_id :selected").val();
-	var type_id = $("#type_id :selected").val();
+	var title = $("#title").val();
+	var is_rented = $("input:checked").val();
+	var house_type_id = $("#house_type_id :selected").val();
 	var tel = $("#tel").val();
-	var bosstel = $("#bosstel").val();
-	var open_time = $("#open_time").val();
 	var addr = $("#addr").val();
 	var lng = $("#lng").val();
 	var lat = $("#lat").val();
-	var intro = $("#intro").val();
-	var image_url01 = $("#image_url01").attr("alt");
-	var image_url11 = $("#image_url11").attr("alt");
-	var image_url21 = $("#image_url21").attr("alt");
-	var image_url31 = $("#image_url31").attr("alt");
-	var image_url41 = $("#image_url41").attr("alt");
+	var price = $("#price").val();
+	// var detail = $("#detail").val();
+	var detail = CKEDITOR.instances.detail.getData();
+	var image_url1 = $("#image_url1").attr("alt");
 
-	var postData = {name: name, is_vip: is_vip, cat_id: cat_id, type_id: type_id, tel: tel, bosstel: bosstel, open_time: open_time, addr: addr, lng: lng, lat: lat, intro: intro, image_url01: image_url01, image_url11: image_url11, image_url21: image_url21, image_url31: image_url31, image_url41: image_url41};
-	
+	var postData = {title: title, is_rented: is_rented, house_type_id: house_type_id, tel: tel, addr: addr, lng: lng, lat: lat, price: price, detail: detail, image_url: image_url1};
+	console.log(postData);
 	var options = {
-		url: "{{ url('/houtai/shops') }}",
+		url: "{{ url('/houtai/rents') }}",
 		type: 'post',
 		dataType: 'json',
 		data: postData,
 		success: function(data){
 			alert(data.msg);
-			window.location.href = "{{ url('/houtai/shops') }}";
+			window.location.href = "{{ url('/houtai/rents') }}";
 		},
 		error: function(){
 			alert('出错了')
 		}
 	};
-	$("#createShop").ajaxSubmit(options);
+	$("#createRent").ajaxSubmit(options);
 	return false;
 }
 
 $(document).ready(function(){
 
-	$("#cat_id").on("change", changeCat);
-	$("#image_url0").on("change", changeFile0);
-	$("#image_url1").on("change", changeFile1);
-	$("#image_url2").on("change", changeFile2);
-	$("#image_url3").on("change", changeFile3);
-	$("#image_url4").on("change", changeFile4);
+	$("#image_url").on("change", changeFile);
 
 	AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],
     function(){
@@ -288,7 +170,7 @@ $(document).ready(function(){
 	    });
 	});
 
-	$("#createShop").submit(submitCreateShop);
+	$("#createRent").submit(submitCreateRent);
 });
 </script>
 @endsection
@@ -398,17 +280,45 @@ $(document).ready(function(){
 							<div class="col-lg-6">
 								<form role="form" id="uploadImage" enctype="multipart/form-data">
         							<div class="form-group">
-                                            <label>商户头图</label>
+                                            <label>房源头图</label>
                                             <input type="file" id="image_url" name="image_url">
                                             {{ csrf_field() }}
                                  	</div>
 								</form>
 							</div>
 							<div class="col-lg-6">
-								<img src="" alt="" id="image_url" style="width: 100px; height: 100px" >
+								<img src="" alt="" id="image_url1" style="width: 100px; height: 100px" >
 								<button class="btn btn-default" onclick="clickButton()">删除</button>
 							</div>
 						</div>	
+
+						<div class="row">
+							<div class="form-group">
+									<label>详情</label>
+									<textarea name="detail" id="detail" rows="10" cols="80"></textarea>
+									<script>
+						                // Replace the <textarea id="editor1"> with a CKEditor
+						                // instance, using default configuration.
+						                CKEDITOR.replace('detail');
+						            </script>
+									<span class="help-block">
+                                    </span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="form-group">
+                                    <label>是否已经租出</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="is_rented" value="0" checked>否
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="is_rented" value="1">是
+                                    </label>
+                                </div>
+							</div>	
+						</div>
 									
 						<form id="createRent">		
 						{{ csrf_field() }}

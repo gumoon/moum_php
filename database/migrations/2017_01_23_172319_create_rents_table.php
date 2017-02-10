@@ -24,7 +24,9 @@ class CreateRentsTable extends Migration
             $table->decimal('lat', 10, 6)->comment('纬度');
             $table->decimal('lng', 10, 6)->comment('经度');
             $table->string('addr', 255)->comment('商户地址');
+            $table->string('price', 50)->comment('租金');
             $table->text('detail')->comment('详细介绍');
+            $table->unsignedSmallInteger('is_rented')->comment('是否已经租出:0=未租出，1=已租出');
             $table->timestamps();
             $table->softDeletes();
         });

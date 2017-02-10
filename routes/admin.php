@@ -22,3 +22,5 @@ Route::get('/', function () {
 Route::post('/shops/get_types', 'ShopController@getTypesByCatId');
 Route::resource('shops', 'ShopController');
 Route::resource('links', 'LinkController');
+Route::resource('rents', 'RentController');
+Route::resource('one14s', 'One14Controller');

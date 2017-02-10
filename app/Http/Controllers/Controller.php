@@ -36,6 +36,26 @@ class Controller extends BaseController
         ),//跟分类顺序对应上，此为外卖的子分类
     );
 
+    //房型
+    public $houseTypes = array(
+        array(
+            'id' => 0,
+            'name' => '一室'
+        ),
+        array(
+            'id' => 1,
+            'name' => '二室'
+        ),
+        array(
+            'id' => 2,
+            'name' => '三室'
+        ),
+        array(
+            'id' => 3,
+            'name' => '四室'
+        )
+    );
+
     //黄页分类
     public $one14Categories = array(
         array(

@@ -60,16 +60,48 @@ class One14Controller extends Controller
     {
         $one14 = new One14;
         $one14->name = $request->input('name');
-        $one14->image_url = $request->input('image_url');
+
+        $image_url = $request->input('image_url');
+        if( $image_url )
+        {
+            $one14->image_url = $image_url;
+        }
+        
         $one14->cat_id = $request->input('cat_id');
         $one14->type_id = $request->input('type_id');
         $one14->tel = $request->input('tel');
-        $one14->lat = $request->input('lat');
-        $one14->lng = $request->input('lng');
-        $one14->addr = $request->input('addr');
+
+        $lat = $request->input('lat');
+        if( $lat )
+        {
+            $one14->lat = $lat;
+        }
+        
+        $lng = $request->input('lng');
+        if( $lng )
+        {
+           $one14->lng = $lng; 
+        }
+        
+        $addr = $request->input('addr');
+        if( $addr )
+        {
+            $one14->addr = $addr;
+        }
+        
         $one14->is_vip = $request->input('is_vip');
-        $one14->detail = $request->input('detail');
-        $one14->tags = $request->input('tags');
+
+        $detail = $request->input('detail');
+        if( $detail )
+        {
+            $one14->detail = $detail;
+        }
+        
+        $tags = $request->input('tags');
+        if( $tags )
+        {
+            $one14->tags = $tags;
+        }
 
         $one14->save();
  

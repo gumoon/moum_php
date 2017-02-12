@@ -295,7 +295,7 @@ $(document).ready(function(){
         					</div>
     						<div class="col-lg-6">
     							<div class="form-group">
-    								<label>标签列表，用分号分隔</label>
+    								<label>标签列表，用半角分号分隔</label>
     								<input type="text" name="tags" id="tags" class="form-control" placeholder="" value="{{$one14->tags}}">
 
     								<span class="help-block">

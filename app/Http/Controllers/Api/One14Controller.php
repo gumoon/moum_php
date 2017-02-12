@@ -41,17 +41,18 @@ class One14Controller extends Controller
 	 * @apiSuccess {String} msg 错误信息
 	 * @apiSuccess {Object} data
 	 * @apiSuccess {Object[]} data.partner
-	 * @apiSuccess {Number} data.partner.id 商户ID
-	 * @apiSuccess {String} data.partner.name 商户名
-	 * @apiSuccess {String} data.partner.image_url 商户头图
-	 * @apiSuccess {String} data.partner.tel 商户电话
+	 * @apiSuccess {Number} data.partner.id ID
+	 * @apiSuccess {String} data.partner.name  企业名
+	 * @apiSuccess {String} data.partner.image_ur 头图
+	 * @apiSuccess {String} data.partner.tel 电话
 	 * @apiSuccess {Number} data.partner.tags 标签列表,用半角分号分隔
 	 * @apiSuccess {String} data.partner.addr 地址
+	 * @apiSuccess {String} data.partner.url 企业114详情页
 	 * @apiSuccess {Object[]} data.other
-	 * @apiSuccess {Number} data.other.id 商户ID
-	 * @apiSuccess {String} data.other.name 商户名
-	 * @apiSuccess {String} data.other.tel 商户电话
-	 * @apiSuccess {Number} data.amount 满足条件的商户总数
+	 * @apiSuccess {Number} data.other.id ID
+	 * @apiSuccess {String} data.other.name 企业名
+	 * @apiSuccess {String} data.other.tel 电话
+	 * @apiSuccess {Number} data.amount 满足条件的企业总数
 	 *
 	 * @apiSuccessExample {json} Success-response:
 	 * {

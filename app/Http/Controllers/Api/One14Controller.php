@@ -45,7 +45,7 @@ class One14Controller extends Controller
 	 * @apiSuccess {String} data.partner.name 商户名
 	 * @apiSuccess {String} data.partner.image_url 商户头图
 	 * @apiSuccess {String} data.partner.tel 商户电话
-	 * @apiSuccess {Number} data.partner.tags 标签列表
+	 * @apiSuccess {Number} data.partner.tags 标签列表,用半角分号分隔
 	 * @apiSuccess {String} data.partner.addr 地址
 	 * @apiSuccess {Object[]} data.other
 	 * @apiSuccess {Number} data.other.id 商户ID
@@ -66,7 +66,8 @@ class One14Controller extends Controller
 	 *          "image_url": "http://www.idaocao.com/daocaoeditor/uploadfile/2008815124937986.jpg",
 	 *          "tel": "18600562137",
 	 *          "tags": "标签1;标签2",
-	 *          "addr": "朝阳区望京SOHO23-234-3"
+	 *          "addr": "朝阳区望京SOHO23-234-3",
+	 *          "url": "http://www.baidu.com/"
 	 *        }
 	 *      ],
 	 *      "other": [

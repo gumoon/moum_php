@@ -37,7 +37,8 @@ class RentController extends Controller
 	 *        "distance": "2.4km",
 	 *        "type_name": "一室一厅一厨一卫",
 	 *        "price": "2400元/月",
-	 *        "addr": "海淀区五道口清华大学附近小区19-12-3"
+	 *        "addr": "海淀区五道口清华大学附近小区19-12-3",
+	 *        "url": "http://www.baidu.com/"
 	 *      }
 	 *    ],
 	 *    "amount": 30
@@ -79,7 +80,8 @@ class RentController extends Controller
 				'image_url' => $rent->image_url ? Config::get('app.ossDomain').$rent->image_url : '',
 				'distance' => $distance,
 				'price' => $rent->price.'元/月',
-				'addr' => $rent->addr
+				'addr' => $rent->addr,
+				'url' => 'http://www.baidu.com/'
 			);
 		}
 

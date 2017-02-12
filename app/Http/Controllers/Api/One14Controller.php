@@ -119,7 +119,7 @@ class One14Controller extends Controller
 					'tel' => $one14->tel,
 					'tags' => $one14->tags,
 					'addr' => $one14->addr,
-					'url' => 'http://www.baidu.com/'
+					'url' => url('home/one14/profile', [base64_encode($one14->id)])
 				);
 			}
 			else

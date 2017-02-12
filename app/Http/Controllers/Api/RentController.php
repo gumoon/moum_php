@@ -96,7 +96,7 @@ class RentController extends Controller
 				'type_name' => $houseTypes[$rent->house_type_id]['name'],
 				'price' => $rent->price.'元/月',
 				'addr' => $rent->addr,
-				'url' => 'http://www.baidu.com/'
+				'url' => url('home/rent/profile', [base64_encode($rent->id)])
 			);
 		}
 

@@ -4,6 +4,8 @@ namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
+use Config;
+use moum\Models\One14;
 
 class One14Controller extends Controller
 {
@@ -96,26 +98,35 @@ class One14Controller extends Controller
 		$lng = $request->input('lng');
 		$typeId = $request->input('type_id');
 
+		$one14s = One14::where('type_id', $typeId)
+					->skip($offset)
+					->take($count)
+					->get();
+
 		$partner = array();
-		for($i=0;$i<1;$i++)
-		{
-			$partner[] = array(
-				'id' => 1,
-				'name' => '韩国驻北京领事馆',
-				'image_url' => 'http://www.idaocao.com/daocaoeditor/uploadfile/2008815124937986.jpg',
-				'tel' => '18600562137',
-				'tags' => '标签1;标签2',
-				'addr' => '朝阳区望京SOHO23-234-3'
-			);
-		}
 		$other = array();
-		for($j=0;$j<1;$j++)
+		foreach( $one14s AS $one14 )
 		{
-			$other[] = array(
-				'id' => 10,
-				'name' => '某某KTV',
-				'tel' => '13911112222'
-			);
+			if( $one14->is_vip == 1 )
+			{
+				$partner[] = array(
+					'id' => $one14->id,
+					'name' => $one14->name,
+					'image_url' => $one14->image_url ? Config::get('app.ossDomain').$one14->image_url : '',
+					'tel' => $one14->tel,
+					'tags' => $one14->tags,
+					'addr' => $one14->addr,
+					'url' => 'http://www.baidu.com/'
+				);
+			}
+			else
+			{
+				$other[] = array(
+					'id' => $one14->id,
+					'name' => $one14->name,
+					'tel' => $one14->tel
+				);
+			}
 		}
 
 		$data = array(
@@ -123,7 +134,7 @@ class One14Controller extends Controller
 				'partner' => $partner,
 				'other' => $other
 			),
-			'amount' => 100
+			'amount' => One14::where('type_id', $typeId)->count()
 		);
 
 		return $this->successJson( $data );

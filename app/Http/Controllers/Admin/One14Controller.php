@@ -5,6 +5,7 @@ namespace moum\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use moum\Models\One14;
 use Config;
+use Illuminate\Validation\Rule;
 use moum\Http\Controllers\Controller;
 
 class One14Controller extends Controller
@@ -58,6 +59,13 @@ class One14Controller extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'bail|required|unique:one14s,name',
+            'cat_id' => 'bail|required|integer|min:0',
+            'type_id' => 'bail|required|integer|min:0',
+            'tel' => 'bail|required'
+        ]);
+
         $one14 = new One14;
         $one14->name = $request->input('name');
 
@@ -155,6 +163,13 @@ class One14Controller extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'name' => Rule::unique('one14s')->ignore($id, 'id'),
+            'cat_id' => 'bail|required|integer|min:0',
+            'type_id' => 'bail|required|integer|min:0',
+            'tel' => 'bail|required'
+        ]);
+
         $id = intval($id);
 
         $one14 = One14::find($id);

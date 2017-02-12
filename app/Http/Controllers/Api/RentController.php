@@ -3,7 +3,10 @@
 namespace moum\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
+use moum\Models\Rent;
 use moum\Http\Controllers\Controller;
+use moum\Services\Helper;
+use Config;
 
 class RentController extends Controller
 {
@@ -54,31 +57,35 @@ class RentController extends Controller
 		$lng = $request->input('lng');
 		$page = $request->input('page', 1);
 		$count = $request->input('count', 10);
+		$offset = ($page - 1) * $count;
 
-		//推荐商户显示几个
-		$amount = 30;
-		if( $page > 3)
-		{
-			return $this->successJson();
-		}
-
+		$rents = Rent::where('id', '>', 0)
+					->skip($offset)
+					->take($count)
+					->get();
+		
 		$tmp = array();
-		for($i=0;$i<1;$i++)
+		$distance = '';
+		foreach($rents AS $rent)
 		{
+			if( !empty($lng) && !empty($lat) )
+			{
+				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+			}
+
 			$tmp[] = array(
-				'id' => $i,
-				'title' => '全城最低价,短租月付',
-				'image_url' => 'http://yun.qfangimg.com/group1/1000x1000/M00/CF/8A/CvtcNFdvYI-AT5-CAADaia6oOcE506.jpg',
-				'distance' => '2.4km',
-				'type_name' => '一室一厅一厨一卫',
-				'price' => '2400元/月',
-				'addr' => '海淀区五道口清华大学附近小区19-12-3'
+				'id' => $rent->id,
+				'title' => $rent->title,
+				'image_url' => $rent->image_url ? Config::get('app.ossDomain').$rent->image_url : '',
+				'distance' => $distance,
+				'price' => $rent->price.'元/月',
+				'addr' => $rent->addr
 			);
-		}	
+		}
 
 		$data = array(
 			'houses' => $tmp,
-			'amount' => $amount
+			'amount' => Rent::where('id', '>', 0)->count()
 		);
 
 		return $this->successJson( $data );

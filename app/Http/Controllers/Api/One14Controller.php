@@ -59,7 +59,7 @@ class One14Controller extends Controller
 	 *  "err_no": 0,
 	 *  "msg": "成功",
 	 *  "data": {
-	 *    "one14": {
+	 *    "one14s": {
 	 *      "partner": [
 	 *        {
 	 *        	"id": 1,
@@ -132,7 +132,7 @@ class One14Controller extends Controller
 		}
 
 		$data = array(
-			'one14' => array(
+			'one14s' => array(
 				'partner' => $partner,
 				'other' => $other
 			),

@@ -24,6 +24,17 @@ class RentController extends Controller
 	 * @apiSuccess {Number} err_no 
 	 * @apiSuccess {String} msg
 	 * @apiSuccess {Object} data
+	 * @apiSuccess {Object[]} data.houses
+	 * @apiSuccess {Number} data.houses.id
+	 * @apiSuccess {String} data.houses.title
+	 * @apiSuccess {String} data.houses.image_url
+	 * @apiSuccess {String} data.houses.distance
+	 * @apiSuccess {String} data.houses.type_name
+	 * @apiSuccess {String} data.houses.price
+	 * @apiSuccess {String} data.houses.addr
+	 * @apiSuccess {String} data.houses.url
+	 * @apiSuccess {Number} data.amount
+	 * 
 	 * @apiSuccessExample {json} Success-response: 
 	 * {
 	 *  "err_no": 0,
@@ -40,6 +51,7 @@ class RentController extends Controller
 	 *        "addr": "海淀区五道口清华大学附近小区19-12-3",
 	 *        "url": "http://www.baidu.com/"
 	 *      }
+	 *      ...
 	 *    ],
 	 *    "amount": 30
 	 *  }
@@ -67,6 +79,8 @@ class RentController extends Controller
 		
 		$tmp = array();
 		$distance = '';
+		$houseTypes = collect($this->houseTypes)->keyBy('id');
+
 		foreach($rents AS $rent)
 		{
 			if( !empty($lng) && !empty($lat) )
@@ -79,6 +93,7 @@ class RentController extends Controller
 				'title' => $rent->title,
 				'image_url' => $rent->image_url ? Config::get('app.ossDomain').$rent->image_url : '',
 				'distance' => $distance,
+				'type_name' => $houseTypes[$rent->house_type_id]['name'],
 				'price' => $rent->price.'元/月',
 				'addr' => $rent->addr,
 				'url' => 'http://www.baidu.com/'

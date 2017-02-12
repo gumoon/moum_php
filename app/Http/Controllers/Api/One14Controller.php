@@ -40,18 +40,19 @@ class One14Controller extends Controller
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
 	 * @apiSuccess {Object} data
-	 * @apiSuccess {Object[]} data.partner
-	 * @apiSuccess {Number} data.partner.id ID
-	 * @apiSuccess {String} data.partner.name  企业名
-	 * @apiSuccess {String} data.partner.image_ur 头图
-	 * @apiSuccess {String} data.partner.tel 电话
-	 * @apiSuccess {Number} data.partner.tags 标签列表,用半角分号分隔
-	 * @apiSuccess {String} data.partner.addr 地址
-	 * @apiSuccess {String} data.partner.url 企业114详情页
-	 * @apiSuccess {Object[]} data.other
-	 * @apiSuccess {Number} data.other.id ID
-	 * @apiSuccess {String} data.other.name 企业名
-	 * @apiSuccess {String} data.other.tel 电话
+	 * @apiSuccess {Object} data.one14s
+	 * @apiSuccess {Object[]} data.one14s.partner
+	 * @apiSuccess {Number} data.one14s.partner.id ID
+	 * @apiSuccess {String} data.one14s.partner.name  企业名
+	 * @apiSuccess {String} data.one14s.partner.image_ur 头图
+	 * @apiSuccess {String} data.one14s.partner.tel 电话
+	 * @apiSuccess {Number} data.one14s.partner.tags 标签列表,用半角分号分隔
+	 * @apiSuccess {String} data.one14s.partner.addr 地址
+	 * @apiSuccess {String} data.one14s.partner.url 企业114详情页
+	 * @apiSuccess {Object[]} data.one14s.other
+	 * @apiSuccess {Number} data.one14s.other.id ID
+	 * @apiSuccess {String} data.one14s.other.name 企业名
+	 * @apiSuccess {String} data.one14s.other.tel 电话
 	 * @apiSuccess {Number} data.amount 满足条件的企业总数
 	 *
 	 * @apiSuccessExample {json} Success-response:

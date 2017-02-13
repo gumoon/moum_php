@@ -167,12 +167,16 @@ class DialController extends Controller
      * @apiSuccess {Object[]} data 实时打电话信息
      * @apiSuccess {Object[]} data.dials 实时打电话详情
      * @apiSuccess {String} data.dials.created_at 打电话时间
-     * @apiSuccess {Object} data.dials.shop 被打电话的商户
+     * @apiSuccess {Object} [data.dials.shop] 被打电话的商户
      * @apiSuccess {Number} data.dials.shop.id 商户ID
      * @apiSuccess {String} data.dials.shop.name 商户名
      * @apiSuccess {String} data.dials.shop.image_url 商户头图
      * @apiSuccess {String} data.dials.shop.open_time 营业时间
      * @apiSuccess {String} data.dials.shop.intro 商户简介
+     * @apiSuccess {Object} [data.dials.one14]
+     * @apiSuccess {Number} data.dials.one14.id
+     * @apiSuccess {String} data.dials.one14.name
+     * @apiSuccess {String} data.dials.one14.tel
      * @apiSuccess {Object} data.dials.user 打电话的用户
      * @apiSuccess {String} data.dials.user.name 用户名
      * @apiSuccess {Number} data.amount 满足条件的总记录条数

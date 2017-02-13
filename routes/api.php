@@ -41,7 +41,8 @@ Route::post('/user/captcha', 'UserController@captcha');
 
 Route::post('/suggest/create', 'SuggestController@create');
 
-Route::get('/spread/all', 'SpreadController@all');
+Route::get('/spread/firing', 'SpreadController@firing');
+Route::get('/spread/topic', 'SpreadController@topic');
 
 Route::get('/rent/arround', 'RentController@arround');
 

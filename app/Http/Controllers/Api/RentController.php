@@ -85,7 +85,7 @@ class RentController extends Controller
 		{
 			if( !empty($lng) && !empty($lat) )
 			{
-				$distance = Helper::getDistance($shop->lng, $shop->lat, $lng, $lat).'km';
+				$distance = Helper::getDistance($rent->lng, $rent->lat, $lng, $lat).'km';
 			}
 
 			$tmp[] = array(

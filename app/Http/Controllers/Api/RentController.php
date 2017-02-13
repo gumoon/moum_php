@@ -49,6 +49,7 @@ class RentController extends Controller
 	 *        "type_name": "一室一厅一厨一卫",
 	 *        "price": "2400元/月",
 	 *        "addr": "海淀区五道口清华大学附近小区19-12-3",
+	 *        "tel": "18600562137",
 	 *        "url": "http://www.baidu.com/"
 	 *      }
 	 *      ...
@@ -96,6 +97,7 @@ class RentController extends Controller
 				'type_name' => $houseTypes[$rent->house_type_id]['name'],
 				'price' => $rent->price.'元/月',
 				'addr' => $rent->addr,
+				'tel' => $rent->tel,
 				'url' => url('home/rent/profile', [base64_encode($rent->id)])
 			);
 		}

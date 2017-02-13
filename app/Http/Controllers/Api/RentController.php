@@ -32,6 +32,7 @@ class RentController extends Controller
 	 * @apiSuccess {String} data.houses.type_name
 	 * @apiSuccess {String} data.houses.price
 	 * @apiSuccess {String} data.houses.addr
+	 * @apiSuccess {String} data.houses.tel
 	 * @apiSuccess {String} data.houses.url
 	 * @apiSuccess {Number} data.amount
 	 * 

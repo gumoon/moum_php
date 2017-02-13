@@ -23,4 +23,12 @@ class Dial extends Model
     {
     	return $this->belongsTo('moum\Models\Shop');
     }
+
+    /**
+     * Get the one14 that owns the dials.
+     */
+    public function one14()
+    {
+        return $this->belongsTo('moum\Models\One14');
+    }
 }

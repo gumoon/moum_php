@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 Route::post('/common/init', 'CommonController@init');
 Route::post('/common/upload', 'CommonController@upload');
 
+Route::get('/dial/shop_timeline', 'DialController@shopTimeline');
 Route::get('/dial/timeline', 'DialController@timeline');
 Route::post('/dial/create', 'DialController@create');
 

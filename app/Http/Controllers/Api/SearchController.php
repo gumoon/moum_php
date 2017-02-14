@@ -118,7 +118,7 @@ class SearchController extends Controller
 	}
 
 	/**
-	 * @api {get} /shop/global 全局搜索
+	 * @api {get} /search/global 全局搜索
 	 * @apiName SearchGlobal
 	 * @apiGroup Search
 	 *

@@ -97,6 +97,7 @@ class SpreadController extends Controller
 	 *      {
 	 *        "image_url": "http://image.tupian114.com/20121102/11081330.jpg",
 	 *        "url": "http://moum.xiaoyuweb.cn/home/one14/profile/Mg%3D%3D",
+	 *        "id": 1,
 	 *        "flag": 2
 	 *      }
 	 *    ]
@@ -121,10 +122,12 @@ class SpreadController extends Controller
 				array(
 					'image_url' => 'http://image.tupian114.com/20121102/11081330.jpg',
 					'url' => 'http://moum.xiaoyuweb.cn/home/one14/profile/Mg%3D%3D',
+					'id' => 1,
 					'flag' => 2
 				)
 			)
 		);
+		
 		return $this->successJson( $data );
 	}
 }

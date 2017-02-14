@@ -25,7 +25,6 @@ Route::get('/shop/arround', 'ShopController@arround');
 Route::get('/shop/show', 'ShopController@show');
 Route::post('/shop/report_error', 'ShopController@reportError');
 Route::get('/shop/timeline', 'ShopController@timeline');
-Route::get('/shop/search', 'ShopController@search');
 Route::get('/shop/access_rank_by_month', 'ShopController@accessRankByMonth');
 
 Route::get('/discover/links', 'LinkController@all');
@@ -49,3 +48,6 @@ Route::get('/rent/arround', 'RentController@arround');
 
 Route::get('/one14/categorize', 'One14Controller@categorize');
 Route::get('/one14/arround', 'One14Controller@arround');
+
+Route::get('/search/shop', 'SearchController@shop');
+Route::get('/search/global', 'SearchController@global');

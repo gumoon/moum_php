@@ -47,7 +47,7 @@ class SpreadController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'image_url' => 'bail|required|max:255'
+            //'image_url' => 'bail|required|max:255'
         ]);
 
         $spread = new Spread;
@@ -110,7 +110,7 @@ class SpreadController extends Controller
         $id = intval($id);
 
         $this->validate($request, [
-            'image_url' => 'bail|required|max:255'
+            //'image_url' => 'bail|required|max:255'
         ]);
 
         $spread = Spread::find($id);

@@ -12,23 +12,10 @@
 <script src="{{ asset('admin/vendor/morrisjs/morris.min.js') }}"></script>
 <script src="{{ asset('admin/data/morris-data.js') }}"></script>
 <script type="text/javascript" src="{{ asset('admin/data/jquery.form.js') }}"></script>
-<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=ba07f815eee649971fedc65ba266300e"></script>
 @endsection
 
 @section('customjs')
 <script type="text/javascript">
-var map = new AMap.Map('map',{
-    zoom: 14,
-    center: [116.337844,39.99293],
-    scrollWheel: false
-});
-var marker = new AMap.Marker({
-	position: [116.337844, 39.99293],
-	draggable: true
-});
-marker.setMap(map);
-marker.on('dragend', dragendMarker);
-
 function processJson(data){
 	$("#image_url1").attr("src", data.data.url);
 	$("#image_url1").attr("alt", data.data.filename);
@@ -53,69 +40,6 @@ function changeFile(){
 	};
 	$("#uploadImage").ajaxSubmit(options);
 	return false;
-}
-
-function dragendMarker(event)
-{
-	var lat = event.lnglat.getLat();
-	var lng = event.lnglat.getLng();
-
-	AMap.service('AMap.Geocoder',function(){//回调函数
-	    //实例化Geocoder
-	    geocoder = new AMap.Geocoder({
-	        city: "010"//城市，默认：“全国”
-	    });
-	    //TODO: 使用geocoder 对象完成相关功能
-	    //逆地理编码
-		var lnglatXY=[lng, lat];//地图上所标点的坐标
-		geocoder.getAddress(lnglatXY, function(status, result) {
-		    if (status === 'complete' && result.info === 'OK') {
-		       //获得了有效的地址信息:
-		       //即，result.regeocode.formattedAddress
-		       map.panTo(lnglatXY);
-		       $("#addr").val(result.regeocode.formattedAddress);
-		    }else{
-		       //获取地址失败
-		    }
-		});
-	})
-
-	$("#lat").val(lat);
-	$("#lng").val(lng);
-}
-
-function search(){
-	var addr = $("#addr").val();
-	AMap.service('AMap.Geocoder',function(){//回调函数
-	    //实例化Geocoder
-	    geocoder = new AMap.Geocoder({
-	        city: "010"//城市，默认：“全国”
-	    });
-	    //TODO: 使用geocoder 对象完成相关功能
-	    //地理编码
-		geocoder.getLocation( addr, function(status, result) {
-		    if (status === 'complete' && result.info === 'OK') {
-		        //TODO:获得了有效经纬度，可以做一些展示工作
-		        //比如在获得的经纬度上打上一个Marker
-		        var lat = result.geocodes[0].location.getLat();
-		        var lng = result.geocodes[0].location.getLng();
-		        var position = [lng, lat];
-		        map.panTo(position);
-		        map.clearMap();
-		        var marker = new AMap.Marker({
-		        	position: position,
-		        	draggable: true
-		        });
-		        marker.setMap(map);
-		        marker.on('dragend', dragendMarker);
-
-		        $("#lat").val(lat);
-		        $("#lng").val(lng);
-		    }else{
-		        //获取经纬度失败
-		    }
-		});
-	});
 }
 
 function submitUpdateRent()
@@ -153,21 +77,6 @@ function submitUpdateRent()
 $(document).ready(function(){
 
 	$("#image_url").on("change", changeFile);
-
-	AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.OverView'],
-    function(){
-        map.addControl(new AMap.ToolBar());
- 
-        map.addControl(new AMap.Scale());
- 
-        map.addControl(new AMap.OverView({isOpen:true}));
-	});
-	AMap.service('AMap.Geocoder',function(){//回调函数
-	    //实例化Geocoder
-	    geocoder = new AMap.Geocoder({
-	        city: "010"//城市，默认：“全国”
-	    });
-	});
 
 	$("#updateRent").submit(submitUpdateRent);
 });

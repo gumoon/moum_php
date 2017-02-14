@@ -104,7 +104,8 @@ class SearchController extends Controller
 				'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 				'tel' => $shop->tel,
 				'distance' => $distance,
-				'open_time' => $shop->open_time
+				'open_time' => $shop->open_time,
+				'is_vip' => $shop->is_vip
 			);
 		}
 
@@ -159,12 +160,17 @@ class SearchController extends Controller
 	 *         "tel": "18600562137",
 	 *         "distance": "",
 	 *         "open_time": "1111777",
+	 *         "is_vip": 1,
 	 *         "flag": 0
 	 *       },
 	 *       {
 	 *         "id": 1,
 	 *         "name": "111",
 	 *         "tel": "ddd",
+	 *         "is_vip": 1,
+	 *         "image_url": "",
+	 *         "addr": "",
+	 *         "tags": "",
 	 *         "flag": 1
 	 *       }
 	 *     ],
@@ -213,6 +219,7 @@ class SearchController extends Controller
 				'tel' => $shop->tel,
 				'distance' => $distance,
 				'open_time' => $shop->open_time,
+				'is_vip' => $shop->is_vip,
 				'flag' => 0
 			);
 		}
@@ -227,6 +234,11 @@ class SearchController extends Controller
 				'id' => $one14->id,
 				'name' => $one14->name,
 				'tel' => $one14->tel,
+				'is_vip' => $one14->is_vip,
+				'image_url' => $one14->image_url ? Config::get('app.ossDomain').$one14->image_url : '',
+				'tags' => $one14->tags,
+				'addr' => $one14->addr,
+				'url' => url('home/one14/profile', [base64_encode($one14->id)]),
 				'flag' => 1,
 			);
 		}

@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use Config;
 use Carbon\Carbon;
+use moum\Models\Spread;
+use moum\Models\One14;
 
 
 class SpreadController extends Controller
@@ -47,20 +49,35 @@ class SpreadController extends Controller
      */
 	public function firing(Request $request)
 	{
+		$spreads = Spread::where('position_id', 1)
+					->get();
+
+		$openpage = array();
+		foreach($spreads AS $spread)
+		{
+			if( $spread->flag == 0 )
+			{
+				$openpage[] = array(
+					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
+					'url' => $spread->extra,
+					'flag' => $spread->flag
+				);
+			}
+			elseif( $spread->flag == 1 )
+			{
+				$openpage[] = array(
+					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
+					'shop_id' => $spread->extra,
+					'flag' => $spread->flag
+				);
+			}
+			
+		}
+
 		$data = array(
-			'openpage' => array(
-				[
-					'image_url' => 'http://img5.2345.com/toolsimg/baike/collect/sheying/2146599705_650x2000.jpg',
-					'url' => 'http://www.baidu.com/',
-					'flag' => 0
-				],
-				[
-					'image_url' => 'http://i4.piimg.com/11340/7f638e192b9079e6.jpg',
-					'shop_id' => 10,
-					'flag' => 1,
-				]
-			)
+			'openpage' => $openpage
 		);
+
 		return $this->successJson( $data );
 	}
 
@@ -108,25 +125,43 @@ class SpreadController extends Controller
 	 */
 	public function topic(Request $request)
 	{
+		$spreads = Spread::where('position_id', 2)
+					->get();
+
+		$tmp = array();
+		foreach($spreads AS $spread)
+		{
+			if( $spread->flag == 0 )
+			{
+				$tmp[] = array(
+					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
+					'url' => $spread->extra,
+					'flag' => $spread->flag
+				);
+			}
+			elseif( $spread->flag == 1 )
+			{
+				$tmp[] = array(
+					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
+					'shop_id' => $spread->extra,
+					'flag' => $spread->flag
+				);
+			}
+			elseif( $spread->flag == 2 )
+			{
+				$one14 = One14::find($spread->extra);
+				$tmp[] = array(
+					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
+					'url' => url('home/one14/profile', [base64_encode($spread->extra)]),
+					'tel' => $one14->tel,
+					'flag' => $spread->flag
+				);
+			}
+			
+		}
+
 		$data = array(
-			'topics' => array(
-				array(
-					'image_url' => 'http://img5.2345.com/toolsimg/baike/collect/sheying/2146599705_650x2000.jpg',
-					'url' => 'http://www.baidu.com/',
-					'flag' => 0
-				),
-				array(
-					'image_url' => 'http://i4.piimg.com/11340/7f638e192b9079e6.jpg',
-					'shop_id' => 10,
-					'flag' => 1
-				),
-				array(
-					'image_url' => 'http://image.tupian114.com/20121102/11081330.jpg',
-					'url' => 'http://moum.xiaoyuweb.cn/home/one14/profile/Mg%3D%3D',
-					'tel' => '18600562137',
-					'flag' => 2
-				)
-			)
+			'topics' => $tmp
 		);
 
 		return $this->successJson( $data );

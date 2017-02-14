@@ -15,6 +15,7 @@ class CreateSpreadsTable extends Migration
     {
         Schema::create('spreads', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('title')->nullable()->comment('描述');
             $table->unsignedInteger('position_id')->comment('位置: 0=外卖商户推荐，1=启动页，2=首页主题列表');
             $table->string('image_url');
             $table->unsignedSmallInteger('flag')->comment('0=网址，1=商户，2=黄页');

@@ -4,7 +4,7 @@ namespace moum\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use moum\Http\Requests\StoreShopPost;
-use moum\Models\Shop;
+use moum\Models\Spread;
 use moum\Models\Rent;
 use Config;
 use moum\Http\Controllers\Controller;
@@ -19,9 +19,13 @@ class SpreadController extends Controller
      */
     public function index()
     {
-        $rents = Rent::all();
+        $spreads = Spread::all();
+        foreach($spreads AS &$spread)
+        {
+            $spread->image_url_src = $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '';
+        }
 
-        return view('admin.rents.index', ['rents' => $rents]);
+        return view('admin.spreads.index', ['spreads' => $spreads]);
     }
 
     /**
@@ -31,9 +35,7 @@ class SpreadController extends Controller
      */
     public function create()
     {
-        return view('admin.rents.create', [
-            'houseTypes' => $this->houseTypes
-        ]);
+        return view('admin.spreads.create');
     }
 
     /**
@@ -44,19 +46,18 @@ class SpreadController extends Controller
      */
     public function store(Request $request)
     {
-        $rent = new Rent;
-        $rent->title = $request->input('title');
-        $rent->image_url = $request->input('image_url');
-        $rent->house_type_id = $request->input('house_type_id');
-        $rent->tel = $request->input('tel');
-        $rent->lat = $request->input('lat');
-        $rent->lng = $request->input('lng');
-        $rent->addr = $request->input('addr');
-        $rent->is_rented = $request->input('is_rented');
-        $rent->detail = $request->input('detail');
-        $rent->price = $request->input('price');
+        $this->validate($request, [
+            'image_url' => 'bail|required|max:255'
+        ]);
 
-        $rent->save();
+        $spread = new Spread;
+        $spread->title = $request->input('title');
+        $spread->image_url = $request->input('image_url');
+        $spread->position_id = $request->input('position_id');
+        $spread->extra = $request->input('extra');
+        $spread->flag = $request->input('flag');
+
+        $spread->save();
  
         if( $request->expectsJson() )
         {
@@ -64,7 +65,7 @@ class SpreadController extends Controller
         }
         else
         {
-            return redirect('/houtai/rents');
+            return redirect('/houtai/spreads');
         }
     }
 
@@ -89,12 +90,12 @@ class SpreadController extends Controller
     {
         $id = intval($id);
 
-        $rent = Rent::findOrFail($id);
+        $spread = Spread::findOrFail($id);
 
         //头图
-        $rent->image_url_src = empty($rent->image_url) ? '' : Config::get('app.ossDomain'). $rent->image_url;
+        $spread->image_url_src = empty($spread->image_url) ? '' : Config::get('app.ossDomain'). $spread->image_url;
 
-        return view('admin.rents.edit', ['rent' => $rent, 'houseTypes' => $this->houseTypes]);
+        return view('admin.spreads.edit', ['spread' => $spread]);
     }
 
     /**
@@ -108,19 +109,18 @@ class SpreadController extends Controller
     {
         $id = intval($id);
 
-        $rent = Rent::find($id);
-        $rent->title = $request->input('title');
-        $rent->image_url = $request->input('image_url');
-        $rent->house_type_id = $request->input('house_type_id');
-        $rent->tel = $request->input('tel');
-        $rent->lat = $request->input('lat');
-        $rent->lng = $request->input('lng');
-        $rent->addr = $request->input('addr');
-        $rent->is_rented = $request->input('is_rented');
-        $rent->detail = $request->input('detail');
-        $rent->price = $request->input('price');
+        $this->validate($request, [
+            'image_url' => 'bail|required|max:255'
+        ]);
 
-        $rent->save();
+        $spread = Spread::find($id);
+        $spread->title = $request->input('title');
+        $spread->image_url = $request->input('image_url');
+        $spread->position_id = $request->input('position_id');
+        $spread->extra = $request->input('extra');
+        $spread->flag = $request->input('flag');
+
+        $spread->save();
  
         if( $request->expectsJson() )
         {
@@ -128,7 +128,7 @@ class SpreadController extends Controller
         }
         else
         {
-            return redirect('/houtai/rents');
+            return redirect('/houtai/spreads');
         }
     }
 
@@ -140,6 +140,18 @@ class SpreadController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = intval($id);
+
+        $res = Spread::destroy($id);
+
+        if( $res == 1 )
+        {
+            return $this->successJson();
+        }
+        else
+        {
+            return $this->failedJson('delete fail');
+        }
+        
     }
 }

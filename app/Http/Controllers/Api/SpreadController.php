@@ -76,6 +76,7 @@ class SpreadController extends Controller
      * @apiSuccess {String} data.topics.image_url
      * @apiSuccess {String} [data.topics.url]
      * @apiSuccess {Number} [data.topics.shop_id]
+     * @apiSuccess {String} [data.topics.tel]
      * @apiSuccess {Number} data.topics.flag flag=0表示是网页，flag=1表示是商户,flag=2表示是黄页
      * 
      * @apiSuccessExample {json} Success-response:
@@ -97,7 +98,7 @@ class SpreadController extends Controller
 	 *      {
 	 *        "image_url": "http://image.tupian114.com/20121102/11081330.jpg",
 	 *        "url": "http://moum.xiaoyuweb.cn/home/one14/profile/Mg%3D%3D",
-	 *        "id": 1,
+	 *        "tel": "18600562137",
 	 *        "flag": 2
 	 *      }
 	 *    ]
@@ -122,12 +123,12 @@ class SpreadController extends Controller
 				array(
 					'image_url' => 'http://image.tupian114.com/20121102/11081330.jpg',
 					'url' => 'http://moum.xiaoyuweb.cn/home/one14/profile/Mg%3D%3D',
-					'id' => 1,
+					'tel' => '18600562137',
 					'flag' => 2
 				)
 			)
 		);
-		
+
 		return $this->successJson( $data );
 	}
 }

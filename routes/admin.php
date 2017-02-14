@@ -25,3 +25,5 @@ Route::resource('shops', 'ShopController');
 Route::resource('links', 'LinkController');
 Route::resource('rents', 'RentController');
 Route::resource('one14s', 'One14Controller');
+Route::resource('spreads', 'SpreadController');
+Route::resource('users', 'UserController');

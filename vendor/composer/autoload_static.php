@@ -404,6 +404,7 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'CreateRoleUserTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_31_170811_create_role_user_table.php',
         'CreateRolesTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_31_163314_create_roles_table.php',
         'CreateShopsTable' => __DIR__ . '/../..' . '/database/migrations/2016_12_27_102626_create_shops_table.php',
+        'CreateSpreadsTable' => __DIR__ . '/../..' . '/database/migrations/2017_02_14_140650_create_spreads_table.php',
         'CreateUserReportShopErrorsTable' => __DIR__ . '/../..' . '/database/migrations/2017_01_04_135356_create_user_report_shop_errors_table.php',
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',

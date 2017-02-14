@@ -55,7 +55,7 @@ class SpreadController extends Controller
 					'flag' => 0
 				],
 				[
-					'image_url' => 'http://img1.imgtn.bdimg.com/it/u=1062463557,3581994092&fm=23&gp=0.jpg',
+					'image_url' => 'http://i4.piimg.com/11340/7f638e192b9079e6.jpg',
 					'shop_id' => 10,
 					'flag' => 1,
 				]
@@ -116,7 +116,7 @@ class SpreadController extends Controller
 					'flag' => 0
 				),
 				array(
-					'image_url' => 'http://img1.imgtn.bdimg.com/it/u=1062463557,3581994092&fm=23&gp=0.jpg',
+					'image_url' => 'http://i4.piimg.com/11340/7f638e192b9079e6.jpg',
 					'shop_id' => 10,
 					'flag' => 1
 				),

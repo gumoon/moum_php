@@ -72,7 +72,7 @@ $(document).ready(function(){
         					<thead>
         						<tr>
         							<th>ID</th>
-        							<th>描述</th>
+        							<th>扩展信息</th>
         							<th>图片</th>
                                     <th>位置</th>
         							<th>操作</th>
@@ -82,7 +82,7 @@ $(document).ready(function(){
         					@forelse ($spreads as $spread)
 							    <tr>
         							<td>{{ $spread->id }}</td>
-        							<td>{{ $spread->title }}</td>
+        							<td>{{ $spread->extra }}</td>
         							<td><img src="{{ $spread->image_url_src }}" style="width:100px;height: 100px"></td>
                                     <td>@if($spread->position_id == 0) 外卖商户推荐 @elseif($spread->position_id == 1) 启动页 @else 首页主题列表 @endif</td>
         							<td><a href="{{ route('spreads.edit', ['spread' => $spread->id]) }}">编辑</a>&nbsp;&nbsp;<a href="javascript;" onclick="destroy({{$spread->id}}); return false;">删除</a></td>

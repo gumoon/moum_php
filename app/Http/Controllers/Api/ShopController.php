@@ -11,7 +11,7 @@ use moum\Services\Helper;
 use moum\Http\Controllers\Controller;
 use Carbon\Carbon;
 use moum\Events\AccessShopEvent;
-
+use moum\Models\Spread;
 
 class ShopController extends Controller
 {
@@ -71,12 +71,11 @@ class ShopController extends Controller
 		$lat = $request->input('lat');
 		$lng = $request->input('lng');
 
-		//推荐商户显示几个
-		$amount = 10;
+		$spreads = Spread::where('position_id', 0)
+					->get();
+		$shopIds = $spreads->keyBy('extra')->keys()->all();
 
-		$shops = Shop::where('id', '>', 0)
-						->latest()
-						->take($amount)
+		$shops = Shop::whereIn('id', $shopIds)
 						->get();
 
 		$tmp = array();
@@ -103,7 +102,7 @@ class ShopController extends Controller
 
 		$data = array(
 			'shops' => $tmp,
-			'amount' => $amount
+			'amount' => count($shopIds)
 		);
 
 		return $this->successJson( $data );

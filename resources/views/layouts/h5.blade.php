@@ -12,7 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+    @yield('thirdcss')
+    
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([

@@ -13,11 +13,11 @@
 	<div class="panel panel-success" style="margin-top: 5px;">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a href="#rent-general" data-toggle="collapse">基本信息</a>
+				<a href="#rent-general" data-toggle="collapse" aria-expanded="true">基本信息</a>
 			</h4>
 		</div>
-			
-			<ul class="list-group" id="rent-general">
+		<div class="panel-collapse collapse in" id="rent-general">	
+			<ul class="list-group">
 				<li class="list-group-item">
 					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
 					<span class="text-muted h5"> {{$rent->title}}</span>
@@ -35,6 +35,7 @@
 				<span class="text-muted h5"> {{$rent->price}} 元/月</span>
 				</li>
 			</ul>
+		</div>
 	</div>
 	
 

@@ -13,11 +13,11 @@
 	<div class="panel panel-success" style="margin-top: 5px;">
 		<div class="panel-heading">
 			<h4 class="panel-title">
-				<a href="#one14-general" data-toggle="collapse">基本信息</a>
+				<a href="#one14-general" data-toggle="collapse" aria-expanded="true">基本信息</a>
 			</h4>
 		</div>
-			
-			<ul class="list-group" id="one14-general">
+		<div class="panel-collapse collapse in" id="one14-general">
+			<ul class="list-group">
 				<li class="list-group-item">
 					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
 					<span class="text-muted h5"> {{$one14->name}}</span>
@@ -27,6 +27,7 @@
 				<span class="text-muted h5"> {{$one14->addr}}</span>
 				</li>
 			</ul>
+		</div>
 	</div>
 	
 

@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="container">
-	<div class="panel panel-success navbar-fixed-top" style="margin-top: 5px;">
+	<div class="panel panel-success" style="margin-top: 5px;">
 		<div class="panel-heading">
 			<h4 class="panel-title">
 				<a href="#one14-general" data-toggle="collapse">基本信息</a>

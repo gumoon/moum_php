@@ -10,17 +10,19 @@
 @section('content')
 
 <div class="container">
-	<div class="page-head">
-		<div class="row">
-			<div class="col-xs-12 list">
-				<span class="glyphicon glyphicon-th icon" aria-hidden="true"></span>
-				<span class="text-primary h4"> {{$one14->name}}</span>
-			</div>
-			<div class="col-xs-12 list">
-				<span class="glyphicon glyphicon-map-marker icon" aria-hidden="true"></span>
+	<div class="panel panel-success">
+		<div class="panel-heading">基本信息</div>
+			
+			<ul class="list-group">
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-th icon" aria-hidden="true"></span>
+					<span class="text-primary h4"> {{$one14->name}}</span>
+				</li>
+				<li class="list-group-item">
+					<span class="glyphicon glyphicon-map-marker icon" aria-hidden="true"></span>
 				<span class="text-primary h4"> {{$one14->addr}}</span>
-			</div>
-		</div>
+				</li>
+			</ul>
 	</div>
 	
 

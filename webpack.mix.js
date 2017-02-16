@@ -16,8 +16,9 @@ mix.js('resources/assets/js/home/one14.profile.js', 'public/js/home')
    .js('resources/assets/js/app.js', 'public/js')
    .sass('resources/assets/sass/app.scss', 'public/css')
    .sass('resources/assets/sass/one14h5.scss', 'public/css')
-   .extract(['vue'])
-   .combine(['resources/assets/css/home.css'], 'public/css/home.css');
+   .sass('resources/assets/sass/home.index.scss', 'public/css')
+   .extract(['vue']);
+   //.combine(['resources/assets/css/home.css'], 'public/css/home.css');
 
 // //有更新时，文件名不一样，确保浏览器不会使用缓存
 mix.version();

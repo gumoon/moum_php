@@ -22,3 +22,15 @@ const app = new Vue({
     	}
     }
 });
+
+Pusher.logToConsole = true;
+
+Echo.channel('access-shop')
+    .listen('.moum\\Events\\AccessShopEvent', (e) => {
+        console.log(e.shop.tel);
+	});
+
+$(".carousel").carousel({
+	interval: 2000,
+});
+$(".carousel").carousel(2);

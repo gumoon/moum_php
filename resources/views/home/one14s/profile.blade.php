@@ -1,10 +1,10 @@
 @extends('layouts.h5')
 
 @section('thirdcss')
-<link rel="stylesheet" href="{{ mix('css/one14h5.css') }}">
+
 @endsection
 @section('thirdjs')
-<script type="text/javascript" src="{{ mix('js/home/one14.profile.js') }}"></script>
+
 @endsection
 
 @section('content')

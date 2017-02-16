@@ -29,6 +29,9 @@ class RentController extends Controller
         
         $rent = Rent::find($id);
 
+        $houseTypes = collect($this->houseTypes)->keyBy('id');
+        $rent['house_type'] = $houseTypes[$rent['house_type_id']]['name'];
+
         return view('home.rents.profile', ['rent' => $rent]);
     }
 }

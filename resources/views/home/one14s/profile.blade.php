@@ -10,17 +10,21 @@
 @section('content')
 
 <div class="container">
-	<div class="panel panel-success">
-		<div class="panel-heading">基本信息</div>
+	<div class="panel panel-success navbar-fixed-top" style="margin-top: 5px;">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a href="#one14-general" data-toggle="collapse">基本信息</a>
+			</h4>
+		</div>
 			
-			<ul class="list-group">
+			<ul class="list-group" id="one14-general">
 				<li class="list-group-item">
-					<span class="glyphicon glyphicon-th icon" aria-hidden="true"></span>
-					<span class="text-primary h4"> {{$one14->name}}</span>
+					<span class="glyphicon glyphicon-th" aria-hidden="true"></span>
+					<span class="text-muted h5"> {{$one14->name}}</span>
 				</li>
 				<li class="list-group-item">
-					<span class="glyphicon glyphicon-map-marker icon" aria-hidden="true"></span>
-				<span class="text-primary h4"> {{$one14->addr}}</span>
+					<span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+				<span class="text-muted h5"> {{$one14->addr}}</span>
 				</li>
 			</ul>
 	</div>

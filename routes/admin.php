@@ -12,12 +12,7 @@
 */
 
 //管理后台
-Route::get('login', function () {
-    return view('admin.login');
-});
-Route::get('/', function () {
-    return view('admin.index');
-})->middleware('auth');
+Route::get('/', 'IndexController@index');
 
 Route::post('/shops/get_types', 'ShopController@getTypesByCatId');
 Route::post('/one14s/get_types', 'One14Controller@getTypesByCatId');

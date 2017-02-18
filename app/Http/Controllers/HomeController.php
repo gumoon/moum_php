@@ -26,9 +26,11 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //return redirect('/houtai');
+        // dd($request->session());
+
         return view('home');
     }
 

@@ -103,7 +103,7 @@
                     <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 运营管理<span class="fa arrow"></span></a>
                     <ul class="nav nav-second-level">
                         <li>
-                            <a href="{{ url('houtai/spreads') }}">查看</a>
+                            <a href="{{ url('houtai/spreads') }}">运营项列表</a>
                         </li>
                         <li>
                             <a href="{{ url('houtai/spreads/create') }}">新增</a>
@@ -116,6 +116,15 @@
                     <ul class="nav nav-second-level">
                         <li>
                             <a href="{{ url('houtai/users') }}">用户列表</a>
+                        </li>
+                    </ul>
+                    <!-- /.nav-second-level -->
+                </li>
+                <li>
+                    <a href="#"><i class="fa fa-bar-chart-o fa-fw"></i> 反馈建议管理<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="{{ url('houtai/suggests') }}">反馈建议列表</a>
                         </li>
                     </ul>
                     <!-- /.nav-second-level -->

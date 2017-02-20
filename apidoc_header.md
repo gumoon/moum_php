@@ -1,12 +1,10 @@
 ## 域名说明
 
 1. 阿里云测试服务器api域名：http://moum.xiaoyuweb.cn/api/v1
-2. 生产服务器api域名：
+2. 生产服务器api域名：https://moum.xiaoyuweb.cn/api/v1
 
 ## 注意事项
 
-1. 生产环境下接口域名会为 https 
-2. 接口名，可能会变化，为了适应 restful 标准
-3. 接口参数和接口返回值一定会变，因为新的需求或者需求变更
-4. 故，在调用接口的过程中要考虑到这些未来可能或一定会发生的变化。
-5. 接口调用需要先获得access_token，每次调用接口，需要通过http头传递 Authorization。
+1. 生产环境下接口域名请用 https 协议
+2. 请兼容接口名和返回值变化的可能性。
+3. 接口调用需要先获得access_token，每次调用接口，需要通过http头传递 Authorization和uuid。

@@ -109,6 +109,8 @@ class DialController extends Controller
 	 * @apiName DialCreate
 	 * @apiGroup Dial
 	 *
+	 * @apiHeader {String} uuid
+	 * 
 	 * @apiParam {Number} [shop_id]
 	 * @apiParam {Number} [one14_id] shop_id和one14_id 任选其一
 	 * 

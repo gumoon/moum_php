@@ -20,8 +20,8 @@ class ShopController extends Controller
      * @apiName ShopRecommend
      * @apiGroup Shop
      *
-     * @apiParam {Number} lat
-     * @apiParam {Number} lng
+     * @apiParam {Number{-180,180}} lat
+     * @apiParam {Number{-180,180}} lng
      * 
      * @apiSuccess {Number} err_no 错误码
      * @apiSuccess {String} msg 错误信息
@@ -116,8 +116,8 @@ class ShopController extends Controller
 	 *
 	 * @apiParam {Number} [page=1]
 	 * @apiParam {Number} [count=10]
-	 * @apiParam {Number} lat
-	 * @apiParam {Number} lng
+	 * @apiParam {Number{-180,180}} lat
+	 * @apiParam {Number{-180,180}} lng
 	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg
@@ -194,8 +194,8 @@ class ShopController extends Controller
 	 * @apiName ShopArround
 	 * @apiGroup Shop
 	 *
-	 * @apiParam {Number} lng 经度
-	 * @apiParam {Number} lat 维度
+	 * @apiParam {Number{-180,180}} lng 经度
+	 * @apiParam {Number{-180,180}} lat 维度
 	 * @apiParam {Number} [page=1] 页码
 	 * @apiParam {Number} [count=10] 每页商户数
 	 * @apiParam {Number} type_id 类型ID:0-4,全部时传99
@@ -349,8 +349,8 @@ class ShopController extends Controller
 	 * @apiGroup Shop
 	 *
 	 * @apiParam {Number} shop_id 商户ID
-	 * @apiParam {Number} lat
-	 * @apiParam {Number} lng
+	 * @apiParam {Number{-180,180}} lat
+	 * @apiParam {Number{-180,180}} lng
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息
@@ -451,10 +451,11 @@ class ShopController extends Controller
 
 	/**
 	 * @api {post} /shop/report_error 商户纠错
-	 * @apiName ShopHasError
+	 * @apiName ShopReportError
 	 * @apiGroup Shop
+	 * @apiVersion 0.0.0
 	 *
-	 * @apiParam {Number} err_num 错误号
+	 * @apiParam {Number} err_num 错误号（1=电话有误，2=地址错了，3=商家不存在了）
 	 * @apiParam {Number} shop_id
 	 *
 	 * @apiSuccess {Number} err_no 错误码
@@ -493,8 +494,8 @@ class ShopController extends Controller
 	 * @apiName ShopAccessRankByMonth
 	 * @apiGroup Shop
 	 *
-	 * @apiParam {Number} [page=1]
-	 * @apiParam {Number} [count=10]
+	 * @apiParam {Number{1..}} [page=1]
+	 * @apiParam {Number{1..}} [count=10]
 	 * 
 	 * @apiSuccess {Number} err_no
 	 * @apiSuccess {String} msg

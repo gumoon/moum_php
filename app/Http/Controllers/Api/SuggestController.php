@@ -14,6 +14,9 @@ class SuggestController extends Controller
 	 * @apiName SuggestCreate
 	 * @apiGroup Suggest
 	 *
+	 * @apiHeader {String} authorization Authorization value.
+	 * @apiHeader {String} uuid
+	 * 
 	 * @apiParam {String} content
 	 * 
 	 * @apiSuccess {Number} err_no 

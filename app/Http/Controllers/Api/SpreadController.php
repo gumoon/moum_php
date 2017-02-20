@@ -50,6 +50,7 @@ class SpreadController extends Controller
 	public function firing(Request $request)
 	{
 		$spreads = Spread::where('position_id', 1)
+					->orderBy('order', 'desc')
 					->get();
 
 		$openpage = array();
@@ -126,6 +127,7 @@ class SpreadController extends Controller
 	public function topic(Request $request)
 	{
 		$spreads = Spread::where('position_id', 2)
+					->orderBy('order', 'desc')
 					->get();
 
 		$tmp = array();

@@ -48,8 +48,9 @@ function submitUpdateSpread()
 	var flag = $("#flag :selected").val();
 	var extra = $("#extra").val();
 	var image_url1 = $("#image_url1").attr("alt");
+	var order = $("#order").val();
 
-	var postData = {title: title, position_id: position_id, flag: flag, extra: extra, image_url: image_url1};
+	var postData = {title: title, position_id: position_id, flag: flag, extra: extra, image_url: image_url1, order: order};
 	console.log(postData);
 	var options = {
 		url: "{{ url('/houtai/spreads') }}"+'/'+{{$spread->id}},
@@ -156,6 +157,17 @@ $(document).ready(function(){
 							<div class="col-lg-6">
 								<img src="{{$spread->image_url_src}}" alt="{{$spread->image_url}}" id="image_url1" style="width: 100px; height: 100px" >
 								<button class="btn btn-default" onclick="clickButton()">删除</button>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="form-group">
+    								<label>排序（数字越大，排前面）</label>
+    								<input type="number" id="order" name="order" class="form-control" placeholder="" value="{{$spread->order}}">
+                                    <span class="help-block">
+                                    </span>
+    							</div>
 							</div>
 						</div>	
 

@@ -72,6 +72,7 @@ class ShopController extends Controller
 		$lng = $request->input('lng');
 
 		$spreads = Spread::where('position_id', 0)
+					->orderBy('order', 'desc')
 					->get();
 		$shopIds = $spreads->keyBy('extra')->keys()->all();
 

@@ -556,6 +556,7 @@ return array(
     'TestCase' => $baseDir . '/tests/TestCase.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
     'UpdateChannelToDialsTable' => $baseDir . '/database/migrations/2017_02_13_185114_update_channel_to_dials_table.php',
+    'UpdateOrderToSpreadsTable' => $baseDir . '/database/migrations/2017_02_18_162655_update_order_to_spreads_table.php',
     'UpdateTelAttrToShopsTable' => $baseDir . '/database/migrations/2017_01_05_121141_update_tel_attr_to_shops_table.php',
     'UpdateTelAttrToUsersTable' => $baseDir . '/database/migrations/2017_01_05_123607_update_tel_attr_to_users_table.php',
     'UpdateUsersTable' => $baseDir . '/database/migrations/2017_01_04_172641_update_users_table.php',

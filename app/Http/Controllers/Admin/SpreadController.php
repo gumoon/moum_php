@@ -56,6 +56,7 @@ class SpreadController extends Controller
         $spread->position_id = $request->input('position_id');
         $spread->extra = $request->input('extra');
         $spread->flag = $request->input('flag');
+        $spread->order = $request->input('order');
 
         $spread->save();
  
@@ -119,6 +120,7 @@ class SpreadController extends Controller
         $spread->position_id = $request->input('position_id');
         $spread->extra = $request->input('extra');
         $spread->flag = $request->input('flag');
+        $spread->order = $request->input('order');
 
         $spread->save();
  

@@ -16,7 +16,34 @@
 @endsection
 
 @section('customjs')
+
 <script type="text/javascript">
+function deleteOne14(id){
+    var r=confirm("确认删除吗？");
+    if( r==true ){
+        var url = "{{ url('/houtai/one14s/') }}"+"/"+id;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: url,
+            type: 'delete',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                window.location.href = "{{ url('/houtai/one14s') }}";
+            },
+            error: function(){
+                alert('出错了');
+            }
+        });
+
+        return false;        
+    }
+}
 	$(document).ready(function(){
 		$("#programTables").DataTable({
 			responsive: true,
@@ -63,7 +90,7 @@
         							<td>{{ $one14->cat_name }}/{{ $one14->type_name }}</td>
         							<td>{{ $one14->tel }}</td>
                                     <td>@if($one14->is_vip) 是 @else 否 @endif</td>
-        							<td><a href="{{ route('one14s.edit', ['one14' => $one14->id]) }}">编辑</a></td>
+        							<td><a href="{{ route('one14s.edit', ['one14' => $one14->id]) }}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript::void();" onclick="deleteOne14({{$one14->id}})">删除</a></td>
         						</tr>
 							@empty
 							    <tr>

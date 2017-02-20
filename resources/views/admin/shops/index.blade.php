@@ -17,6 +17,33 @@
 
 @section('customjs')
 <script type="text/javascript">
+function deleteShop(id){
+    var r=confirm("确认删除吗？");
+    if( r==true ){
+        var url = "{{ url('/houtai/shops/') }}"+"/"+id;
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: url,
+            type: 'delete',
+            dataType: 'json',
+            success: function(data){
+                console.log(data);
+                window.location.href = "{{ url('/houtai/shops') }}";
+            },
+            error: function(){
+                alert('出错了');
+            }
+        });
+
+        return false;        
+    }
+}
+
 	$(document).ready(function(){
 		$("#programTables").DataTable({
 			responsive: true,
@@ -63,7 +90,7 @@
         							<td>{{ $shopCats[$shop->cat_id] }}/{{ $shopTypes[$shop->cat_id][$shop->type_id] }}</td>
         							<td>{{ $shop->tel }}</td>
                                     <td>@if($shop->is_vip) 是 @else 否 @endif</td>
-        							<td><a href="{{ route('shops.edit', ['shop' => $shop->id]) }}">编辑</a></td>
+        							<td><a href="{{ route('shops.edit', ['shop' => $shop->id]) }}">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript::void();" onclick="deleteShop({{$shop->id}})">删除</a></td>
         						</tr>
 							@empty
 							    <tr>

@@ -164,7 +164,18 @@ class ShopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = intval($id);
+
+        $res = Shop::destroy($id);
+
+        if( $res == 1 )
+        {
+            return $this->successJson();
+        }
+        else
+        {
+            return $this->failedJson('delete fail');
+        }
     }
 
     /**

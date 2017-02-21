@@ -7,5 +7,6 @@ CKEDITOR.editorConfig = function( config ) {
 	// Define changes to default configuration here. For example:
 	// config.language = 'fr';
 	// config.uiColor = '#AADC6E';
-	config.filebrowserImageUploadUrl = '/common/upload';
+	config.filebrowserImageUploadUrl = '/tools/upload_ckimage';
+	config.image_previewText = CKEDITOR.tools.repeat( ' ', 1 );
 };

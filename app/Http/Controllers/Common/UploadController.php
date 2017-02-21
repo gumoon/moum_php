@@ -5,6 +5,7 @@ namespace moum\Http\Controllers\Common;
 use Illuminate\Http\Request;
 use moum\Services\OSS;
 use moum\Http\Controllers\Controller;
+use Config;
 
 class UploadController extends Controller
 {
@@ -38,13 +39,11 @@ class UploadController extends Controller
 
 		OSS::upload($filename, $path);
 
-		$url = OSS::getUrl($filename);
+		//$url = OSS::getUrl($filename);
 		
-		$data = array(
-			'url' => $url,
-			'filename' => $filename
-		);
-		
-		return $this->successJson( $data );
+		$callback = $request->input('CKEditorFuncNum');
+		$url = Config::get('app.ossDomain').$filename;
+
+        echo "<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction($callback,'".$url."','');</script>";
 	}
 }

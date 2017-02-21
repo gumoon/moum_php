@@ -159,12 +159,6 @@ class UserController extends Controller
 		$password = $request->input('password');
 		$captcha = $request->input('captcha');
 
-		// $user = new User;
-		// $user->tel = $tel;
-		// $user->password = bcrypt($password);
-		// $user->email = $tel;
-		// //此处 $saved 为 true 
-		// $saved = $user->save();
 		$saved = User::create([
             'email' => $tel,
             'password' => bcrypt($password),
@@ -325,7 +319,7 @@ class UserController extends Controller
 			'captcha' => $captcha
 		);
 		//发短信通知给用户
-		//Notification::send($request->user(), new CaptchaNotification($tmp));
+		// Notification::send($request->user(), new CaptchaNotification($tmp));
 		
 		$data = array(
 			'captcha' => $captcha

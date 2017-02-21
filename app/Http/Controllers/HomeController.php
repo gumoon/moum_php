@@ -41,6 +41,8 @@ class HomeController extends Controller
 
     public function debug()
     {
+
+        dd(Cache::store('memcached'));
         $client = new Client();
         $res = $client->request('GET', 'http://lbsfood-taocms.stor.sinaapp.com/pictures/month_1401/201401171647438268.jpeg');
         $data = $res->getBody()->getContents();

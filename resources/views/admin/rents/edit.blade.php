@@ -293,7 +293,9 @@ $(document).ready(function(){
 
 						<div class="row">
 							<div class="form-group">
-									<label>详情</label>
+									<label>详情(“样式类名称”
+项请填写：img-thumbnail；并且“行内样式
+”项为空)</label>
 									<textarea name="detail" id="detail" rows="10" cols="80">{{$rent->detail}}</textarea>
 									<script>
 						                // Replace the <textarea id="editor1"> with a CKEditor

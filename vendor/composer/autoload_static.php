@@ -12,13 +12,14 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         '1d1b89d124cc9cb8219922c9d5569199' => __DIR__ . '/..' . '/hamcrest/hamcrest-php/hamcrest/Hamcrest.php',
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
         '2c102faa651ef8ea5874edb585946bce' => __DIR__ . '/..' . '/swiftmailer/swiftmailer/lib/swift_required.php',
-        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'c964ee0ededf28c96ebd9db5099ef910' => __DIR__ . '/..' . '/guzzlehttp/promises/src/functions_include.php',
+        'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
         'decc78cc4436b1292c6c0d151b19445c' => __DIR__ . '/..' . '/phpseclib/phpseclib/phpseclib/bootstrap.php',
         '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
         'e7223560d890eab89cda23685e711e2c' => __DIR__ . '/..' . '/psy/psysh/src/Psy/functions.php',
         'f0906e6318348a765ffb6eb24e0d0938' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Foundation/helpers.php',
         '58571171fd5812e6e447dce228f52f4d' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Support/helpers.php',
+        '4378f255c67b62a024d3295602369ebf' => __DIR__ . '/..' . '/johnlui/aliyun-oss/src/AliyunOSS.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -91,10 +92,6 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
             'Laravel\\Tinker\\' => 15,
             'Laravel\\Scout\\' => 14,
             'Laravel\\Passport\\' => 17,
-        ),
-        'J' => 
-        array (
-            'JohnLui\\AliyunOSS\\' => 18,
         ),
         'I' => 
         array (
@@ -277,10 +274,6 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'Laravel\\Passport\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/passport/src',
-        ),
-        'JohnLui\\AliyunOSS\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/johnlui/aliyun-oss',
         ),
         'Illuminate\\' => 
         array (
@@ -1263,6 +1256,8 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'GuzzleHttp\\Psr7\\StreamWrapper' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/StreamWrapper.php',
         'GuzzleHttp\\Psr7\\UploadedFile' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UploadedFile.php',
         'GuzzleHttp\\Psr7\\Uri' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/Uri.php',
+        'GuzzleHttp\\Psr7\\UriNormalizer' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriNormalizer.php',
+        'GuzzleHttp\\Psr7\\UriResolver' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/UriResolver.php',
         'GuzzleHttp\\RedirectMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RedirectMiddleware.php',
         'GuzzleHttp\\RequestOptions' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RequestOptions.php',
         'GuzzleHttp\\RetryMiddleware' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/RetryMiddleware.php',
@@ -1744,6 +1739,9 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'Illuminate\\Http\\Request' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Request.php',
         'Illuminate\\Http\\Response' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Response.php',
         'Illuminate\\Http\\ResponseTrait' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/ResponseTrait.php',
+        'Illuminate\\Http\\Testing\\File' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Testing/File.php',
+        'Illuminate\\Http\\Testing\\FileFactory' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Testing/FileFactory.php',
+        'Illuminate\\Http\\Testing\\MimeType' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/Testing/MimeType.php',
         'Illuminate\\Http\\UploadedFile' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Http/UploadedFile.php',
         'Illuminate\\Log\\Events\\MessageLogged' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Log/Events/MessageLogged.php',
         'Illuminate\\Log\\LogServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Log/LogServiceProvider.php',
@@ -2035,7 +2033,6 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'JakubOnderka\\PhpConsoleColor\\ConsoleColor' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/ConsoleColor.php',
         'JakubOnderka\\PhpConsoleColor\\InvalidStyleException' => __DIR__ . '/..' . '/jakub-onderka/php-console-color/src/JakubOnderka/PhpConsoleColor/InvalidStyleException.php',
         'JakubOnderka\\PhpConsoleHighlighter\\Highlighter' => __DIR__ . '/..' . '/jakub-onderka/php-console-highlighter/src/JakubOnderka/PhpConsoleHighlighter/Highlighter.php',
-        'JohnLui\\AliyunOSS\\AliyunOSS' => __DIR__ . '/..' . '/johnlui/aliyun-oss/AliyunOSS.php',
         'Laravel\\Passport\\ApiTokenCookieFactory' => __DIR__ . '/..' . '/laravel/passport/src/ApiTokenCookieFactory.php',
         'Laravel\\Passport\\AuthCode' => __DIR__ . '/..' . '/laravel/passport/src/AuthCode.php',
         'Laravel\\Passport\\Bridge\\AccessToken' => __DIR__ . '/..' . '/laravel/passport/src/Bridge/AccessToken.php',
@@ -2702,6 +2699,7 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'PHP_Token_NEW' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_C' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NS_SEPARATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PHP_Token_NULLSAFE_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_NUM_STRING' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_CAST' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_OBJECT_OPERATOR' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
@@ -3360,6 +3358,7 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'Psy\\CodeCleaner\\CalledClassPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/CalledClassPass.php',
         'Psy\\CodeCleaner\\CodeCleanerPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/CodeCleanerPass.php',
         'Psy\\CodeCleaner\\ExitPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/ExitPass.php',
+        'Psy\\CodeCleaner\\FinalClassPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/FinalClassPass.php',
         'Psy\\CodeCleaner\\FunctionReturnInWriteContextPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/FunctionReturnInWriteContextPass.php',
         'Psy\\CodeCleaner\\ImplicitReturnPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/ImplicitReturnPass.php',
         'Psy\\CodeCleaner\\InstanceOfPass' => __DIR__ . '/..' . '/psy/psysh/src/Psy/CodeCleaner/InstanceOfPass.php',
@@ -4131,7 +4130,10 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'Symfony\\Component\\Yaml\\Unescaper' => __DIR__ . '/..' . '/symfony/yaml/Unescaper.php',
         'Symfony\\Component\\Yaml\\Yaml' => __DIR__ . '/..' . '/symfony/yaml/Yaml.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
-        'TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
+        'Tests\\CreatesApplication' => __DIR__ . '/../..' . '/tests/CreatesApplication.php',
+        'Tests\\Feature\\ExampleTest' => __DIR__ . '/../..' . '/tests/Feature/ExampleTest.php',
+        'Tests\\TestCase' => __DIR__ . '/../..' . '/tests/TestCase.php',
+        'Tests\\Unit\\ExampleTest' => __DIR__ . '/../..' . '/tests/Unit/ExampleTest.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
         'TijsVerkoyen\\CssToInlineStyles\\CssToInlineStyles' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/CssToInlineStyles.php',
         'TijsVerkoyen\\CssToInlineStyles\\Css\\Processor' => __DIR__ . '/..' . '/tijsverkoyen/css-to-inline-styles/src/Css/Processor.php',

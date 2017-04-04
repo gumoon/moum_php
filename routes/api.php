@@ -51,3 +51,6 @@ Route::get('/one14/arround', 'One14Controller@arround');
 
 Route::get('/search/shop', 'SearchController@shop');
 Route::get('/search/global', 'SearchController@global');
+
+Route::get('/news/timeline', 'NewsController@timeline');
+Route::get('/news/show', 'NewsController@show');

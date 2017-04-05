@@ -103,6 +103,14 @@ class NewsController extends Controller
      *  "data": {
      *    "id": 10,
      *    "title": "新闻标题",
+     *    "content": "新闻内容",
+     *    "image_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
+     *    "created_at": "5小时前",
+     *    "source":
+     *     {
+     *        "name": "望京通",
+     *        "logo_url": "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg"
+     *     }
      *  }
      * }
      */
@@ -124,7 +132,14 @@ class NewsController extends Controller
 
         $data = array(
             'id' => 1,
-            'title' => "新闻标题新闻标题"
+            'title' => "新闻标题新闻标题",
+            'content' => '新闻内容，新闻内容',
+            'image_url' => "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
+            'created_at' => "10分钟前",
+            'source' => array(
+                'name' => '望京通',
+                'logo_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg'
+            )
         );
 
         return $this->successJson( $data );

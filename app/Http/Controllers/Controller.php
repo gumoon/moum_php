@@ -13,7 +13,7 @@ class Controller extends BaseController
 
     //商户分类
     public $shopCats = array(
-        '外卖'
+        '外卖',
     );
 
     //商户分类子分类

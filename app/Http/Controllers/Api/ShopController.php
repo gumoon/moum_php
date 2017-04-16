@@ -213,6 +213,7 @@ class ShopController extends Controller
 	 * @apiSuccess {String} data.partner.tel 商户电话
 	 * @apiSuccess {Number} data.partner.distance 距离
 	 * @apiSuccess {String} data.partner.open_time 营业时间
+     * @apiSuccess {Number} data.partner.can_delivery 1=支持外卖，0=不支持外卖
 	 * @apiSuccess {Object[]} data.other
 	 * @apiSuccess {Number} data.other.id 商户ID
 	 * @apiSuccess {String} data.other.name 商户名
@@ -222,6 +223,7 @@ class ShopController extends Controller
 	 * @apiSuccess {String} data.other.tel 商户电话
 	 * @apiSuccess {Number} data.other.distance 距离
 	 * @apiSuccess {String} data.other.open_time 营业时间
+     * @apiSuccess {Number} data.partner.can_delivery 1=支持外卖，0=不支持外卖
 	 * @apiSuccess {Number} data.amount 满足条件的商户总数
 	 *
 	 * @apiSuccessExample {json} Success-response:
@@ -240,7 +242,8 @@ class ShopController extends Controller
 	 *          "type_name": "韩食快餐",
 	 *          "tel": "18600562137",
 	 *          "distance": 0.81,
-	 *          "open_time": "10:00-22:00"
+	 *          "open_time": "10:00-22:00",
+     *          "can_delivery": 1,
 	 *        }
 	 *        ...
 	 *      ],
@@ -253,7 +256,8 @@ class ShopController extends Controller
 	 *          "type_name": "韩食快餐",
 	 *          "tel": "18600562137",
 	 *          "distance": 81,
-	 *          "open_time": "10:00-22:00"
+	 *          "open_time": "10:00-22:00",
+     *          "can_delivery": 0,
 	 *        }
 	 *        ...
 	 *      ]
@@ -269,7 +273,7 @@ class ShopController extends Controller
 			'count' => 'bail|filled|integer|min:1',
 			'lat' => 'bail|required|min:-90|max:90',
 			'lng' => 'bail|required|min:-180|max:180',
-			'type_id' => 'bail|required|in:0,1,2,3,4,99'
+			'type_id' => 'bail|required|in:0,1,2,3,4,5,6,99'
 		]);
 
 		$page = $request->input('page', 1);
@@ -281,7 +285,7 @@ class ShopController extends Controller
 		
 		if( $typeId == 99 )
 		{
-			$typeIds = [0,1,2,3,4];
+			$typeIds = [0,1,2,3,4,5,6];
 		}
 		else
 		{
@@ -313,7 +317,8 @@ class ShopController extends Controller
 					'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 					'tel' => $shop->tel,
 					'distance' => $distance,
-					'open_time' => $shop->open_time
+					'open_time' => $shop->open_time,
+                    'can_delivery' => mt_rand() % 2,
 				);
 			}
 			else
@@ -326,7 +331,8 @@ class ShopController extends Controller
 					'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 					'tel' => $shop->tel,
 					'distance' => $distance,
-					'open_time' => $shop->open_time
+					'open_time' => $shop->open_time,
+                    'can_delivery' => mt_rand() % 2,
 				);
 			}
 

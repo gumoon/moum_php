@@ -198,7 +198,7 @@ class ShopController extends Controller
 	 * @apiParam {Number{-180,180}} lat 维度
 	 * @apiParam {Number} [page=1] 页码
 	 * @apiParam {Number} [count=10] 每页商户数
-	 * @apiParam {Number} type_id 类型ID:0-4,全部时传99
+	 * @apiParam {Number} type_id 类型ID:0-6,全部时传99
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息

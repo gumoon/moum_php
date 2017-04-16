@@ -54,3 +54,6 @@ Route::get('/search/global', 'SearchController@global');
 
 Route::get('/news/timeline', 'NewsController@timeline');
 Route::get('/news/show', 'NewsController@show');
+
+Route::get('/magazine_page/timeline', 'MagazinePageController@timeline');
+Route::get('/magazine_page/show', 'MagazinePageController@show');

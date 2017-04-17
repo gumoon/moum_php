@@ -114,7 +114,6 @@ class MagazinePageController extends Controller
             'magazine_page_id' => 'bail|required'
         ]);
 
-        $newsId = $request->input('news_id');
         $uuid = $request->header('uuid');
         if( empty($uuid) )
         {
@@ -128,7 +127,7 @@ class MagazinePageController extends Controller
             'image_url' => "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
             'id' => 10,
             'name' => "商户名商户名",
-            'name' => '18600562137',
+            'tel' => '18600562137',
             'addr' => '北京市朝阳区望京SOHO',
             'lat' => 39.996794,
             'lng' => 116.48105,

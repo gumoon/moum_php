@@ -3,7 +3,7 @@ Vue.component('example', require('../components/Example.vue'));
 Vue.component('todo-item', {
 	props: ['todo'],
 	template: '<li>{{ todo.text }}</li>'
-})
+});
 
 const app = new Vue({
     el: '#app',
@@ -28,8 +28,7 @@ Pusher.logToConsole = true;
 Echo.channel('access-shop')
     .listen('.moum\\Events\\AccessShopEvent', (e) => {
         console.log(e.shop.tel);
-	});
-
+})
 $(".carousel").carousel({
 	interval: 2000,
 });

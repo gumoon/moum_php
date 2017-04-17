@@ -99,7 +99,7 @@ function dragendMarker(event)
 		       //获取地址失败
 		    }
 		});
-	})
+	});
 
 	$("#lat").val(lat);
 	$("#lng").val(lng);

@@ -74,31 +74,31 @@ class MagazinePageController extends Controller
             ->get();
 
         $tmp = array();
-        foreach ($spreads AS $spread) {
-            $tmp = array(
+        foreach ($spreads AS $k => $spread) {
+            $tmp[$k] = array(
                 'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
                 'flag' => mt_rand() % 2,
             );
 
             if ($spread->flag == Spread::FLAG_SHOP) {
                 $shop = Shop::find($spread->extra);
-                $tmp['name'] = $shop->name;
-                $tmp['tel'] = $shop->tel;
-                $tmp['addr'] = $shop->addr;
-                $tmp['lat'] = $shop->lat;
-                $tmp['lng'] = $shop->lng;
-                $tmp['type'] = $spread->flag;
-                $tmp['shop_id'] = $shop->id;
+                $tmp[$k]['name'] = $shop->name;
+                $tmp[$k]['tel'] = $shop->tel;
+                $tmp[$k]['addr'] = $shop->addr;
+                $tmp[$k]['lat'] = $shop->lat;
+                $tmp[$k]['lng'] = $shop->lng;
+                $tmp[$k]['type'] = $spread->flag;
+                $tmp[$k]['shop_id'] = $shop->id;
 
             } elseif ($spread->flag == Spread::FLAG_ONE14) {
                 $one14 = One14::find($spread->extra);
-                $tmp['name'] = $one14->name;
-                $tmp['tel'] = $one14->tel;
-                $tmp['addr'] = $one14->addr;
-                $tmp['lat'] = $one14->lat;
-                $tmp['lng'] = $one14->lng;
-                $tmp['type'] = $spread->flag;
-                $tmp['url'] = url('home/one14/profile', [base64_encode($spread->extra)]);
+                $tmp[$k]['name'] = $one14->name;
+                $tmp[$k]['tel'] = $one14->tel;
+                $tmp[$k]['addr'] = $one14->addr;
+                $tmp[$k][$k]['lat'] = $one14->lat;
+                $tmp[$k]['lng'] = $one14->lng;
+                $tmp[$k]['type'] = $spread->flag;
+                $tmp[$k]['url'] = url('home/one14/profile', [base64_encode($spread->extra)]);
             }
         }
 

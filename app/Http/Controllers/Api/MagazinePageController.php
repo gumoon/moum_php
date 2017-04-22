@@ -95,7 +95,7 @@ class MagazinePageController extends Controller
                 $tmp[$k]['name'] = $one14->name;
                 $tmp[$k]['tel'] = $one14->tel;
                 $tmp[$k]['addr'] = $one14->addr;
-                $tmp[$k][$k]['lat'] = $one14->lat;
+                $tmp[$k]['lat'] = $one14->lat;
                 $tmp[$k]['lng'] = $one14->lng;
                 $tmp[$k]['type'] = $spread->flag;
                 $tmp[$k]['url'] = url('home/one14/profile', [base64_encode($spread->extra)]);

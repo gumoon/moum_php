@@ -72,7 +72,7 @@ class NewsController extends Controller
         $client = new Client();
         $url = "http://www.zoglo.net/stand/getMobileJson/1/board/m_photo_news/0/0/0/{$count}/x/0/0/0/0/last_update";
         $res = $client->request('get', $url);
-        $res = json_decode($res, true);
+        $res = json_decode($res->getBody(), true);
         $tmp = array();
         foreach ($res AS $v) {
             $tmp[] = array(

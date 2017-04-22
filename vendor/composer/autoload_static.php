@@ -4202,6 +4202,8 @@ class ComposerStaticInit744c2d751e322fbc326a3eeb93744e9f
         'moum\\Http\\Controllers\\Api\\CommonController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CommonController.php',
         'moum\\Http\\Controllers\\Api\\DialController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/DialController.php',
         'moum\\Http\\Controllers\\Api\\LinkController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/LinkController.php',
+        'moum\\Http\\Controllers\\Api\\MagazinePageController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/MagazinePageController.php',
+        'moum\\Http\\Controllers\\Api\\NewsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/NewsController.php',
         'moum\\Http\\Controllers\\Api\\One14Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/One14Controller.php',
         'moum\\Http\\Controllers\\Api\\RentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/RentController.php',
         'moum\\Http\\Controllers\\Api\\SearchController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/SearchController.php',

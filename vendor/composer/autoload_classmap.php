@@ -3823,6 +3823,8 @@ return array(
     'moum\\Http\\Controllers\\Api\\CommonController' => $baseDir . '/app/Http/Controllers/Api/CommonController.php',
     'moum\\Http\\Controllers\\Api\\DialController' => $baseDir . '/app/Http/Controllers/Api/DialController.php',
     'moum\\Http\\Controllers\\Api\\LinkController' => $baseDir . '/app/Http/Controllers/Api/LinkController.php',
+    'moum\\Http\\Controllers\\Api\\MagazinePageController' => $baseDir . '/app/Http/Controllers/Api/MagazinePageController.php',
+    'moum\\Http\\Controllers\\Api\\NewsController' => $baseDir . '/app/Http/Controllers/Api/NewsController.php',
     'moum\\Http\\Controllers\\Api\\One14Controller' => $baseDir . '/app/Http/Controllers/Api/One14Controller.php',
     'moum\\Http\\Controllers\\Api\\RentController' => $baseDir . '/app/Http/Controllers/Api/RentController.php',
     'moum\\Http\\Controllers\\Api\\SearchController' => $baseDir . '/app/Http/Controllers/Api/SearchController.php',

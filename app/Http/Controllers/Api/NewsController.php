@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Config;
 use DB;
 use moum\Http\Controllers\Controller;
+use GuzzleHttp\Client;
 
 class NewsController extends Controller
 {
@@ -68,18 +69,22 @@ class NewsController extends Controller
 //            ->take($count)
 //            ->get();
 
+        $client = new Client();
+        $url = "http://www.zoglo.net/stand/getMobileJson/1/board/m_photo_news/0/0/0/{$count}/x/0/0/0/0/last_update";
+        $res = $client->request('get', $url);
+        $res = json_decode($res, true);
         $tmp = array();
-        for ($i = 0; $i <= 5; $i++) {
+        foreach ($res AS $v) {
             $tmp[] = array(
-                'id' => $i,
-                'title' => "新闻标题新闻标题",
-                'image_url' => "http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg",
-                'created_at' => "10分钟前",
-                'url' => 'http://moum.xiaoyuweb.cn',
+                'id' => $v['doc_id'],
+                'title' => $v['title'],
+                'image_url' => 'http://www.zoglo.net/'.$v['img1'],
+                'created_at' => $v['datetime'],
+                'url' => $v['url'],
                 'source' => array(
-                    'name' => '望京通',
-                    'logo_url' => 'http://www.6681.com/uploads/allimg/160321/51-160321164625.jpg'
-                )
+                    'name' => $v['username'],
+                    'logo_url' => 'http://www.zoglo.net/'.$v['img1'],
+                ),
             );
         }
 

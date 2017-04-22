@@ -75,7 +75,7 @@ class MagazinePageController extends Controller
 
         $tmp = array();
         foreach ($spreads AS $spread) {
-            $tmp[] = array(
+            $tmp = array(
                 'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
                 'flag' => mt_rand() % 2,
             );

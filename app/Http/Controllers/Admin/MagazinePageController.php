@@ -54,7 +54,6 @@ class MagazinePageController extends Controller
         $spread->position_id = Spread::POSITION_MAGAZINE_PAGE;
         $spread->extra = $request->input('extra');
         $spread->flag = $request->input('flag');
-        $spread->order = $request->input('order');
 
         $spread->save();
  
@@ -117,7 +116,6 @@ class MagazinePageController extends Controller
         $spread->image_url = $request->input('image_url');
         $spread->extra = $request->input('extra');
         $spread->flag = $request->input('flag');
-        $spread->order = $request->input('order');
 
         $spread->save();
  

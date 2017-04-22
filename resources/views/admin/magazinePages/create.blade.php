@@ -47,9 +47,8 @@ function submitCreateSpread()
 	var flag = $("#flag :selected").val();
 	var extra = $("#extra").val();
 	var image_url1 = $("#image_url1").attr("alt");
-	var order = $("#order").val();
 
-	var postData = {title: title, flag: flag, extra: extra, image_url: image_url1, order: order};
+	var postData = {title: title, flag: flag, extra: extra, image_url: image_url1};
 	console.log(postData);
 	var options = {
 		url: "{{ url('/houtai/magazinePages') }}",
@@ -96,7 +95,7 @@ $(document).ready(function(){
         				<div class="row">
         					<div class="col-lg-6">
     							<div class="form-group" id="titlediv">
-    								<label>描述</label>
+    								<label>描述（仅用于后台标记，不显示）</label>
     								<input type="text" id="title" name="title" class="form-control" placeholder="">
 
                                     <span class="help-block">
@@ -111,9 +110,8 @@ $(document).ready(function(){
     								<label>请选择类型</label>
     								<select class="form-control" id="flag" name="flag">
 										<option value="-1">请选择类型</option>
-										<option value="0">外部网址</option>
 										<option value="1">外卖商户</option>
-										<option value="2">114企业</option>
+										<option value="2">114黄页</option>
 									</select>
                                     <span class="help-block">
                                     </span>
@@ -121,7 +119,7 @@ $(document).ready(function(){
     						</div>
 							<div class="col-lg-6">
 								<div class="form-group">
-    								<label>扩展信息（网址，或外卖商户ID，或114企业ID)</label>
+    								<label>扩展信息（外卖商户ID 或 114黄页ID)</label>
     								<input type="text" id="extra" name="extra" class="form-control" placeholder="">
                                     <span class="help-block">
                                     </span>
@@ -144,17 +142,6 @@ $(document).ready(function(){
 							<div class="col-lg-6">
 								<img src="" alt="" id="image_url1" style="width: 100px; height: 100px" >
 								<button class="btn btn-default" onclick="clickButton()">删除</button>
-							</div>
-						</div>	
-
-						<div class="row">
-							<div class="col-lg-6">
-								<div class="form-group">
-    								<label>排序（数字越大，排前面）</label>
-    								<input type="number" id="order" name="order" class="form-control" placeholder="">
-                                    <span class="help-block">
-                                    </span>
-    							</div>
 							</div>
 						</div>
 

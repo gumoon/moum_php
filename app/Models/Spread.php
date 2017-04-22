@@ -24,4 +24,11 @@ class Spread extends Model
     const POSITION_INDEX_TOPIC = 2;
 	//杂志页位置ID
 	const POSITION_MAGAZINE_PAGE = 3;
+
+	//链接对象类型 网址
+    const FLAG_WEBSITE = 0;
+    //链接对象类型 商户
+    const FLAG_SHOP = 1;
+    //链接对象类型 114
+    const FLAG_ONE14 = 2;
 }

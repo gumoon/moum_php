@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\fetchNews::class,
     ];
 
     /**
@@ -24,8 +24,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+//         $schedule->command('inspire')
+//                  ->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true)
+//                  ->everyMinute();
+//         $schedule->command('news:fetch 20')->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true)->everyMinute();
+//         $schedule->exec('date')->everyMinute()->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true);
     }
 
     /**

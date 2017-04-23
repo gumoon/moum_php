@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
 //         $schedule->command('inspire')
 //                  ->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true)
 //                  ->everyMinute();
-//         $schedule->command('news:fetch 20')->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true)->everyMinute();
+        $logFile = env('CRONTAB_LOG_DIR') . 'zoglo.txt';
+         $schedule->command('news:fetch 10')->sendOutputTo($logFile, true)->everyMinute();
 //         $schedule->exec('date')->everyMinute()->sendOutputTo('/Users/gumoon/Desktop/testcommand.txt', true);
     }
 

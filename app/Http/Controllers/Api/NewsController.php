@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Config;
 use DB;
 use moum\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use moum\Models\News;
 
 class NewsController extends Controller
 {
@@ -63,27 +63,23 @@ class NewsController extends Controller
         $offset = ($page - 1) * $count;
 
         //按照时间戳，查询最新的商户列表
-//        $shops = Shop::where('id', '>', 0)
-//            ->latest()
-//            ->skip($offset)
-//            ->take($count)
-//            ->get();
+        $news = News::where('id', '>', 0)
+            ->latest()
+            ->skip($offset)
+            ->take($count)
+            ->get();
 
-        $client = new Client();
-        $url = "http://www.zoglo.net/stand/getMobileJson/1/board/m_photo_news/0/0/0/{$count}/x/0/0/0/0/last_update";
-        $res = $client->request('get', $url);
-        $res = json_decode($res->getBody(), true);
         $tmp = array();
-        foreach ($res AS $v) {
+        foreach ($news AS $v) {
             $tmp[] = array(
-                'id' => $v['doc_id'],
+                'id' => $v['id'],
                 'title' => $v['title'],
-                'image_url' => 'http://www.zoglo.net/'.$v['img1'],
-                'created_at' => $v['datetime'],
+                'image_url' => News::$sources[$v['source']].$v['image_url'],
+                'created_at' => $v['public_at'],
                 'url' => 'http://www.zoglo.net/weixin/index.html?doc_id='.$v['doc_id'],
                 'source' => array(
-                    'name' => $v['username'],
-                    'logo_url' => 'http://www.zoglo.net/weixin/images/logo1.gif',
+                    'name' => News::$sources[$v['source']]['name'],
+                    'logo_url' => News::$sources[$v['source']]['logo_url'],
                 ),
             );
         }

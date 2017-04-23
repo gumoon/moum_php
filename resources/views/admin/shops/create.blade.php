@@ -341,6 +341,7 @@ $(document).ready(function(){
 									<select class="form-control" id="cat_id" name="cat_id">
 										<option value="-1">请选择分类</option>
 										<option value="0">外卖</option>
+										<option value="1">美食</option>
 									</select>
 									<span class="help-block"></span>
 								</div>

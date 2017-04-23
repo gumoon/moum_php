@@ -41,6 +41,7 @@ function changeCat(){
 			alert(data.msg);
 		}else{
 			console.log(data);
+            $("#type_id").empty();
 			for(id in data.data){
 				var str = '<option value="'+id+'">'+data.data[id]+'</option>';
 				$("#type_id").append(str);

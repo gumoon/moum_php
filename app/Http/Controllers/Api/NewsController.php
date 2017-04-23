@@ -80,10 +80,10 @@ class NewsController extends Controller
                 'title' => $v['title'],
                 'image_url' => 'http://www.zoglo.net/'.$v['img1'],
                 'created_at' => $v['datetime'],
-                'url' => $v['url'],
+                'url' => 'http://www.zoglo.net/weixin/index.html?doc_id='.$v['doc_id'],
                 'source' => array(
                     'name' => $v['username'],
-                    'logo_url' => 'http://www.zoglo.net/'.$v['img1'],
+                    'logo_url' => 'http://www.zoglo.net/weixin/images/logo1.gif',
                 ),
             );
         }

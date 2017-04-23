@@ -37,6 +37,7 @@ class ShopController extends Controller
      * @apiSuccess {Number} data.shops.distance 距离
      * @apiSuccess {String} data.shops.open_time 营业时间
      * @apiSuccess {Number} data.amount 满足条件的商户总数
+     * @apiSuccess {Number} data.can_delivery 是否支持外卖1=支持，0=不支持
      *
      * @apiSuccessExample {json} Success-response:
      * {
@@ -53,7 +54,8 @@ class ShopController extends Controller
 	 *        "type_name": "韩食快餐",
 	 *        "tel": "18600562137",
 	 *        "distance": 0.81,
-	 *        "open_time": "10:00-22:00"
+	 *        "open_time": "10:00-22:00",
+     *        "can_delivery": 1
 	 *      }
 	 *      ...
 	 *    ],
@@ -97,7 +99,8 @@ class ShopController extends Controller
 				'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 				'tel' => $shop->tel,
 				'distance' => $distance,
-				'open_time' => $shop->open_time
+				'open_time' => $shop->open_time,
+                'can_delivery' => $shop->cat_id == 0 ? 1 : 0,
 			);
 		}	
 

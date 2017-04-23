@@ -15,3 +15,5 @@
 Route::get('/rent/profile/{id}', 'RentController@profile');
 //黄页详情页
 Route::get('/one14/profile/{id}', 'One14Controller@profile');
+//新闻详情页
+Route::get('/news/detail/{id}', 'NewsController@detail');

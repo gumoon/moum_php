@@ -75,8 +75,8 @@ class NewsController extends Controller
                 'id' => $v['id'],
                 'title' => $v['title'],
                 'image_url' => News::$sources[$v['source']]['base_url'].$v['image_url'],
-                'created_at' => $v['public_at'],
-                'url' => 'http://www.zoglo.net/weixin/index.html?doc_id='.$v['doc_id'],
+                'created_at' => substr($v['public_at'], 0, 10),
+                'url' => url('home/news/detail', [base64_encode($v['id'])]),
                 'source' => array(
                     'name' => News::$sources[$v['source']]['name'],
                     'logo_url' => News::$sources[$v['source']]['logo_url'],

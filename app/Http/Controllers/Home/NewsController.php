@@ -27,6 +27,7 @@ class NewsController extends Controller
         $id = base64_decode($id);
         
         $news = News::find($id);
+        $news->content = str_replace('<img', '<img class="img-thumbnail" ', $news->content);
 
         return view('home.news.detail', ['news' => $news]);
     }

@@ -440,7 +440,7 @@ class ShopController extends Controller
 		$data = array(
 			'id' => $shop->id,
 			'name' => $shop->name,
-			'score' => 3,
+			'score' => 4,
 			'comments_count' => $shop->comments->count(),
 			'type_name' => $this->shopTypes[$shop->cat_id][$shop->type_id],
 			'tel' => $shop->tel,

@@ -5,9 +5,9 @@ namespace moum\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use moum\Http\Controllers\Controller;
 use Config;
-use Carbon\Carbon;
 use moum\Models\Spread;
 use moum\Models\One14;
+use moum\Models\Shop;
 
 
 class SpreadController extends Controller
@@ -25,6 +25,7 @@ class SpreadController extends Controller
      * @apiSuccess {String} [data.openpage.url]
      * @apiSuccess {Number} [data.openpage.shop_id]
      * @apiSuccess {Number} data.openpage.flag flag=0表示是网页，flag=1表示是商户
+     * @apiSuccess {Number} [data.can_delivery] 是否是外卖商户
      * 
      * @apiSuccessExample {json} Success-response:
 	 * {
@@ -40,7 +41,8 @@ class SpreadController extends Controller
 	 *      {
 	 *        "image_url": "http://img1.imgtn.bdimg.com/it/u=1062463557,3581994092&fm=23&gp=0.jpg",
 	 *        "shop_id": 10,
-	 *        "flag": 1
+	 *        "flag": 1,
+     *        "can_delivery": 1
 	 *      }
 	 *    ]
 	 *  }
@@ -66,10 +68,12 @@ class SpreadController extends Controller
 			}
 			elseif( $spread->flag == 1 )
 			{
+                $shop = Shop::find($spread->extra);
 				$openpage[] = array(
 					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
 					'shop_id' => $spread->extra,
-					'flag' => $spread->flag
+					'flag' => $spread->flag,
+                    'can_delivery' => $shop->cat_id == 0 ? 1 : 0,
 				);
 			}
 			
@@ -96,6 +100,7 @@ class SpreadController extends Controller
      * @apiSuccess {Number} [data.topics.shop_id]
      * @apiSuccess {String} [data.topics.tel]
      * @apiSuccess {Number} data.topics.flag flag=0表示是网页，flag=1表示是商户,flag=2表示是黄页
+     * @apiSuccess {Number} [data.can_delivery] 是否是外卖商户
      * 
      * @apiSuccessExample {json} Success-response:
      * {
@@ -111,7 +116,8 @@ class SpreadController extends Controller
 	 *      {
 	 *        "image_url": "http://img1.imgtn.bdimg.com/it/u=1062463557,3581994092&fm=23&gp=0.jpg",
 	 *        "shop_id": 10,
-	 *        "flag": 1
+	 *        "flag": 1,
+     *        "can_delivery":1
 	 *      },
 	 *      {
 	 *        "image_url": "http://image.tupian114.com/20121102/11081330.jpg",
@@ -143,10 +149,12 @@ class SpreadController extends Controller
 			}
 			elseif( $spread->flag == 1 )
 			{
+			    $shop = Shop::find($spread->extra);
 				$tmp[] = array(
 					'image_url' => $spread->image_url ? Config::get('app.ossDomain'). $spread->image_url : '',
 					'shop_id' => $spread->extra,
-					'flag' => $spread->flag
+					'flag' => $spread->flag,
+                    'can_delivery' => $shop->cat_id == 0 ? 1 : 0,
 				);
 			}
 			elseif( $spread->flag == 2 )

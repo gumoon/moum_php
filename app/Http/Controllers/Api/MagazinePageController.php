@@ -33,6 +33,7 @@ class MagazinePageController extends Controller
      * @apiSuccess {Number} data.type 杂志页关联对象类型，1=美食商户,2=114黄页
      * @apiSuccess {String} [data.url] 杂志页关联对象链接为114商户时，有这个字段
      * @apiSuccess {Number} [data.shop_id] 对象类型为美食时，有这个字段
+     * @apiSuccess {Number} [data.can_delivery] 对象类型为美食时，有这个字段
      *
      * @apiSuccessExample {json} Success-response:
      * {
@@ -49,6 +50,7 @@ class MagazinePageController extends Controller
      *      "lng": 234.532,
      *      "type": 1,
      *      "shop_id": 13,
+     *      "can_delivery":1,
      *      "url": "www.baidu.com"
      *    }
      *    ...
@@ -89,6 +91,7 @@ class MagazinePageController extends Controller
                 $tmp[$k]['lng'] = $shop->lng;
                 $tmp[$k]['type'] = $spread->flag;
                 $tmp[$k]['shop_id'] = $shop->id;
+                $tmp[$k]['can_delivery'] = $shop->cat_id == 0 ? 1 : 0;
 
             } elseif ($spread->flag == Spread::FLAG_ONE14) {
                 $one14 = One14::find($spread->extra);

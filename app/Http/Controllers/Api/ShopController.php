@@ -318,7 +318,7 @@ class ShopController extends Controller
 					'tel' => $shop->tel,
 					'distance' => $distance,
 					'open_time' => $shop->open_time,
-                    'can_delivery' => mt_rand() % 2,
+                    'can_delivery' => $shop->cat_id == 0 ? 1 : 0,
 				);
 			}
 			else
@@ -332,7 +332,7 @@ class ShopController extends Controller
 					'tel' => $shop->tel,
 					'distance' => $distance,
 					'open_time' => $shop->open_time,
-                    'can_delivery' => mt_rand() % 2,
+                    'can_delivery' => $shop->cat_id == 0 ? 1 : 0,
 				);
 			}
 

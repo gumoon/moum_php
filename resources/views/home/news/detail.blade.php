@@ -11,8 +11,8 @@
 
     <div class="container">
         <h3>{{$news->title}}</h3>
-        <span>{{substr($news->public_at, 0, 10)}}     {{\moum\Models\News::$sources[$news->source]['name']}}</span>
-        <br/>
+        <div class="small"><span class="">{{substr($news->public_at, 0, 10)}}</span>&nbsp;&nbsp;&nbsp;&nbsp; {{\moum\Models\News::$sources[$news->source]['name']}}</div>
+        <br />
         {!! $news->content !!}
     </div>
 

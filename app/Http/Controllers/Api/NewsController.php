@@ -74,7 +74,7 @@ class NewsController extends Controller
             $tmp[] = array(
                 'id' => $v['id'],
                 'title' => $v['title'],
-                'image_url' => News::$sources[$v['source']].$v['image_url'],
+                'image_url' => News::$sources[$v['source']]['base_url'].$v['image_url'],
                 'created_at' => $v['public_at'],
                 'url' => 'http://www.zoglo.net/weixin/index.html?doc_id='.$v['doc_id'],
                 'source' => array(

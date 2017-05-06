@@ -42,24 +42,24 @@ module.exports = function normalizeComponent (
   scopeId,
   cssModules
 ) {
-  var esModule
-  var scriptExports = rawScriptExports = rawScriptExports || {}
+  var esModule;
+  var scriptExports = rawScriptExports = rawScriptExports || {};
 
   // ES6 modules interop
-  var type = typeof rawScriptExports.default
+  var type = typeof rawScriptExports.default;
   if (type === 'object' || type === 'function') {
-    esModule = rawScriptExports
+    esModule = rawScriptExports;
     scriptExports = rawScriptExports.default
   }
 
   // Vue.extend constructor export interop
   var options = typeof scriptExports === 'function'
     ? scriptExports.options
-    : scriptExports
+    : scriptExports;
 
   // render functions
   if (compiledTemplate) {
-    options.render = compiledTemplate.render
+    options.render = compiledTemplate.render;
     options.staticRenderFns = compiledTemplate.staticRenderFns
   }
 
@@ -70,11 +70,11 @@ module.exports = function normalizeComponent (
 
   // inject cssModules
   if (cssModules) {
-    var computed = Object.create(options.computed || null)
+    var computed = Object.create(options.computed || null);
     Object.keys(cssModules).forEach(function (key) {
-      var module = cssModules[key]
+      var module = cssModules[key];
       computed[key] = function () { return module }
-    })
+    });
     options.computed = computed
   }
 
@@ -107,10 +107,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Example Component")]), _vm._v(" "), _c('div', {
     staticClass: "panel-body"
   }, [_vm._v("\n                    I'm an example component!\n                ")])])])])])
-}]}
-module.exports.render._withStripped = true
+}]};
+module.exports.render._withStripped = true;
 if (false) {
-  module.hot.accept()
+  module.hot.accept();
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-3236b873", module.exports)
   }
@@ -130,17 +130,17 @@ var Component = __webpack_require__("./node_modules/vue-loader/lib/component-nor
   null,
   /* cssModules */
   null
-)
-Component.options.__file = "/Users/gumoon/Code/moum114/moum_php/resources/assets/js/components/Example.vue"
+);
+Component.options.__file = "/Users/gumoon/Code/moum114/moum_php/resources/assets/js/components/Example.vue";
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
 if (Component.options.functional) {console.error("[vue-loader] Example.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
+  var hotAPI = require("vue-hot-reload-api");
+  hotAPI.install(require("vue"), false);
+  if (!hotAPI.compatible) return;
+  module.hot.accept();
   if (!module.hot.data) {
     hotAPI.createRecord("data-v-3236b873", Component.options)
   } else {

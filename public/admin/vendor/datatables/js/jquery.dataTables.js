@@ -15275,4 +15275,5 @@
 	 */
 
 	return $.fn.dataTable;
-}));
+});
+)

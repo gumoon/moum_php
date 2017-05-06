@@ -8,11 +8,11 @@ use moum\Models\User;
 use Illuminate\Auth\AuthenticationException;
 use Config;
 use Hash;
-use moum\Notifications\Captcha as CaptchaNotification;
 use Notification;
 use DB;
 use Carbon\Carbon;
 use moum\Events\OldUserLogin;
+use moum\Notifications\Captcha as CaptchaNotification;
 
 class UserController extends Controller
 {
@@ -283,47 +283,48 @@ class UserController extends Controller
 		return $this->successJson();
 	}
 
-	/**
-	 * @api {post} /user/captcha 获取验证码
-	 * @apiName UserCaptcha
-	 * @apiGroup User
-	 *
-	 * @apiParam {String} tel
-	 * 
-	 * @apiSuccess {Number} err_no
-	 * @apiSuccess {String} msg
-	 * @apiSuccess {Object} data
-	 * @apiSuccess {String} data.captcha
-	 *
-	 * @apiSuccessExample {json} Success-response:
-	 * {
-	 *  "err_no": 0,
-	 *  "msg": "success",
-	 *  "data": {
-	 *    "captcha": "123456"
-	 *  }
-	 * }
-	 */
-	public function captcha(Request $request)
-	{
-		$this->validate($request, [
-			'tel' => 'required'
-		]);
+    /**
+     * @api {post} /user/captcha 获取验证码
+     * @apiName UserCaptcha
+     * @apiGroup User
+     *
+     * @apiParam {String} tel
+     *
+     * @apiSuccess {Number} err_no
+     * @apiSuccess {String} msg
+     * @apiSuccess {Object} data
+     * @apiSuccess {String} data.captcha
+     *
+     * @apiSuccessExample {json} Success-response:
+     * {
+     *  "err_no": 0,
+     *  "msg": "success",
+     *  "data": {
+     *    "captcha": "123456"
+     *  }
+     * }
+     */
+    public function captcha(Request $request)
+    {
+        $this->validate($request, [
+            'tel' => 'required'
+        ]);
 
-		$tel = $request->input('tel');
+        $tel = $request->input('tel');
 
-		$captcha = '123456';
+        $captcha = mt_rand(100000, 999999);
 
-		$tmp = array(
-			'tel' => $tel,
-			'captcha' => $captcha
-		);
-		//发短信通知给用户
-		// Notification::send($request->user(), new CaptchaNotification($tmp));
-		
-		$data = array(
-			'captcha' => $captcha
-		);
-		return $this->successJson($data);
-	}
+        $tmp = array(
+            'tel' => $tel,
+            'captcha' => $captcha
+        );
+
+        //发短信验证码给用户
+        Notification::send($request->user(), new CaptchaNotification($tmp));
+
+        $data = array(
+            'captcha' => $captcha
+        );
+        return $this->successJson($data);
+    }
 }

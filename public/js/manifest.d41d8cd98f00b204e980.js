@@ -99,8 +99,9 @@
 /******/ 				if(chunk) chunk[1](new Error('Loading chunk ' + chunkId + ' failed.'));
 /******/ 				installedChunks[chunkId] = undefined;
 /******/ 			}
-/******/ 		};
-/******/ 		head.appendChild(script);
+            /******/
+        }
+        /******/ 		head.appendChild(script);
 /******/
 /******/ 		return promise;
 /******/ 	};

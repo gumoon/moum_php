@@ -36,6 +36,7 @@ class One14Controller extends Controller
 	 * @apiParam {Number} [page=1] 页码
 	 * @apiParam {Number} [count=10] 每页商户数
 	 * @apiParam {Number} type_id 类型ID
+     * @apiParam {Number} area_id 地区ID
 	 *
 	 * @apiSuccess {Number} err_no 错误码
 	 * @apiSuccess {String} msg 错误信息

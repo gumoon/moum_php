@@ -11,6 +11,18 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
+    //地区
+    public $areas = [
+        [
+            'name' => '北京',
+            'area_id' => 1,
+        ],
+        [
+            'name' => '燕郊',
+            'area_id' => 2,
+        ],
+    ];
+
     //商户分类
     public $shopCats = array(
         '外卖',

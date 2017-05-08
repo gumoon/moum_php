@@ -63,7 +63,8 @@ class One14Controller extends Controller
             'name' => 'bail|required|unique:one14s,name',
             'cat_id' => 'bail|required|integer|min:0',
             'type_id' => 'bail|required|integer|min:0',
-            'tel' => 'bail|required'
+            'tel' => 'bail|required',
+            'area_id' => 'bail|required|integer|min:0',
         ]);
 
         $one14 = new One14;
@@ -78,6 +79,7 @@ class One14Controller extends Controller
         $one14->cat_id = $request->input('cat_id');
         $one14->type_id = $request->input('type_id');
         $one14->tel = $request->input('tel');
+        $one14->area_id = $request->input('area_id');
 
         $lat = $request->input('lat');
         if( $lat )
@@ -167,7 +169,8 @@ class One14Controller extends Controller
             'name' => Rule::unique('one14s')->ignore($id, 'id'),
             'cat_id' => 'bail|required|integer|min:0',
             'type_id' => 'bail|required|integer|min:0',
-            'tel' => 'bail|required'
+            'tel' => 'bail|required',
+            'area_id' => 'bail|required|integer|min:0',
         ]);
 
         $id = intval($id);
@@ -184,6 +187,7 @@ class One14Controller extends Controller
         $one14->cat_id = $request->input('cat_id');
         $one14->type_id = $request->input('type_id');
         $one14->tel = $request->input('tel');
+        $one14->area_id = $request->input('area_id');
 
         $lat = $request->input('lat');
         if( $lat )

@@ -91,7 +91,7 @@ class One14Controller extends Controller
 			'count' => 'bail|filled|integer|min:1',
 			'lat' => 'bail|required|min:-90|max:90',
 			'lng' => 'bail|required|min:-180|max:180',
-			'type_id' => 'bail|required'
+			'type_id' => 'bail|required',
 		]);
 
 		$page = $request->input('page', 1);
@@ -100,8 +100,10 @@ class One14Controller extends Controller
 		$lat = $request->input('lat');
 		$lng = $request->input('lng');
 		$typeId = $request->input('type_id');
+		$areaId = $request->input('area_id', 1);
 
 		$one14s = One14::where('type_id', $typeId)
+                    ->where('area_id', $areaId)
 					->skip($offset)
 					->take($count)
 					->get();

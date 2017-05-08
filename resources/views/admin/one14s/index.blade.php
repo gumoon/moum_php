@@ -75,6 +75,7 @@ function deleteOne14(id){
         					<thead>
         						<tr>
         							<th>ID</th>
+									<th>地区</th>
         							<th>名称</th>
         							<th>分类/子分类</th>
         							<th>电话</th>
@@ -86,6 +87,7 @@ function deleteOne14(id){
         					@forelse ($one14s as $one14)
 							    <tr>
         							<td>{{ $one14->id }}</td>
+									<td>@if($one14->area_id == 1)北京 @else 燕郊 @endif</td>
         							<td>{{ $one14->name }}</td>
         							<td>{{ $one14->cat_name }}/{{ $one14->type_name }}</td>
         							<td>{{ $one14->tel }}</td>

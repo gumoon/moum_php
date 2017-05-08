@@ -144,6 +144,7 @@ function submitUpdateOne14()
 	var is_vip = $("input:checked").val();
 	var cat_id = $("#cat_id :selected").val();
 	var type_id = $("#type_id :selected").val();
+    var area_id = $("#area_id :selected").val();
 	var tel = $("#tel").val();
 	var addr = $("#addr").val();
 	var lng = $("#lng").val();
@@ -152,7 +153,7 @@ function submitUpdateOne14()
 	var detail = CKEDITOR.instances.detail.getData();
 	var image_url = $("#image_url01").attr("alt");
 
-	var postData = {name: name, is_vip: is_vip, cat_id: cat_id, type_id: type_id, tel: tel, addr: addr, lng: lng, lat: lat, tags: tags, image_url: image_url, detail: detail};
+	var postData = {name: name, is_vip: is_vip, cat_id: cat_id, type_id: type_id, area_id: area_id, tel: tel, addr: addr, lng: lng, lat: lat, tags: tags, image_url: image_url, detail: detail};
 	console.log(postData);
 	
 	var options = {
@@ -235,6 +236,17 @@ $(document).ready(function(){
                                         <input type="radio" name="is_vip" value="1" @if( $one14->is_vip == 1)checked @endif>是
                                     </label>
                                 </div>
+								<div class="col-lg-6">
+									<div class="form-group" id="typediv">
+										<label>地区</label>
+										<select class="form-control" id="area_id" name="area_id">
+											<option value="-1">请选择地区</option>
+											<option value="1" @if( $one14->area_id == 1)selected @endif>北京</option>
+											<option value="2" @if( $one14->area_id == 2)selected @endif>燕郊</option>
+										</select>
+										<span class="help-block"></span>
+									</div>
+								</div>
 							</div>
 						</div>
 

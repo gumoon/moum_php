@@ -53,7 +53,18 @@ class RentController extends Controller
         $rent->lng = $request->input('lng');
         $rent->addr = $request->input('addr');
         $rent->is_rented = $request->input('is_rented');
-        $rent->detail = $request->input('detail');
+        $detail = $request->input('detail');
+        if ($detail) {
+            //给图片加样式，去掉原来的样式
+            $detail = preg_replace_callback("/<img .+ \/>/", function($matches){
+                return preg_replace("/style=\"(.*)\"/","", $matches[0]);
+            },
+                $detail
+            );
+            $detail = str_replace('<img', '<img class="img-thumbnail" ', $detail);
+        }
+
+        $rent->detail = $detail;
         $rent->price = $request->input('price');
 
         $rent->save();
@@ -117,7 +128,18 @@ class RentController extends Controller
         $rent->lng = $request->input('lng');
         $rent->addr = $request->input('addr');
         $rent->is_rented = $request->input('is_rented');
-        $rent->detail = $request->input('detail');
+        $detail = $request->input('detail');
+        if ($detail) {
+            //给图片加样式，去掉原来的样式
+            $detail = preg_replace_callback("/<img .+ \/>/", function($matches){
+                return preg_replace("/style=\"(.*)\"/","", $matches[0]);
+            },
+                $detail
+            );
+            $detail = str_replace('<img', '<img class="img-thumbnail" ', $detail);
+        }
+
+        $rent->detail = $detail;
         $rent->price = $request->input('price');
 
         $rent->save();
